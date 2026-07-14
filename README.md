@@ -1,6 +1,6 @@
-# 🕉️ Vighnaharta Ganesh Mandal Portal
+# 🕉️ Vighnaharta Mitra Mandal Portal
 
-A modern MERN Stack web application built for **Shri Vighnaharta Ganesh Mandal** to manage festival activities digitally.
+A modern MERN Stack web application built for **Shri Vighnaharta Mitra Mandal** to manage festival activities digitally.
 
 ## 🌟 Features
 

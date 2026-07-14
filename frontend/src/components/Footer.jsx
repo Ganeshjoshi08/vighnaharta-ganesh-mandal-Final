@@ -17,24 +17,24 @@ const Footer = () => {
 
   const footerText = {
     marathi: {
-      title: "श्री गणेश मंडळ",
+      title: "श्री विघ्नहर्ता मित्र मंडळ",
       tag: "श्रद्धा • सेवा • संस्कृती",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       volunteer: "Volunteer Signup",
       timings: "Temple Timing",
-      copyright: "© 2024 श्री गणेश मंडळ. Developed by Ganesh Joshi",
+      copyright: "© 2024 श्री विघ्नहर्ता मित्र मंडळ. Developed by Ganesh Joshi",
       dev: "Developed by Ganesh Joshi",
       chant: "“गणपती बाप्पा मोरया, पुढच्या वर्षी लवकर या!”"
     },
     english: {
-      title: "Shree Ganesh Mandal",
+      title: "Shree Vighnaharta Mitra Mandal",
       tag: "DEVOTION • SERVICE • CULTURE",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       volunteer: "Volunteer Signup",
       timings: "Temple Timing",
-      copyright: "© 2024 श्री गणेश मंडळ. Developed by Ganesh Joshi",
+      copyright: "© 2024 श्री विघ्नहर्ता मित्र मंडळ. Developed by Ganesh Joshi",
       dev: "Developed by Ganesh Joshi",
       chant: "“Ganpati Bappa Morya, Pudhchya Varshi Lavkar Ya!”"
     }

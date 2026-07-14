@@ -46,16 +46,16 @@ const Home = () => {
     marathi: {
       hero: {
         sub: "श्री विघ्नहर्ताय नमः",
-        title: "विघ्नहर्ता गणेश मंडळ",
+        title: "विघ्नहर्ता मित्र मंडळ",
         est: "स्थापना: १९९० • विघ्नहर्ता चौक, बीड",
         morya: "गणपती बाप्पा मोरया!"
       },
       about: {
         tag: "आमच्याबद्दल",
         title: "मंडळाचा गौरवशाली इतिहास",
-        p1: "१९९० सालापासून बीड शहराच्या सांस्कृतिक, धार्मिक आणि सामाजिक वैभवात मोलाची भर घालणारे ‘विघ्नहर्ता गणेश मंडळ’ हे केवळ गणेशोत्सव साजरा करणारे मंडळ नसून समाजसेवा, संस्कार आणि भक्ती यांचे प्रेरणादायी केंद्र आहे. विघ्नहर्ता चौक येथे दरवर्षी श्री गणेशाचे आगमन भक्तिभाव, उत्साह आणि पारंपरिक जल्लोषात होत असून हजारो भाविकांच्या श्रद्धा आणि विश्वासाचे केंद्रस्थान बनले आहे.",
+        p1: "१९९० सालापासून बीड शहराच्या सांस्कृतिक, धार्मिक आणि सामाजिक वैभवात मोलाची भर घालणारे ‘विघ्नहर्ता मित्र मंडळ’ हे केवळ गणेशोत्सव साजरा करणारे मंडळ नसून समाजसेवा, संस्कार आणि भक्ती यांचे प्रेरणादायी केंद्र आहे. विघ्नहर्ता चौक येथे दरवर्षी श्री गणेशाचे आगमन भक्तिभाव, उत्साह आणि पारंपरिक जल्लोषात होत असून हजारो भाविकांच्या श्रद्धा आणि विश्वासाचे केंद्रस्थान बनले आहे.",
         p2: "स्थापनेपासून गेली ३६ वर्षे मंडळाने धार्मिक परंपरांचे जतन करत विविध सामाजिक उपक्रम, रक्तदान शिबिरे, आरोग्य जनजागृती मोहिमा, पर्यावरण संवर्धन उपक्रम तसेच गरजू आणि होतकरू विद्यार्थ्यांना शैक्षणिक मदत करण्याचे कार्य सातत्याने केले आहे. समाजहित आणि सेवाभाव यांची सांगड घालत मंडळाने बीडकरांच्या मनात एक विशेष आणि मानाचे स्थान निर्माण केले आहे.",
-        p3: "२०२६ मध्ये ३७ व्या वर्षात पदार्पण करताना, ‘विघ्नहर्ता गणेश मंडळ’ श्रद्धा, सेवा आणि सामाजिक बांधिलकीचा वारसा अधिक दृढ करण्याचा संकल्प बाळगून आहे. आमचे बाप्पा हे केवळ मंडळाचे आराध्य दैवत नसून संपूर्ण बीडकरांच्या श्रद्धा, एकात्मता आणि विश्वासाचे प्रतीक आहेत.",
+        p3: "२०२६ मध्ये ३७ व्या वर्षात पदार्पण करताना, ‘विघ्नहर्ता मित्र मंडळ’ श्रद्धा, सेवा आणि सामाजिक बांधिलकीचा वारसा अधिक दृढ करण्याचा संकल्प बाळगून आहे. आमचे बाप्पा हे केवळ मंडळाचे आराध्य दैवत नसून संपूर्ण बीडकरांच्या श्रद्धा, एकात्मता आणि विश्वासाचे प्रतीक आहेत.",
         p4: "॥ गणपती बाप्पा मोरया ॥ 🙏🏻🐘✨",
         yearsVal: "३६+",
         yearsLbl: "उत्सवाचे वर्ष",
@@ -160,16 +160,16 @@ const Home = () => {
     english: {
       hero: {
         sub: "Shree Vighnahartaya Namah",
-        title: "Vighnaharta Ganesh Mandal",
+        title: "Vighnaharta Mitra Mandal",
         est: "Established: 1990 • Vighnaharta Chowk, Beed",
         morya: "Ganpati Bappa Morya!"
       },
       about: {
         tag: "About Us",
         title: "Glorious History of the Mandal",
-        p1: "Since 1990, 'Vighnaharta Ganesh Mandal', adding significantly to the cultural, religious and social glory of Beed city, is not just a Mandal celebrating Ganesh festival, but an inspiring center of social service, values and devotion. Every year, the arrival of Shri Ganesha at Vighnaharta Chowk takes place with devotion, enthusiasm and traditional fervor, making it a center of faith and trust for thousands of devotees.",
+        p1: "Since 1990, 'Vighnaharta Mitra Mandal', adding significantly to the cultural, religious and social glory of Beed city, is not just a Mandal celebrating Ganesh festival, but an inspiring center of social service, values and devotion. Every year, the arrival of Shri Ganesha at Vighnaharta Chowk takes place with devotion, enthusiasm and traditional fervor, making it a center of faith and trust for thousands of devotees.",
         p2: "For the past 36 years since its establishment, preserving religious traditions, the Mandal has continuously conducted various social activities, blood donation camps, health awareness campaigns, environmental conservation initiatives, as well as educational assistance to needy and promising students. Combining social welfare and service, the Mandal has created a special and proud place in the hearts of the people of Beed.",
-        p3: "Entering its 37th year in 2026, 'Vighnaharta Ganesh Mandal' is resolved to strengthen the legacy of faith, service and social commitment. Our Bappa is not only the deity of the Mandal, but a symbol of faith, unity and trust of the entire people of Beed.",
+        p3: "Entering its 37th year in 2026, 'Vighnaharta Mitra Mandal' is resolved to strengthen the legacy of faith, service and social commitment. Our Bappa is not only the deity of the Mandal, but a symbol of faith, unity and trust of the entire people of Beed.",
         p4: "|| Ganpati Bappa Morya || 🙏🏻🐘✨",
         yearsVal: "36+",
         yearsLbl: "Years of Celebration",

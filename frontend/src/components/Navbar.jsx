@@ -75,7 +75,7 @@ const Navbar = () => {
 
   const navText = {
     marathi: {
-      title: "विघ्नहर्ता गणेश मंडळ",
+      title: "विघ्नहर्ता मित्र मंडळ",
       sub: "विघ्नहर्ता चौक, बीड - स्थापना: १९९०",
       home: "Home",
       about: "About",
@@ -91,7 +91,7 @@ const Navbar = () => {
       login: "Login"
     },
     english: {
-      title: "Vighnaharta Ganesh Mandal",
+      title: "Vighnaharta Mitra Mandal",
       sub: "Vighnaharta Chowk, Beed - Estd: 1990",
       home: "Home",
       about: "About",
