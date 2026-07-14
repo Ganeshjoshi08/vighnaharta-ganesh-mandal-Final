@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme {
+  --color-secondary: #735c00;
+  --color-on-background: #111827;
+  --color-on-tertiary-container: #8c0c05;
+  --color-on-tertiary-fixed: #410000;
+  --color-surface-dim: #e5e7eb;
+  --color-on-secondary-fixed: #241a00;
+  --color-on-surface: #111827;
+  --color-primary-fixed-dim: #ffb77a;
+  --color-surface-container: #f3f4f6;
+  --color-surface-container-high: #e5e7eb;
+  --color-primary-fixed: #ffdcc2;
+  --color-tertiary-fixed: #ffdad4;
+  --color-surface-bright: #ffffff;
+  --color-inverse-primary: #ffb77a;
+  --color-inverse-on-surface: #f9fafb;
+  --color-surface-container-low: #f9fafb;
+  --color-surface-variant: #f3f4f6;
+  --color-on-primary-container: #693800;
+  --color-on-error-container: #93000a;
+  --color-on-error: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-inverse-surface: #1f2937;
+  --color-on-surface-variant: #4b5563;
+  --color-secondary-container: #fed65b;
+  --color-primary: #8f4e00;
+  --color-outline: #9ca3af;
+  --color-background: #ffffff;
+  --color-surface-tint: #8f4e00;
+  --color-on-secondary-fixed-variant: #574500;
+  --color-surface: #ffffff;
+  --color-on-primary-fixed-variant: #6d3a00;
+  --color-tertiary: #b22b1d;
+  --color-error-container: #ffdad6;
+  --color-on-secondary: #ffffff;
+  --color-on-primary: #ffffff;
+  --color-tertiary-fixed-dim: #ffb4a8;
+  --color-error: #ba1a1a;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-fixed-variant: #8f0f07;
+  --color-outline-variant: #e5e7eb;
+  --color-secondary-fixed-dim: #e9c349;
+  --color-primary-container: #ff9933;
+  --color-surface-container-highest: #e5e7eb;
+  --color-tertiary-container: #ff9585;
+  --color-on-primary-fixed: #2e1500;
+  --color-on-secondary-container: #745c00;
+  --color-secondary-fixed: #ffe088;
+
+  /* Font Families */
+  --font-display-hero: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
+  --font-display-hero-mobile: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
+  --font-headline-lg: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
+  --font-headline-lg-mobile: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
+  --font-headline-md: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
+  --font-body-lg: "Noto Serif", "Noto Serif Devanagari", serif;
+  --font-body-md: "Noto Serif", "Noto Serif Devanagari", serif;
+  --font-label-caps: "Libre Franklin", sans-serif;
+
+  /* Font Sizes and properties */
+  --text-display-hero: 72px;
+  --text-display-hero--line-height: 84px;
+  --text-display-hero--letter-spacing: -0.02em;
+  --text-display-hero--font-weight: 900;
+
+  --text-display-hero-mobile: 48px;
+  --text-display-hero-mobile--line-height: 56px;
+  --text-display-hero-mobile--font-weight: 900;
+
+  --text-headline-lg: 40px;
+  --text-headline-lg--line-height: 48px;
+  --text-headline-lg--font-weight: 700;
+
+  --text-headline-lg-mobile: 32px;
+  --text-headline-lg-mobile--line-height: 40px;
+  --text-headline-lg-mobile--font-weight: 700;
+
+  --text-headline-md: 28px;
+  --text-headline-md--line-height: 36px;
+  --text-headline-md--font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-caps: 12px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.1em;
+  --text-label-caps--font-weight: 700;
+
+  /* Spacing values mapping */
+  --spacing-safe-area-mobile: 20px;
+  --spacing-section-gap: 120px;
+  --spacing-gutter: 24px;
+  --spacing-unit: 8px;
+  --spacing-container-padding: 64px;
+
+  /* Custom Border Radius corresponding to original config */
+  --radius-DEFAULT: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+}
+
+/* Custom CSS classes for visual depth and motifs */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+}
+.temple-border {
+  border-image-source: linear-gradient(to right, #D4AF37, #8f4e00, #D4AF37);
+  border-image-slice: 1;
+}
+.divine-glow {
+  text-shadow: 0 0 15px rgba(255, 153, 51, 0.6);
+}
+.golden-text-gradient {
+  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.divine-overlay {
+  background: linear-gradient(0deg, rgba(29,29,3,0.95) 0%, rgba(29,29,3,0.3) 50%, rgba(29,29,3,0) 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #8f4e00;
+  border-radius: 4px;
+}
