@@ -56,11 +56,11 @@ const Events = () => {
       tagline: "सहकार्य आणि भक्तीच्या भावनेने आमच्या भव्य उत्सवाच्या स्पर्धांमध्ये सहभागी व्हा. विघ्नहर्ता मित्र मंडळाच्या ऐतिहासिक वारशाचा हिस्सा बना.",
       cricket: {
         tag: "PREMIUM TOURNAMENT",
-        title: "Cricket Tournament",
-        mrTitle: "क्रिकेट स्पर्धा",
+        title: "Box Cricket",
+        mrTitle: "बॉक्स क्रिकेट",
         desc: "विघ्नहर्ता कपच्या थराराचा अनुभव घ्या. देवाच्या सानिध्यात स्थानिक खेळाडूंच्या कौशल्याला वाव देणारे भव्य व्यासपीठ.",
         date: "१२ सप्टेंबर - १५ सप्टेंबर, २०२४",
-        fee: "प्रवेश शुल्क: ₹२१०० प्रति संघ"
+        fee: ""
       },
       kabaddi: {
         title: "Kabaddi Championship",
@@ -116,11 +116,11 @@ const Events = () => {
       tagline: "Celebrate the spirit of togetherness and devotion through our grand festive competitions. Join the legacy of Vighnaharta Mitra Mandal.",
       cricket: {
         tag: "PREMIUM TOURNAMENT",
-        title: "Cricket Tournament",
-        mrTitle: "क्रिकेट स्पर्धा",
+        title: "Box Cricket",
+        mrTitle: "बॉक्स क्रिकेट",
         desc: "Experience the thrill of the Vighnaharta Cup. A grand stage for local talent to shine in the presence of the Lord.",
         date: "Sept 12 - Sept 15, 2024",
-        fee: "Entry: ₹2100 Per Team"
+        fee: ""
       },
       kabaddi: {
         title: "Kabaddi Championship",
@@ -284,10 +284,12 @@ const Events = () => {
                   <span>📅</span>
                   <span>{currentUI.cricket.date}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span>🏆</span>
-                  <span>{currentUI.cricket.fee}</span>
-                </div>
+                {currentUI.cricket.fee && (
+                  <div className="flex items-center gap-2">
+                    <span>🏆</span>
+                    <span>{currentUI.cricket.fee}</span>
+                  </div>
+                )}
               </div>
               <button 
                 onClick={() => handleRegisterTrigger(currentUI.cricket.title)}
@@ -526,7 +528,7 @@ const Events = () => {
               required
             >
               <option value="" disabled>{currentUI.form.chooseEventPl}</option>
-              <option value={currentUI.cricket.title}>{currentUI.cricket.title} ({currentUI.cricket.fee})</option>
+              <option value={currentUI.cricket.title}>{currentUI.cricket.title}{currentUI.cricket.fee ? ` (${currentUI.cricket.fee})` : ""}</option>
               <option value={currentUI.kabaddi.title}>{currentUI.kabaddi.title} (FEE: {currentUI.kabaddi.fee})</option>
               <option value={currentUI.rangoli.title}>{currentUI.rangoli.title} (FEE: {currentUI.rangoli.fee})</option>
               <option value={currentUI.drawing.title}>{currentUI.drawing.title} (FEE: {currentUI.drawing.fee})</option>
