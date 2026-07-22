@@ -109,7 +109,7 @@ const Navbar = () => {
   };
 
   const current = navText[lang];
-  const isMantras = location.pathname === "/mantras";
+  const isMantras = location.pathname === "/mantras" || location.pathname === "/events";
 
   return (
     <header
