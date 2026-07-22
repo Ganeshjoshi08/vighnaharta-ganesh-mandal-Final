@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import cricketImg from "../assets/event_cricket.jpg";
+import bgmiImg from "../assets/event_bgmi.jpg";
 
 const Events = () => {
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
@@ -55,40 +56,30 @@ const Events = () => {
       mainTitle: "मुख्य स्पर्धा / Events",
       tagline: "सहकार्य आणि भक्तीच्या भावनेने आमच्या भव्य उत्सवाच्या स्पर्धांमध्ये सहभागी व्हा. विघ्नहर्ता मित्र मंडळाच्या ऐतिहासिक वारशाचा हिस्सा बना.",
       cricket: {
-        tag: "PREMIUM TOURNAMENT",
+        tag: "COMING SOON",
         title: "Box Cricket",
         mrTitle: "बॉक्स क्रिकेट",
-        desc: "विघ्नहर्ता कपच्या थराराचा अनुभव घ्या. देवाच्या सानिध्यात स्थानिक खेळाडूंच्या कौशल्याला वाव देणारे भव्य व्यासपीठ.",
-        date: "१२ सप्टेंबर - १५ सप्टेंबर, २०२४",
-        fee: ""
+        desc: "विघ्नहर्ता कपच्या थराराचा अनुभव घ्या. देवाच्या सानिध्यात स्थानिक खेळाडूंच्या कौशल्याला वाव देणारे भव्य व्यासपीठ."
       },
-      kabaddi: {
-        title: "Kabaddi Championship",
-        mrTitle: "कबड्डी स्पर्धा",
-        desc: "आपल्या तरुणांच्या पारंपरिक ताकद आणि चपळतेचा गौरव.",
-        date: "१६ सप्टेंबर, २०२४",
-        fee: "₹५०० प्रति संघ"
+      bgmi: {
+        title: "Esports BGMI",
+        mrTitle: "ई-स्पोर्ट्स बीजीएमआय",
+        desc: "बॅटलग्राउंड्स मोबाईल इंडिया ई-स्पोर्ट्स स्पर्धा. अंतिम युद्धासाठी तुमचे संघ तयार ठेवा."
       },
       rangoli: {
         title: "Rangoli Competition",
         mrTitle: "रांगोळी स्पर्धा",
-        desc: "कला आणि भक्तीचा मिलाफ. पारंपरिक रंगांनी तुमची कला सादर करा.",
-        date: "१३ सप्टेंबर, २०२४",
-        fee: "₹५०/प्रवेश"
+        desc: "कला आणि भक्तीचा मिलाफ. पारंपरिक रंगांनी तुमची कला सादर करा."
       },
       drawing: {
         title: "Drawing Contest",
         mrTitle: "चित्रकला स्पर्धा",
-        desc: "बाल भक्तांसाठी. त्यांच्या कल्पनाशक्तीला रंगांचे पंख देऊया.",
-        date: "१४ सप्टेंबर, २०२४",
-        fee: "मोफत प्रवेश"
+        desc: "बाल भक्तांसाठी. त्यांच्या कल्पनाशक्तीला रंगांचे पंख देऊया."
       },
       traditional: {
         title: "Traditional Games",
         mrTitle: "पारंपरिक खेळ",
-        desc: "लगोरी, विटी-दांडू आणि बरेच काही. आपल्या जुन्या खेळांचे पुनरुज्जीवन.",
-        date: "१७ सप्टेंबर, २०२४",
-        fee: "मोफत सहभाग"
+        desc: "लगोरी, विटी-दांडू आणि बरेच काही. आपल्या जुन्या खेळांचे पुनरुज्जीवन."
       },
       registerBtn: "REGISTER NOW",
       form: {
@@ -115,40 +106,30 @@ const Events = () => {
       mainTitle: "मुख्य स्पर्धा / Events",
       tagline: "Celebrate the spirit of togetherness and devotion through our grand festive competitions. Join the legacy of Vighnaharta Mitra Mandal.",
       cricket: {
-        tag: "PREMIUM TOURNAMENT",
+        tag: "COMING SOON",
         title: "Box Cricket",
         mrTitle: "बॉक्स क्रिकेट",
-        desc: "Experience the thrill of the Vighnaharta Cup. A grand stage for local talent to shine in the presence of the Lord.",
-        date: "Sept 12 - Sept 15, 2024",
-        fee: ""
+        desc: "Experience the thrill of the Vighnaharta Cup. A grand stage for local talent to shine in the presence of the Lord."
       },
-      kabaddi: {
-        title: "Kabaddi Championship",
-        mrTitle: "कबड्डी स्पर्धा",
-        desc: "Honoring the traditional strength and agility of our youth.",
-        date: "Sept 16, 2024",
-        fee: "₹500 Per Team"
+      bgmi: {
+        title: "Esports BGMI",
+        mrTitle: "ई-स्पोर्ट्स बीजीएमआय",
+        desc: "Battlegrounds Mobile India Esports Championship. Prepare your squads for the ultimate battle."
       },
       rangoli: {
         title: "Rangoli Competition",
         mrTitle: "रांगोळी स्पर्धा",
-        desc: "Artistry meets devotion. Showcase your skill with traditional colors.",
-        date: "Sept 13, 2024",
-        fee: "₹50/Entry"
+        desc: "Artistry meets devotion. Showcase your skill with traditional colors."
       },
       drawing: {
         title: "Drawing Contest",
         mrTitle: "चित्रकला स्पर्धा",
-        desc: "For the little devotees. Let their imagination run wild with colors.",
-        date: "Sept 14, 2024",
-        fee: "Free Entry"
+        desc: "For the little devotees. Let their imagination run wild with colors."
       },
       traditional: {
         title: "Traditional Games",
         mrTitle: "पारंपरिक खेळ",
-        desc: "Lagori, Viti Dandu, and more. Reviving the games of our heritage.",
-        date: "Sept 17, 2024",
-        fee: "Free Participation"
+        desc: "Lagori, Viti Dandu, and more. Reviving the games of our heritage."
       },
       registerBtn: "REGISTER NOW",
       form: {
@@ -251,16 +232,16 @@ const Events = () => {
       {/* EVENTS GRID */}
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
         
-        {/* ROW 1: Featured Cricket Tournament (col-span-2) */}
+        {/* ROW 1: Featured Box Cricket (col-span-2) */}
         <div className="lg:col-span-2 bg-[#FAF6E5] border border-[#d8c39e] rounded-sm overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-md transition-all duration-300 group">
           {/* Cover image with overlay */}
           <div className="w-full md:w-[45%] relative aspect-[4/3] md:aspect-auto min-h-[220px] overflow-hidden">
             <img 
               src={cricketImg} 
-              alt="Cricket Tournament" 
+              alt="Box Cricket" 
               className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700" 
             />
-            <div className="absolute bottom-3 left-3 bg-[#f97316] text-white text-[9px] font-black uppercase px-2.5 py-1 tracking-widest rounded-sm">
+            <div className="absolute top-3 left-3 bg-[#8f4e00] text-white text-[9px] font-black uppercase px-2.5 py-1 tracking-widest rounded-sm shadow-md">
               {currentUI.cricket.tag}
             </div>
           </div>
@@ -279,17 +260,8 @@ const Events = () => {
               </p>
             </div>
             <div>
-              <div className="flex flex-col gap-2 border-t border-[#d8c39e]/20 pt-4 text-xs text-[#5C4017]/70 font-bold">
-                <div className="flex items-center gap-2">
-                  <span>📅</span>
-                  <span>{currentUI.cricket.date}</span>
-                </div>
-                {currentUI.cricket.fee && (
-                  <div className="flex items-center gap-2">
-                    <span>🏆</span>
-                    <span>{currentUI.cricket.fee}</span>
-                  </div>
-                )}
+              <div className="flex flex-col gap-2 border-t border-[#d8c39e]/20 pt-4 text-xs text-[#8f4e00] font-black tracking-widest uppercase">
+                <span>📢 COMING SOON</span>
               </div>
               <button 
                 onClick={() => handleRegisterTrigger(currentUI.cricket.title)}
@@ -301,38 +273,39 @@ const Events = () => {
           </div>
         </div>
 
-        {/* ROW 1: Kabaddi Championship (col-span-1) */}
+        {/* ROW 1: Esports BGMI (col-span-1) */}
         <div className="lg:col-span-1 bg-[#FAF6E5] border border-[#d8c39e] rounded-sm overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 group">
-          {/* High-end decorative fall-back cover */}
-          <div className="w-full h-[180px] bg-gradient-to-br from-[#802C13] to-[#B24E31] relative flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/40 via-transparent to-transparent" />
-            <div className="absolute w-32 h-32 border border-white/5 rounded-full" />
-            <div className="absolute w-44 h-44 border border-white/10 rounded-full" />
-            <span className="font-display-hero text-lg font-bold text-[#FFD700] tracking-widest relative z-10 drop-shadow-md">
-              KABADDI
-            </span>
+          {/* Image cover with coming soon overlay */}
+          <div className="w-full relative h-[180px] overflow-hidden">
+            <img 
+              src={bgmiImg} 
+              alt="Esports BGMI" 
+              className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700" 
+            />
+            <div className="absolute top-3 left-3 bg-[#8f4e00] text-white text-[8px] font-black uppercase px-2 py-0.5 tracking-wider rounded-sm shadow-md">
+              COMING SOON
+            </div>
           </div>
           
           <div className="p-5 flex flex-col justify-between flex-grow">
             <div>
               <h3 className="font-display-hero text-lg font-black text-[#5C4017] mb-0.5">
-                {currentUI.kabaddi.title}
+                {currentUI.bgmi.title}
               </h3>
               <p className="text-[10px] text-[#8f4e00]/60 font-semibold mb-2">
-                ({currentUI.kabaddi.mrTitle})
+                ({currentUI.bgmi.mrTitle})
               </p>
               <p className="text-xs text-[#5C4017]/80 leading-relaxed font-medium mb-3">
-                {currentUI.kabaddi.desc}
+                {currentUI.bgmi.desc}
               </p>
             </div>
             
             <div className="mt-auto">
-              <div className="flex justify-between items-center text-[11px] text-[#5C4017]/70 py-2 border-y border-[#d8c39e]/20 my-3 font-bold">
-                <span>DATE: {currentUI.kabaddi.date}</span>
-                <span>FEE: {currentUI.kabaddi.fee}</span>
+              <div className="flex justify-center items-center text-[11px] text-[#8f4e00] py-2 border-y border-[#d8c39e]/20 my-3 font-black tracking-widest uppercase">
+                COMING SOON
               </div>
               <button 
-                onClick={() => handleRegisterTrigger(currentUI.kabaddi.title)}
+                onClick={() => handleRegisterTrigger(currentUI.bgmi.title)}
                 className="border border-[#8f4e00] text-[#8f4e00] hover:bg-[#8f4e00]/10 text-[10px] font-black uppercase tracking-widest py-2.5 rounded-sm text-center w-full mt-1 transition-all duration-200 cursor-pointer block"
               >
                 {currentUI.registerBtn}
@@ -353,6 +326,9 @@ const Events = () => {
             <span className="font-display-hero text-lg font-bold text-white tracking-widest relative z-10 drop-shadow-md">
               RANGOLI
             </span>
+            <div className="absolute top-3 left-3 bg-[#8f4e00] text-white text-[8px] font-black uppercase px-2 py-0.5 tracking-wider rounded-sm shadow-md">
+              COMING SOON
+            </div>
           </div>
 
           <div className="p-5 flex flex-col justify-between flex-grow">
@@ -369,9 +345,8 @@ const Events = () => {
             </div>
 
             <div className="mt-auto">
-              <div className="flex justify-between items-center text-[11px] text-[#5C4017]/70 py-2 border-y border-[#d8c39e]/20 my-3 font-bold">
-                <span>DATE: {currentUI.rangoli.date}</span>
-                <span>FEE: {currentUI.rangoli.fee}</span>
+              <div className="flex justify-center items-center text-[11px] text-[#8f4e00] py-2 border-y border-[#d8c39e]/20 my-3 font-black tracking-widest uppercase">
+                COMING SOON
               </div>
               <button 
                 onClick={() => handleRegisterTrigger(currentUI.rangoli.title)}
@@ -391,6 +366,9 @@ const Events = () => {
             <span className="font-display-hero text-lg font-bold text-[#FFF2CC] tracking-widest relative z-10 drop-shadow-md">
               DRAWING
             </span>
+            <div className="absolute top-3 left-3 bg-[#8f4e00] text-white text-[8px] font-black uppercase px-2 py-0.5 tracking-wider rounded-sm shadow-md">
+              COMING SOON
+            </div>
           </div>
 
           <div className="p-5 flex flex-col justify-between flex-grow">
@@ -407,9 +385,8 @@ const Events = () => {
             </div>
 
             <div className="mt-auto">
-              <div className="flex justify-between items-center text-[11px] text-[#5C4017]/70 py-2 border-y border-[#d8c39e]/20 my-3 font-bold">
-                <span>DATE: {currentUI.drawing.date}</span>
-                <span>FEE: {currentUI.drawing.fee}</span>
+              <div className="flex justify-center items-center text-[11px] text-[#8f4e00] py-2 border-y border-[#d8c39e]/20 my-3 font-black tracking-widest uppercase">
+                COMING SOON
               </div>
               <button 
                 onClick={() => handleRegisterTrigger(currentUI.drawing.title)}
@@ -431,6 +408,9 @@ const Events = () => {
             <span className="font-display-hero text-lg font-bold text-[#E9DBB5] tracking-widest relative z-10 drop-shadow-md">
               TRADITIONAL
             </span>
+            <div className="absolute top-3 left-3 bg-[#8f4e00] text-white text-[8px] font-black uppercase px-2 py-0.5 tracking-wider rounded-sm shadow-md">
+              COMING SOON
+            </div>
           </div>
 
           <div className="p-5 flex flex-col justify-between flex-grow">
@@ -447,9 +427,8 @@ const Events = () => {
             </div>
 
             <div className="mt-auto">
-              <div className="flex justify-between items-center text-[11px] text-[#5C4017]/70 py-2 border-y border-[#d8c39e]/20 my-3 font-bold">
-                <span>DATE: {currentUI.traditional.date}</span>
-                <span>FEE: {currentUI.traditional.fee}</span>
+              <div className="flex justify-center items-center text-[11px] text-[#8f4e00] py-2 border-y border-[#d8c39e]/20 my-3 font-black tracking-widest uppercase">
+                COMING SOON
               </div>
               <button 
                 onClick={() => handleRegisterTrigger(currentUI.traditional.title)}
@@ -528,11 +507,11 @@ const Events = () => {
               required
             >
               <option value="" disabled>{currentUI.form.chooseEventPl}</option>
-              <option value={currentUI.cricket.title}>{currentUI.cricket.title}{currentUI.cricket.fee ? ` (${currentUI.cricket.fee})` : ""}</option>
-              <option value={currentUI.kabaddi.title}>{currentUI.kabaddi.title} (FEE: {currentUI.kabaddi.fee})</option>
-              <option value={currentUI.rangoli.title}>{currentUI.rangoli.title} (FEE: {currentUI.rangoli.fee})</option>
-              <option value={currentUI.drawing.title}>{currentUI.drawing.title} (FEE: {currentUI.drawing.fee})</option>
-              <option value={currentUI.traditional.title}>{currentUI.traditional.title} (FEE: {currentUI.traditional.fee})</option>
+              <option value={currentUI.cricket.title}>{currentUI.cricket.title}</option>
+              <option value={currentUI.bgmi.title}>{currentUI.bgmi.title}</option>
+              <option value={currentUI.rangoli.title}>{currentUI.rangoli.title}</option>
+              <option value={currentUI.drawing.title}>{currentUI.drawing.title}</option>
+              <option value={currentUI.traditional.title}>{currentUI.traditional.title}</option>
             </select>
           </div>
 
