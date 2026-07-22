@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import qrImg from "../assets/qr.png";
 import homeImg from "../assets/HOME_IMG.jpg";
 import aboutGanesha from "../assets/about_ganesha.jpg";
+import timeline2010 from "../assets/timeline_2010.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -68,8 +69,8 @@ const Home = () => {
         title: "प्रवासाचे महत्त्वाचे टप्पे",
         y1990: "१९९०",
         d1990: "मंडळाची स्थापना आणि प्रथम सार्वजनिक गणेशोत्सव सोहळा. एका छोट्या मांडवात सुरू झालेला हा प्रवास आज महाकाय वटवृक्षाप्रमाणे विस्तारला आहे.",
-        y2000: "२०००",
-        d2000: "दशकोत्सव सोहळा साजरा. चांदीच्या सिंहासनाची निर्मिती आणि भव्य मिरवणूक. बीड शहरात प्रथमच एवढ्या मोठ्या प्रमाणावर सामाजिक उपक्रमांची सुरुवात.",
+        y2010: "२०१०",
+        d2010: "दशकोत्सव सोहळा साजरा. चांदीच्या सिंहासनाची निर्मिती आणि भव्य मिरवणूक. बीड शहरात प्रथमच एवढ्या मोठ्या प्रमाणावर सामाजिक उपक्रमांची सुरुवात.",
         y2024: "२०२४",
         d2024: "आज आम्ही अद्ययावत तंत्रज्ञान आणि पारंपारिक भक्ती यांचा मेळ घालून 'डिजीटल दर्शन' आणि जागतिक स्तरावर उत्सव पोहचवत आहोत."
       },
@@ -182,8 +183,8 @@ const Home = () => {
         title: "Glorious Timeline",
         y1990: "1990",
         d1990: "Establishment of the Mandal and first public Ganesh festival. This journey started in a small pandal and has expanded like a giant banyan tree today.",
-        y2000: "2000",
-        d2000: "Celebrated 10th anniversary. Made silver throne and grand procession. Started major social welfare campaigns in Beed for the first time.",
+        y2010: "2010",
+        d2010: "Celebrated 10th anniversary. Made silver throne and grand procession. Started major social welfare campaigns in Beed for the first time.",
         y2024: "2024",
         d2024: "Today we combine modern technology and traditional devotion to bring 'Digital Darshan' and celebrate the festival globally."
       },
@@ -418,22 +419,18 @@ const Home = () => {
               <div className="w-8 h-8 rounded-full bg-primary-container border-4 border-on-background z-10 shrink-0 shadow-[0_0_15px_rgba(255,153,51,0.5)] hidden md:block" />
               
               <div className="md:w-1/2 w-full">
-                <img
-                  className="rounded-lg grayscale hover:grayscale-0 transition-all duration-700 aspect-video object-cover w-full shadow-lg border border-white/10"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9Srzg6AMF3tGt6DzuODrX2Ucrcmb-LoVT9wjFqA05ZKo5gJphJLpNEuxfB7J1YCc8HStq93z64A9lAmRIXvHVpPN-h7sYMBN7qovHfCLSSe4K2kMS3_GiOAU7aDZndzudFo9PMtONt4QbntQY2r8s2Pmmd4I53xZaNlg5v28WD4P38wY8VQayiJ1u1lFa3KgQp-4qkhuQN4oCIqiUo-eCDERBHxv3rC2kVjnxb4HFWyqJQV9MispIrb-MABoEkfxYsOHJQXX5Yc8"
-                  alt="Vintage street pandal 1990"
-                />
+                {/* No image for 1990 */}
               </div>
             </div>
 
-            {/* 2000: Text Right, Image Left */}
+            {/* 2010: Text Right, Image Left */}
             <div className="flex flex-col md:flex-row-reverse items-center gap-12 relative">
               <div className="md:w-1/2">
                 <h3 className="font-display-hero text-headline-lg text-primary-fixed">
-                  {current.history.y2000}
+                  {current.history.y2010}
                 </h3>
                 <p className="font-body-lg text-body-lg text-surface-variant">
-                  {current.history.d2000}
+                  {current.history.d2010}
                 </p>
               </div>
               
@@ -443,8 +440,8 @@ const Home = () => {
               <div className="md:w-1/2 w-full">
                 <img
                   className="rounded-lg aspect-video object-cover w-full shadow-lg border border-white/10"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsPxww0s9A4MjEYnOhSz0_-rP9TYNEvom5ygpmB54nlEHrW1l7EQNEju0g0GswttBjaTJ3OtDvzKdHIRfLvRBc4eC4yvxsHC7vJTCrmvX4w784FrGnqA-FeWP2b-oszVChfQE27plTyz_ENEgsZqqHofITJRZuxi31jWWlXmZqEB9L46SGNKw2ZIDsTVNaHW5MaogDbYFT4Zoz7OIBJ3dzp23OBHXSmuXUq3o16EShaYcn_8bfJ6kw45FldAxiup9lsRSorC7LrSY"
-                  alt="Procession with Dhol pathak 2000"
+                  src={timeline2010}
+                  alt="Mandal Group Photo 2010"
                 />
               </div>
             </div>
