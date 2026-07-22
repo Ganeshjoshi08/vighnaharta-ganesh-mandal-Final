@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/api";
+import aboutGanesha from "../assets/about_ganesha.jpg";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
@@ -14,9 +15,15 @@ const Gallery = () => {
   const fetchImages = async () => {
     try {
       const res = await API.get("/gallery");
-      setImages(res.data);
+      setImages([
+        { _id: "local_ganesha", imageUrl: aboutGanesha, title: lang === "english" ? "Shree Vighnaharta Ganesha Murti" : "श्री विघ्नहर्ता गणेश मूर्ती" },
+        ...res.data
+      ]);
     } catch (err) {
       console.log(err.response?.data || err.message);
+      setImages([
+        { _id: "local_ganesha", imageUrl: aboutGanesha, title: lang === "english" ? "Shree Vighnaharta Ganesha Murti" : "श्री विघ्नहर्ता गणेश मूर्ती" }
+      ]);
     } finally {
       setLoading(false);
     }

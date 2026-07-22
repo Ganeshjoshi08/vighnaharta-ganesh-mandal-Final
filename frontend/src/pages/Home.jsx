@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import qrImg from "../assets/qr.png";
 import homeImg from "../assets/HOME_IMG.jpg";
+import aboutGanesha from "../assets/about_ganesha.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const Home = () => {
   };
 
   const galleryImages = [
+    aboutGanesha,
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCEomG5rqOpviVPKAJB2u3TPGeHPcqrq3cLADrh2Ue1wviaHJt7YjxrVikzjD2SEkX6vFUXcywvnKgpYk3efkVm9RO1IRWYxHTlbp_Q2PfIVYelBcgoUpaw2NaPHTaU-QqFT3HEYA9jVT_6HWUd9Wv438kC9hqcReAbtMrNyCeGrgkyIHN8fiC8laKjsgsWaBSnJ5pUbzKOmFvkRwH38PYcXekbeUjm4GdVX1nOkEH1N4c46bInhqn3e2POgtUl04DMHKI4ffMlSFM",
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAhHgjHWfTx0FB2KyiboTf3f8XwXYLX2Dy6ryjkzRJcCEqWp-KKAnC7jwFCka4YIyM1rOmSb-Q37PDyNM8IQPIbnhbZx4i7nJuwLjEBSEBJXHbAZLk-Cr7e2hml7AuiRe1W50ftRUs9V4q6gsazHxgREVOEO_Xo9eseoXIdHs-sXU92OtVYqrTrTvVWD7tvxgbz2VFOPGsRAU7po68mh_bJcjDyNjMyZiyc-iO8DCZa0AuhB0MEJ1Z_GMesrVhtW18NC2iG72p0pb4",
     "https://lh3.googleusercontent.com/aida-public/AB6AXuDFeQqWSJqAYdo7PagZeXkqMuMh0beRB6yZvIFO_Oj00btcdilyTqVgfE4IXXPmRdWWsv6UT0m9aK1l6k7-iOcyv6Nv8OzeMS4IvI9vP-xid-RpMIPxdHAfqdfXyls9oKhuxlLlYt3e_MUmJIGAaECd7RpUQlzZZgpSN0yPr8Z_2yoQEORRQxRg17QgseMBj3AxqfZc9qVApP65z2WtQtOEK1jK-6IVB3oVQiApB2CvbSbIVuwYbBLWOBhVIdaRnPsZhMrwGzPEbjQ",
@@ -332,8 +334,8 @@ const Home = () => {
             <div className="absolute -inset-4 border-2 border-primary/20 transition-transform group-hover:scale-105" />
             <img
               className="w-full aspect-[4/5] object-cover shadow-2xl relative z-10 border-4 border-white"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx91VEPpmfrBPp06FQuncEjfVHFJK_VAD-n4Jz1Gm_-iRedIbz4Qqu2Cib8wIlx6kmvoleXqw7GlS8gKVZHijO7bv9XVeqDaMXJodcTS-ObJYtFJGuREpy8xicpQonnrX1CI157tregY6-9xqJm4mYRq4n9ElCst7rGAbLSRvb8NmGq7OWpMJjgLgyNV41EwSHHKwqDTGANystNzce88hcn1f20n7LQOcqr3YyTYdH9LAYuJJORt7gge0yTB4MC2hvWKRrbNtsbYA"
-              alt="Close-up blessing hand of Ganesha"
+              src={aboutGanesha}
+              alt="Mandal Ganesha Murti"
             />
             <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-primary/10 -z-0 rotate-12" />
           </div>
