@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -25,6 +26,19 @@ function App() {
   const location = useLocation();
 
   const hideLayout = location.pathname.startsWith("/auth");
+
+  useEffect(() => {
+    const updateHtmlLang = () => {
+      const currentLang = localStorage.getItem("lang") || "marathi";
+      document.documentElement.setAttribute("lang", currentLang);
+    };
+
+    updateHtmlLang();
+    window.addEventListener("langChange", updateHtmlLang);
+    return () => {
+      window.removeEventListener("langChange", updateHtmlLang);
+    };
+  }, []);
 
   return (
     <>

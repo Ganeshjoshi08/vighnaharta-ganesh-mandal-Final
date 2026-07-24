@@ -50,11 +50,11 @@
   --color-secondary-fixed: #ffe088;
 
   /* Font Families */
-  --font-display-hero: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
-  --font-display-hero-mobile: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
-  --font-headline-lg: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
-  --font-headline-lg-mobile: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
-  --font-headline-md: "Playfair Display", "Rozha One", "Noto Serif Devanagari", serif;
+  --font-display-hero: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display-hero-mobile: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-headline-lg: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-headline-lg-mobile: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-headline-md: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-body-lg: "Noto Serif", "Noto Serif Devanagari", serif;
   --font-body-md: "Noto Serif", "Noto Serif Devanagari", serif;
   --font-label-caps: "Libre Franklin", sans-serif;
@@ -142,4 +142,25 @@ html {
 ::-webkit-scrollbar-thumb {
   background: #8f4e00;
   border-radius: 4px;
+}
+
+/* Language specific overrides for headings */
+html[lang="marathi"] {
+  --font-display-hero: "ITF Devanagari Marathi", "ITF Devanagari", "Noto Sans Devanagari", -apple-system, sans-serif;
+  --font-display-hero-mobile: "ITF Devanagari Marathi", "ITF Devanagari", "Noto Sans Devanagari", -apple-system, sans-serif;
+  --font-headline-lg: "ITF Devanagari Marathi", "ITF Devanagari", "Noto Sans Devanagari", -apple-system, sans-serif;
+  --font-headline-lg-mobile: "ITF Devanagari Marathi", "ITF Devanagari", "Noto Sans Devanagari", -apple-system, sans-serif;
+  --font-headline-md: "ITF Devanagari Marathi", "ITF Devanagari", "Noto Sans Devanagari", -apple-system, sans-serif;
+}
+
+html[lang="english"] {
+  --font-display-hero: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display-hero-mobile: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-headline-lg: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-headline-lg-mobile: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-headline-md: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline-lg);
 }
