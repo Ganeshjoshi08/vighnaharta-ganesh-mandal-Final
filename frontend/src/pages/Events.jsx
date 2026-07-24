@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import API from "../api/api";
 import cricketImg from "../assets/event_cricket.jpg";
 import bgmiImg from "../assets/event_bgmi.jpg";
 
@@ -167,7 +168,7 @@ const Events = () => {
   };
 
   // Submit dynamic registration
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!formData.fullName || !formData.contactNumber || !formData.competition) {
       alert(lang === "english" ? "Please fill all fields." : "कृपया सर्व फील्ड भरा.");
@@ -175,18 +176,35 @@ const Events = () => {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
       const ticketId = `VMM-${Math.floor(10000 + Math.random() * 90000)}`;
+      const payload = {
+        fullName: formData.fullName,
+        contactNumber: formData.contactNumber,
+        competition: formData.competition,
+        ticketId: ticketId
+      };
+
+      const res = await API.post("/events/register", payload);
+
       setTicketData({
-        name: formData.fullName,
-        phone: formData.contactNumber,
-        event: formData.competition,
-        id: ticketId
+        name: res.data.registration.fullName,
+        phone: res.data.registration.contactNumber,
+        event: res.data.registration.competition,
+        id: res.data.registration.ticketId
       });
       // Clear form
       setFormData({ fullName: "", contactNumber: "", competition: "" });
-    }, 1500);
+    } catch (err) {
+      console.error("REGISTRATION ERROR:", err.response?.data || err.message);
+      alert(
+        lang === "english"
+          ? "Failed to register. Please try again."
+          : "नोंदणी करण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Submit Volunteer

@@ -4,7 +4,8 @@ const router = express.Router();
 const {
   getEvents,
   createEvent,
-  deleteEvent
+  deleteEvent,
+  registerForEvent
 } = require("../controllers/eventController");
 
 const { protect, isAdmin } = require("../middleware/authMiddleware");
@@ -15,6 +16,7 @@ const { protect, isAdmin } = require("../middleware/authMiddleware");
 
 // ✅ Public
 router.get("/events", getEvents);
+router.post("/events/register", registerForEvent);
 
 // 🔒 Admin
 router.post("/events", protect, isAdmin, createEvent);

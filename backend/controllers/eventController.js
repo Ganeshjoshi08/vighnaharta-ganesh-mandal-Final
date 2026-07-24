@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const Registration = require("../models/Registration");
 
 // 🔐 Validation
 const isValidTitle = (title) => {
@@ -111,5 +112,37 @@ exports.deleteEvent = async (req, res) => {
   } catch (err) {
     console.log("DELETE EVENT ERROR:", err);
     res.status(500).json({ msg: "Server error ❌" });
+  }
+};
+
+//--------------------------------------------------
+// 📝 REGISTER FOR EVENT
+//--------------------------------------------------
+exports.registerForEvent = async (req, res) => {
+  try {
+    const { fullName, contactNumber, competition, ticketId } = req.body;
+
+    if (!fullName || !contactNumber || !competition || !ticketId) {
+      return res.status(400).json({ msg: "All fields are required ❌" });
+    }
+
+    const newRegistration = new Registration({
+      fullName: fullName.trim(),
+      contactNumber: contactNumber.trim(),
+      competition: competition.trim(),
+      ticketId: ticketId.trim()
+    });
+
+    await newRegistration.save();
+
+    res.status(201).json({
+      msg: "Registration successful 🎉",
+      registration: newRegistration
+    });
+  } catch (err) {
+    console.log("EVENT REGISTRATION ERROR:", err);
+    res.status(500).json({
+      msg: err.message || "Server error ❌"
+    });
   }
 };

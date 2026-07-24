@@ -128,4 +128,17 @@ router.delete("/events/:id", protect, isAdmin, async (req, res) => {
   }
 });
 
+//--------------------------------------------------
+// 🎫 REGISTRATIONS (ADMIN)
+//--------------------------------------------------
+router.get("/registrations", protect, isAdmin, async (req, res) => {
+  try {
+    const registrations = await require("../models/Registration").find().sort({ createdAt: -1 });
+    res.status(200).json(registrations);
+  } catch (err) {
+    console.log("REGISTRATION FETCH ERROR:", err);
+    res.status(500).json({ msg: "Error fetching registrations ❌" });
+  }
+});
+
 module.exports = router;
