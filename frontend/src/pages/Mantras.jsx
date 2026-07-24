@@ -1,18 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import offeringsImg from "../assets/daily_offerings.jpg";
 
 const Mantras = () => {
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
   const [selectedIdx, setSelectedIdx] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  // Audio references
-  const audioCtxRef = useRef(null);
-  const droneOscRef = useRef(null);
-  const droneGainRef = useRef(null);
-  const bellIntervalRef = useRef(null);
-  const timerRef = useRef(null);
 
   // Force body background to solid cream-beige exactly as shown in the screenshot
   useEffect(() => {
@@ -34,14 +25,8 @@ const Mantras = () => {
       document.body.style.backgroundImage = originalBgImage;
       document.body.style.backgroundAttachment = originalAttachment;
       window.removeEventListener("langChange", handleLangChange);
-      stopAudio();
     };
   }, []);
-
-  // Stop audio when active mantra changes
-  useEffect(() => {
-    stopAudio();
-  }, [selectedIdx]);
 
   const mantrasData = [
     {
@@ -129,14 +114,89 @@ const Mantras = () => {
       titleMr: "श्रीसूक्त",
       subtitle: "OM HIRANYAVARNAM HARINIM",
       verses: [
-        "ॐ हिरण्यवर्णां हरिणीं सुवर्णरजतस्रजाम्।",
+        "हिरण्यवर्णां हरिणीं सुवर्णरजतस्रजाम्।",
         "चन्द्रां हिरण्मयीं लक्ष्मीं जातवेदो म आवह॥",
         "divider",
         "तां म आवह जातवेदो लक्ष्मीमनपगामिनीम्।",
         "यस्यां हिरण्यं विन्देयं गामश्वं पुरुषानहम्॥",
         "divider",
-        "अश्वपूर्वां रथमध्यां हस्तिनादप्रबोधिनीम्।",
-        "श्रियं देवीमुपह्वये श्रीर्मा देवी जुषताम्॥"
+        "अश्वपूर्वां रथमध्यां हस्तिनादप्रमोदिनीम्।",
+        "श्रियं देवीमुपह्वये श्रीर्मा देवी जुषताम्॥",
+        "divider",
+        "कांसोऽस्मि तां हिरण्यप्राकारामार्द्रां ज्वलन्तीं तृप्तां तर्पयन्तीम्।",
+        "पद्मे स्थितां पद्मवर्णां तामिहोपह्वये श्रियम्॥",
+        "divider",
+        "चन्द्रां प्रभासां यशसा ज्वलन्तीं श्रियं लोके देवजुष्टामुदाराम्।",
+        "तां पद्मिनीमीं शरणमहं प्रपद्येऽलक्ष्मीर्मे नश्यतां त्वां वृणे॥",
+        "divider",
+        "आदित्यवर्णे तपसोऽधिजातो वनस्पतिस्तव वृक्षोऽथ बिल्वः।",
+        "तस्य फलानि तपसा नुदन्तु मायान्तरायाश्च बाह्या अलक्ष्मीः॥",
+        "divider",
+        "उपैतु मां देवसखः कीर्तिश्च मणिना सह।",
+        "प्रादुर्भूतोऽस्मि राष्ट्रेऽस्मिन् कीर्तिमृद्धिं ददातु मे॥",
+        "divider",
+        "क्षुत्पिपासामलां ज्येष्ठामलक्ष्मीं नाशयाम्यहम्।",
+        "अभूतिमसमृद्धिं च सर्वां निर्णुद मे गृहात्॥",
+        "divider",
+        "गन्धद्वारां दुराधर्षां नित्यपुष्टां करीषिणीम्।",
+        "ईश्वरीं सर्वभूतानां तामिहोपह्वये श्रियम्॥",
+        "divider",
+        "मनसः काममाकूतिं वाचः सत्यमशीमहि।",
+        "पशूनां रूपमन्नस्य मयि श्रीः श्रयतां यशः॥",
+        "divider",
+        "कर्दमेन प्रजाभूता मयि सम्भव कर्दम।",
+        "श्रियं वासय मे कुले मातरं पद्ममालिनीम्॥",
+        "divider",
+        "आपः स्रजन्तु स्निग्धानि चिक्लीत वस मे गृहे।",
+        "नि च देवीं मातरं श्रियं वासय मे कुले॥",
+        "divider",
+        "आर्द्रां पुष्करिणीं पुष्टिं सुवर्णां हेममालिनीम्।",
+        "सूर्यां हिरण्मयीं लक्ष्मीं जातवेदो म आवह॥",
+        "divider",
+        "आर्द्रां यः करिणीं यष्टिं पिङ्गलां पद्ममालिनीम्।",
+        "चन्द्रां हिरण्मयीं लक्ष्मीं जातवेदो म आवह॥",
+        "divider",
+        "तां म आवह जातवेदो लक्ष्मीमनपगामिनीम्।",
+        "यस्यां हिरण्यं प्रभूतं गावो दास्योऽश्वान् विन्देयं पुरुषानहम्॥",
+        "divider",
+        "Phalaśruti — fruit of recitation",
+        "divider",
+        "यः शुचिः प्रयतो भूत्वा जुहुयादाज्यमन्वहम्।",
+        "सूक्तं पञ्चदशर्चं च श्रीकामः सततं जपेत्॥",
+        "divider",
+        "पद्मानने पद्म ऊरू पद्माक्षी पद्मसम्भवे।",
+        "तन्मे भजसि पद्माक्षी येन सौख्यं लभाम्यहम्॥",
+        "divider",
+        "अश्वदायी गोदायी धनदायी महाधने।",
+        "धनं मे जुषतां देवि सर्वकामांश्च देहि मे॥",
+        "divider",
+        "पद्मानने पद्मविपद्मपत्रे पद्मप्रिये पद्मदलायताक्षि।",
+        "विश्वप्रिये विश्वमनोनुकूले त्वत्पादपद्मं मयि संनिधत्स्व॥",
+        "divider",
+        "पुत्रपौत्रं धनं धान्यं हस्त्यश्वादिगवेरथम्।",
+        "प्रजानां भवसि माता आयुष्मन्तं करोतु मे॥",
+        "divider",
+        "धनमग्निर्धनं वायुर्धनं सूर्यो धनं वसुः।",
+        "धनमिन्द्रो बृहस्पतिर्वरुणं धनमस्तु ते॥",
+        "divider",
+        "वैनतेय सोमं पिब सोमं पिबतु वृत्रहा।",
+        "सोमं धनस्य सोमिनो मह्यं ददातु सोमिनः॥",
+        "divider",
+        "न क्रोधो न च मात्सर्यं न लोभो नाशुभा मतिः।",
+        "भवन्ति कृतपुण्यानां भक्तानां श्रीसूक्तं जपेत्॥",
+        "divider",
+        "सरसिजनिलये सरोजहस्ते धवलतरांशुकगन्धमाल्यशोभे।",
+        "भगवति हरिवल्लभे मनोज्ञे त्रिभुवनभूतिकरि प्रसीद मह्यम्॥",
+        "divider",
+        "विष्णुपत्नीं क्षमादेवीं माधवीं माधवप्रियाम्।",
+        "लक्ष्मीं प्रियसखीं देवीं नमाम्यच्युतवल्लभाम्॥",
+        "divider",
+        "महालक्ष्मी च विद्महे विष्णुपत्नी च धीमहि।",
+        "तन्नो लक्ष्मीः प्रचोदयात्॥",
+        "divider",
+        "श्रीवर्चस्वमायुष्यमारोग्यमाविधाच्छोभमानं महीयते।",
+        "धान्यं धनं पशुं बहुपुत्रलाभं शतसंवत्सरं दीर्घमायुः॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
       ]
     },
     {
@@ -145,143 +205,35 @@ const Mantras = () => {
       titleMr: "गणेश आरती",
       subtitle: "SUKHAKARTA DUKHAKARTA VARTA VIGHNACHI",
       verses: [
-        "सुखकर्ता दुखहर्ता वार्ता विघ्नाची।",
-        "नुरवी पूर्वी प्रेम कृपा जयाची॥",
-        "सर्वांगी सुंदर उटी शेंदुराची।",
-        "कंठी झळके माळ मुक्ताफळांची॥",
+        "सुख करता दुखकर्ता, वार्ता विघ्नाची",
+        "नूर्वी पूर्वी प्रेम कृपा जयाची",
+        "सर्वांगी सुन्दर उटी शेंदु राची",
+        "कंठी झलके माल मुकताफळांची",
         "divider",
-        "जय देव जय देव जय मंगलमूर्ती।",
-        "दर्शनमात्रे मनकामना पुरती॥"
+        "जय देव जय देव, जय मंगल मूर्ति",
+        "दर्शनमात्रे मनःकमाना पूर्ति",
+        "जय देव जय देव",
+        "divider",
+        "रत्नखचित फरा तुझ गौरीकुमरा",
+        "चंदनाची उटी कुमकुम केशरा",
+        "हीरे जडित मुकुट शोभतो बरा",
+        "रुन्झुनती नूपुरे चरनी घागरिया",
+        "divider",
+        "जय देव जय देव, जय मंगल मूर्ति",
+        "दर्शनमात्रे मनःकमाना पूर्ति",
+        "जय देव जय देव",
+        "divider",
+        "लम्बोदर पीताम्बर फनिवर वंदना",
+        "सरल सोंड वक्रतुंडा त्रिनयना",
+        "दास रामाचा वाट पाहे सदना",
+        "संकटी पावावे निर्वाणी रक्षावे सुरवर वंदना",
+        "divider",
+        "जय देव जय देव, जय मंगल मूर्ति",
+        "दर्शनमात्रे मनःकमाना पूर्ति",
+        "जय देव जय देव"
       ]
     }
   ];
-
-  // Web Audio API Synthesizer
-  const playDroneAndBells = () => {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-
-      const ctx = new AudioContext();
-      audioCtxRef.current = ctx;
-
-      const now = ctx.currentTime;
-
-      // 1. Resonant cosmic OM drone hum
-      const osc = ctx.createOscillator();
-      const gainNode = ctx.createGain();
-
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(136.1, now); 
-      
-      const filter = ctx.createBiquadFilter();
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(220, now);
-
-      gainNode.gain.setValueAtTime(0, now);
-      gainNode.gain.linearRampToValueAtTime(0.18, now + 1.5); 
-
-      osc.connect(filter);
-      filter.connect(gainNode);
-      gainNode.connect(ctx.destination);
-
-      osc.start(now);
-
-      droneOscRef.current = osc;
-      droneGainRef.current = gainNode;
-
-      playBellChime(ctx);
-
-      bellIntervalRef.current = setInterval(() => {
-        if (ctx.state === "running") {
-          playBellChime(ctx);
-        }
-      }, 4000);
-
-    } catch (e) {
-      console.error("Audio synthesis failed:", e);
-    }
-  };
-
-  const playBellChime = (ctx) => {
-    const now = ctx.currentTime;
-    const harmonics = [440, 554.37, 659.25, 880];
-    const gains = [0.12, 0.06, 0.04, 0.02];
-
-    harmonics.forEach((freq, idx) => {
-      const bellOsc = ctx.createOscillator();
-      const bellGain = ctx.createGain();
-
-      bellOsc.type = "sine";
-      bellOsc.frequency.setValueAtTime(freq, now);
-
-      bellGain.gain.setValueAtTime(gains[idx], now);
-      bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
-
-      bellOsc.connect(bellGain);
-      bellGain.connect(ctx.destination);
-
-      bellOsc.start(now);
-      bellOsc.stop(now + 2.5);
-    });
-  };
-
-  const stopAudio = () => {
-    setIsPlaying(false);
-    setProgress(0);
-    
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-
-    if (bellIntervalRef.current) {
-      clearInterval(bellIntervalRef.current);
-      bellIntervalRef.current = null;
-    }
-
-    if (droneGainRef.current && audioCtxRef.current) {
-      const ctx = audioCtxRef.current;
-      const now = ctx.currentTime;
-      try {
-        droneGainRef.current.gain.cancelScheduledValues(now);
-        droneGainRef.current.gain.setValueAtTime(droneGainRef.current.gain.gain.value, now);
-        droneGainRef.current.gain.linearRampToValueAtTime(0, now + 0.4);
-        
-        setTimeout(() => {
-          if (droneOscRef.current) {
-            droneOscRef.current.stop();
-            droneOscRef.current.disconnect();
-          }
-          if (audioCtxRef.current) {
-            audioCtxRef.current.close();
-          }
-          droneOscRef.current = null;
-          audioCtxRef.current = null;
-        }, 500);
-      } catch (e) {
-        // Safe catch
-      }
-    }
-  };
-
-  const handleAudioToggle = () => {
-    if (isPlaying) {
-      stopAudio();
-    } else {
-      setIsPlaying(true);
-      playDroneAndBells();
-
-      let currentProgress = 0;
-      timerRef.current = setInterval(() => {
-        currentProgress += 1.67; 
-        if (currentProgress >= 100) {
-          currentProgress = 0;
-        }
-        setProgress(currentProgress);
-      }, 1000);
-    }
-  };
 
   const currentMantra = mantrasData[selectedIdx];
 
@@ -290,16 +242,12 @@ const Mantras = () => {
       selectTitle: "निवडा (Select)",
       dailyOfferings: "नैवेद्य आणि पूजा",
       dailyOfferingsSub: "Daily Offerings",
-      listenBtn: "Listen Audio",
-      stopBtn: "Pause Audio",
       mantrasTitle: "मंत्र (Mantras)"
     },
     english: {
       selectTitle: "निवडा (Select)",
       dailyOfferings: "नैवेद्य आणि पूजा",
       dailyOfferingsSub: "Daily Offerings",
-      listenBtn: "Listen Audio",
-      stopBtn: "Pause Audio",
       mantrasTitle: "मंत्र (Mantras)"
     }
   };
@@ -415,7 +363,7 @@ const Mantras = () => {
           </div>
 
           {/* Verses lyrics */}
-          <div className="w-full max-w-lg text-center mb-10 overflow-y-auto max-h-[380px] px-2 py-1 scrollbar-thin">
+          <div className="w-full max-w-lg text-center mb-4 overflow-y-auto max-h-[440px] px-2 py-1 scrollbar-thin">
             <div className="space-y-6">
               {currentMantra.verses.map((line, lineIdx) => {
                 if (line === "divider") {
@@ -435,38 +383,6 @@ const Mantras = () => {
                 );
               })}
             </div>
-          </div>
-
-          {/* AUDIO CONTROLLER SYSTEM */}
-          <div className="w-full max-w-xs flex flex-col items-center gap-3 mt-auto">
-            <button 
-              onClick={handleAudioToggle}
-              className="flex items-center justify-center gap-2 px-8 py-2.5 rounded-sm bg-[#FFA093] hover:bg-[#ff8c7e] text-[#271b05] font-bold tracking-wide transition-all shadow-sm active:scale-97 cursor-pointer text-xs"
-            >
-              {/* Play/Pause SVG Icon */}
-              {isPlaying ? (
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-              ) : (
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-                </svg>
-              )}
-              <span>
-                {isPlaying ? currentUI.stopBtn : currentUI.listenBtn}
-              </span>
-            </button>
-
-            {/* Progress line */}
-            {isPlaying && (
-              <div className="w-full bg-[#8f4e00]/10 rounded-full h-[2px] overflow-hidden">
-                <div 
-                  className="bg-[#FFA093] h-full rounded-full transition-all duration-1000 ease-linear"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            )}
           </div>
 
         </div>
