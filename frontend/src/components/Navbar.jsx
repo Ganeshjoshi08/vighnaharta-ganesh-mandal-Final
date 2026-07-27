@@ -11,6 +11,8 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [mobileGalleryOpen, setMobileGalleryOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -29,7 +31,9 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      const isHome = window.location.pathname === "/";
+      const threshold = isHome ? window.innerHeight - 120 : 50;
+      if (window.scrollY > threshold) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -41,12 +45,19 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("storage", handleStorage);
+    
+    // Run initially to position correctly
+    handleScroll();
+
+    // Set interval to check pathname changes (as react-router doesn't reload window scroll sometimes)
+    const interval = setInterval(handleScroll, 500);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("storage", handleStorage);
+      clearInterval(interval);
     };
-  }, []);
+  }, [location.pathname]);
 
   const changeLang = (selected) => {
     setLang(selected);
@@ -111,54 +122,63 @@ const Navbar = () => {
   const current = navText[lang];
   const isMantras = location.pathname === "/mantras" || location.pathname === "/events";
 
+  const isHome = location.pathname === "/";
+
   return (
     <header
-      className={`fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-16 py-4 transition-all duration-300 ${
-        isMantras
-          ? "bg-[#FAF6E5] text-[#5C4017] border-b border-[#d8c39e]/40 shadow-none"
+      className={`z-50 transition-all duration-500 ${
+        isHome && !scrolled
+          ? "absolute bottom-6 left-1/2 w-[92%] max-w-6xl flex justify-between items-center px-6 md:px-10 py-2 rounded-xl border border-amber-500/20 bg-amber-950/50 backdrop-blur-lg text-white shadow-2xl"
+          : isMantras
+          ? "fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-16 py-4 bg-[#FAF6E5] text-[#5C4017] border-b border-[#d8c39e]/40 shadow-none"
           : scrolled || location.pathname !== "/"
-          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-outline-variant/30 text-[#111827]"
-          : "bg-transparent text-white"
+          ? "fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-16 py-4 bg-white/95 backdrop-blur-md shadow-md border-b border-outline-variant/30 text-[#111827]"
+          : "fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-16 py-4 bg-transparent text-white"
       }`}
+      style={isHome && !scrolled ? { transform: "translateX(-50%)", top: "auto" } : {}}
     >
       {/* LOGO & TITLE */}
-      <div
-        className="flex items-center gap-3 cursor-pointer"
-        onClick={() => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          navigate("/");
-        }}
-      >
-        <img
-          src={logoImg}
-          alt="Mandal Logo"
-          className="w-10 h-10 rounded-full border border-secondary shadow-sm"
-        />
-        <div className="flex flex-col">
-          <span
-            className={`font-headline-md text-lg md:text-2xl font-bold tracking-wide ${
-              isMantras
-                ? "text-[#5C4017]"
-                : scrolled || location.pathname !== "/"
-                ? "text-primary"
-                : "text-white"
-            }`}
-          >
-            {current.title}
-          </span>
-          <span
-            className={`text-[8px] md:text-[9px] font-label-caps uppercase tracking-widest font-semibold ${
-              isMantras
-                ? "text-[#8f4e00]/70"
-                : scrolled || location.pathname !== "/"
-                ? "text-on-surface-variant"
-                : "text-white/80"
-            }`}
-          >
-            {current.sub}
-          </span>
+      {!(isHome && !scrolled) && (
+        <div
+          className="flex items-center gap-2 md:gap-3 cursor-pointer min-w-0 flex-shrink-0"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            navigate("/");
+          }}
+        >
+          <img
+            src={logoImg}
+            alt="Mandal Logo"
+            className="w-10 h-10 rounded-full border border-secondary shadow-sm flex-shrink-0"
+          />
+          <div className="flex flex-col min-w-0">
+            <span
+              className={`font-headline-md font-bold tracking-wide whitespace-nowrap ${
+                lang === "english" ? "text-base sm:text-lg md:text-xl" : "text-lg md:text-2xl"
+              } ${
+                isMantras
+                  ? "text-[#5C4017]"
+                  : scrolled || location.pathname !== "/"
+                  ? "text-primary"
+                  : "text-white"
+              }`}
+            >
+              {current.title}
+            </span>
+            <span
+              className={`text-[8px] md:text-[9px] font-label-caps uppercase tracking-widest font-semibold whitespace-nowrap ${
+                isMantras
+                  ? "text-[#8f4e00]/70"
+                  : scrolled || location.pathname !== "/"
+                  ? "text-on-surface-variant"
+                  : "text-white/80"
+              }`}
+            >
+              {current.sub}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* DESKTOP MENU - EXACTLY MATCHES SCREENSHOT */}
       <nav className="hidden lg:flex gap-8 items-center h-full">
@@ -177,30 +197,89 @@ const Navbar = () => {
         >
           {current.home}
         </span>
-        <span
-          onClick={() => handleNavClick("about")}
-          className={`cursor-pointer font-label-caps text-xs uppercase tracking-wider font-bold transition-colors ${
-            isMantras ? "text-[#5C4017]/70 hover:text-[#5C4017]" : "hover:text-primary"
-          }`}
-        >
-          {current.about}
-        </span>
-        <span
-          onClick={() => handleNavClick("history")}
-          className={`cursor-pointer font-label-caps text-xs uppercase tracking-wider font-bold transition-colors ${
-            isMantras ? "text-[#5C4017]/70 hover:text-[#5C4017]" : "hover:text-primary"
-          }`}
-        >
-          {current.history}
-        </span>
-        <span
-          onClick={() => handleNavClick("gallery")}
-          className={`cursor-pointer font-label-caps text-xs uppercase tracking-wider font-bold transition-colors ${
-            isMantras ? "text-[#5C4017]/70 hover:text-[#5C4017]" : "hover:text-primary"
-          }`}
-        >
-          {current.gallery}
-        </span>
+        <div className="relative group py-2">
+          <span
+            className={`cursor-pointer font-label-caps text-xs uppercase tracking-wider font-bold transition-colors flex items-center gap-1 ${
+              isMantras ? "text-[#5C4017]/70 hover:text-[#5C4017]" : "hover:text-primary"
+            }`}
+          >
+            {current.about}
+            <span className="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+          </span>
+          
+          {/* Dropdown Box */}
+          <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-outline-variant/30 rounded-xl shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 z-50 py-2">
+            <span
+              onClick={() => navigate("/about/details")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "आमच्याबद्दल" : "About Us"}
+            </span>
+            <span
+              onClick={() => navigate("/about/committee")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "विद्यमान कार्यकारी मंडळ" : "Executive Committee"}
+            </span>
+            <span
+              onClick={() => navigate("/about/journey")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "मंडळाचा गौरवशाली प्रवास" : "Mandal's Glorious Journey"}
+            </span>
+            <span
+              onClick={() => navigate("/about/vision-mission")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "ध्येय आणि उद्दिष्टे" : "Vision & Mission"}
+            </span>
+          </div>
+        </div>
+
+        <div className="relative group py-2">
+          <span
+            className={`cursor-pointer font-label-caps text-xs uppercase tracking-wider font-bold transition-colors flex items-center gap-1 ${
+              isMantras ? "text-[#5C4017]/70 hover:text-[#5C4017]" : "hover:text-primary"
+            }`}
+          >
+            {current.gallery}
+            <span className="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+          </span>
+          
+          {/* Gallery Dropdown Box */}
+          <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-outline-variant/30 rounded-xl shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 z-50 py-2">
+            <span
+              onClick={() => navigate("/gallery/smart-ganesh")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "स्मार्ट गणेश उत्सव" : "Smart Ganesh Utsav"}
+            </span>
+            <span
+              onClick={() => navigate("/gallery/religious")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "धार्मिक उपक्रम" : "Religious Activities"}
+            </span>
+            <span
+              onClick={() => navigate("/gallery/social")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "सामाजिक उपक्रम" : "Social Activities"}
+            </span>
+            <span
+              onClick={() => navigate("/gallery/cultural")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "सांस्कृतिक उपक्रम" : "Cultural Activities"}
+            </span>
+            <span
+              onClick={() => navigate("/gallery/press")}
+              className="block px-4 py-2.5 text-xs font-bold text-[#111827] hover:bg-[#ff7a00]/10 hover:text-[#ff7a00] transition-colors"
+            >
+              {lang === "marathi" ? "वृत्तपत्र वार्तांकन" : "Press Coverage"}
+            </span>
+          </div>
+        </div>
         <span
           onClick={() => navigate("/events")}
           className={`cursor-pointer font-label-caps text-xs uppercase tracking-wider font-bold transition-all ${
@@ -346,24 +425,95 @@ const Navbar = () => {
           >
             {current.home}
           </span>
-          <span
-            onClick={() => handleNavClick("about")}
-            className="block py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary"
-          >
-            {current.about}
-          </span>
-          <span
-            onClick={() => handleNavClick("history")}
-            className="block py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary"
-          >
-            {current.history}
-          </span>
-          <span
-            onClick={() => handleNavClick("gallery")}
-            className="block py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary"
-          >
-            {current.gallery}
-          </span>
+          <div>
+            <span
+              onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+              className="py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary flex items-center justify-between cursor-pointer w-full"
+            >
+              {current.about}
+              <span className="material-symbols-outlined">
+                {mobileAboutOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+              </span>
+            </span>
+            
+            {/* Mobile Submenu */}
+            {mobileAboutOpen && (
+              <div className="pl-4 flex flex-col gap-2 border-l border-primary/20 mt-1 pb-2">
+                <span
+                  onClick={() => { setOpen(false); navigate("/about/details"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "आमच्याबद्दल" : "About Us"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/about/committee"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "विद्यमान कार्यकारी मंडळ" : "Executive Committee"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/about/journey"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "मंडळाचा गौरवशाली प्रवास" : "Mandal's Glorious Journey"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/about/vision-mission"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "ध्येय आणि उद्दिष्टे" : "Vision & Mission"}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <span
+              onClick={() => setMobileGalleryOpen(!mobileGalleryOpen)}
+              className="py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary flex items-center justify-between cursor-pointer w-full"
+            >
+              {current.gallery}
+              <span className="material-symbols-outlined">
+                {mobileGalleryOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+              </span>
+            </span>
+            
+            {/* Mobile Submenu */}
+            {mobileGalleryOpen && (
+              <div className="pl-4 flex flex-col gap-2 border-l border-primary/20 mt-1 pb-2">
+                <span
+                  onClick={() => { setOpen(false); navigate("/gallery/smart-ganesh"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "स्मार्ट गणेश उत्सव" : "Smart Ganesh Utsav"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/gallery/religious"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "धार्मिक उपक्रम" : "Religious Activities"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/gallery/social"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "सामाजिक उपक्रम" : "Social Activities"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/gallery/cultural"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "सांस्कृतिक उपक्रम" : "Cultural Activities"}
+                </span>
+                <span
+                  onClick={() => { setOpen(false); navigate("/gallery/press"); }}
+                  className="block py-1.5 font-label-caps text-xs uppercase tracking-wider font-bold text-gray-700 hover:text-primary"
+                >
+                  {lang === "marathi" ? "वृत्तपत्र वार्तांकन" : "Press Coverage"}
+                </span>
+              </div>
+            )}
+          </div>
           <span
             onClick={() => { setOpen(false); navigate("/events"); }}
             className="block py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary"

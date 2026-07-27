@@ -14,6 +14,17 @@ const gallerySchema = new mongoose.Schema(
       maxlength: 100
     },
 
+    category: {
+      type: String,
+      default: "Smart Ganesh Utsav",
+      enum: ["Smart Ganesh Utsav", "Religious Activities", "Social Activities", "Cultural Activities", "Press Coverage"]
+    },
+
+    order: {
+      type: Number,
+      default: 0
+    },
+
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"

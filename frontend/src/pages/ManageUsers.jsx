@@ -72,7 +72,7 @@ const ManageUsers = () => {
 
 const container = {
   minHeight: "100vh",
-  padding: "30px",
+  padding: "110px 30px 30px 30px",
   background: "#f9fafb"
 };
 

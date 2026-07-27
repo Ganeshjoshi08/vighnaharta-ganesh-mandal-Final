@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/api";
 import aboutGanesha from "../assets/about_ganesha.jpg";
+import ImageLightbox from "../components/ImageLightbox";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
+
+  // Lightbox State
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   useEffect(() => {
     fetchImages();
@@ -27,6 +31,19 @@ const Gallery = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const openLightbox = (index) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const handlePrev = () => {
+    setLightboxIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setLightboxIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const text = {
@@ -53,9 +70,10 @@ const Gallery = () => {
           {images.length === 0 ? (
             <p style={loadingText}>{text[lang].noImages}</p>
           ) : (
-            images.map((img) => (
+            images.map((img, idx) => (
               <div
                 key={img._id}
+                onClick={() => openLightbox(idx)}
                 style={card}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-6px)";
@@ -87,6 +105,16 @@ const Gallery = () => {
           )}
         </div>
       )}
+
+      {/* Fullscreen Image Lightbox Pop-up */}
+      <ImageLightbox
+        isOpen={lightboxOpen}
+        images={images}
+        currentIndex={lightboxIndex}
+        onClose={() => setLightboxOpen(false)}
+        onPrev={handlePrev}
+        onNext={handleNext}
+      />
     </div>
   );
 };

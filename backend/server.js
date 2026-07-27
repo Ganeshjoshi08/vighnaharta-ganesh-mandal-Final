@@ -12,7 +12,11 @@ const app = express();
 // 🔐 MIDDLEWARES
 //--------------------------------------------------
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175"
+  ],
   credentials: true
 }));
 
@@ -28,11 +32,13 @@ app.use("/api/auth", require("./routes/authRoutes"));
 
 // 🔥 FIX HERE ONLY
 app.use("/api", require("./routes/eventRoutes"));
+app.use("/api", require("./routes/aboutHistoryRoutes"));
 
 app.use("/api/donations", require("./routes/donationRoutes"));
 app.use("/api/gallery", require("./routes/galleryRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/announcements", require("./routes/announcementRoutes"));
+app.use("/api/activities", require("./routes/activityRoutes"));
 
 //--------------------------------------------------
 // 🏠 BASE ROUTE

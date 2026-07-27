@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'AMS Chhatrapati';
+  src: url('./assets/Fonts/ams.chhatrapati.ttf') format('truetype');
+}
+
 @theme {
   --color-secondary: #735c00;
   --color-on-background: #111827;
@@ -125,6 +130,9 @@
   background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding-bottom: 0.25em;
+  margin-bottom: -0.25em;
 }
 .divine-overlay {
   background: linear-gradient(0deg, rgba(29,29,3,0.95) 0%, rgba(29,29,3,0.3) 50%, rgba(29,29,3,0) 100%);

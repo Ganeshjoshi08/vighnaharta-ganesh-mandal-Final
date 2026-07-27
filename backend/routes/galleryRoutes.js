@@ -4,7 +4,8 @@ const router = express.Router();
 const {
   getImages,
   addImage,
-  deleteImage
+  deleteImage,
+  updateImage
 } = require("../controllers/galleryController");
 
 const { protect, isAdmin } = require("../middleware/authMiddleware");
@@ -35,6 +36,9 @@ router.post(
   },
   addImage
 );
+
+// 🔒 Admin only: update image details and order
+router.put("/:id", protect, isAdmin, updateImage);
 
 // 🔒 Admin only: delete image
 router.delete("/:id", protect, isAdmin, deleteImage);

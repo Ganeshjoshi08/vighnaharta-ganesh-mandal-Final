@@ -11,6 +11,19 @@ import Atharvashirsha from "./pages/Atharvashirsha";
 import Announcements from "./pages/Announcements";
 import Mantras from "./pages/Mantras";
 
+// New About Pages
+import AboutDetails from "./pages/AboutDetails";
+import AboutCommittee from "./pages/AboutCommittee";
+import AboutJourney from "./pages/AboutJourney";
+import AboutMission from "./pages/AboutMission";
+
+// New Gallery Pages
+import GallerySmart from "./pages/GallerySmart";
+import GalleryReligious from "./pages/GalleryReligious";
+import GallerySocial from "./pages/GallerySocial";
+import GalleryCultural from "./pages/GalleryCultural";
+import GalleryPress from "./pages/GalleryPress";
+
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 
@@ -19,6 +32,7 @@ import ManageDonations from "./pages/ManageDonations";
 import ManageAnnouncements from "./pages/ManageAnnouncements";
 import ManageEvents from "./pages/ManageEvents";
 import ManageGallery from "./pages/ManageGallery"; // ✅ ADD
+import ManageActivities from "./pages/ManageActivities";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -54,6 +68,19 @@ function App() {
         <Route path="/atharva" element={<Atharvashirsha />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/mantras" element={<Mantras />} />
+
+        {/* ℹ️ ABOUT SUB-CHANNELS */}
+        <Route path="/about/details" element={<AboutDetails />} />
+        <Route path="/about/committee" element={<AboutCommittee />} />
+        <Route path="/about/journey" element={<AboutJourney />} />
+        <Route path="/about/vision-mission" element={<AboutMission />} />
+
+        {/* 📸 GALLERY SUB-CHANNELS */}
+        <Route path="/gallery/smart-ganesh" element={<GallerySmart />} />
+        <Route path="/gallery/religious" element={<GalleryReligious />} />
+        <Route path="/gallery/social" element={<GallerySocial />} />
+        <Route path="/gallery/cultural" element={<GalleryCultural />} />
+        <Route path="/gallery/press" element={<GalleryPress />} />
 
         {/* 🔐 AUTH */}
         <Route path="/auth" element={<Auth />} />
@@ -111,6 +138,15 @@ function App() {
           element={
             <PrivateRoute>
               <ManageGallery />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/activities"
+          element={
+            <PrivateRoute>
+              <ManageActivities />
             </PrivateRoute>
           }
         />

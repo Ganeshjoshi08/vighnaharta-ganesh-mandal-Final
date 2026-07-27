@@ -1,16 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api/api";
 import qrImg from "../assets/qr.png";
 import homeImg from "../assets/HOME_IMG.jpg";
 import aboutGanesha from "../assets/about_ganesha.jpg";
 import timeline2010 from "../assets/timeline_2010.jpg";
 
+// New activity assets
+import beedPoliceAward from "../assets/beed_police_award.jpg";
+import ganarayaAward2014 from "../assets/ganaraya_award_2014.jpg";
+import mandalAartiUtsav from "../assets/mandal_aarti_utsav.jpg";
+import lokmanyaTilakTribute from "../assets/lokmanya_tilak_tribute.jpg";
+
+import sriSuktamHavan from "../assets/sri_suktam_havan.png";
+import holiDahanColor from "../assets/holi_dahan_color.png";
+import radhaKrishnaBhajan from "../assets/radha_krishna_bhajan.png";
+import athavasheershaPathan from "../assets/athavasheersha_pathan.png";
+import ganeshYaag from "../assets/ganesh_yaag.png";
+
+import ganeshDivineHero from "../assets/ganesh_transparent.png";
+import logoImg from "../assets/logo.jpeg";
+import mandalTitleGradient from "../assets/mandal_title_gradient.png";
+import mandalLogoCircular from "../assets/mandal_logo_circular.png";
+
 const Home = () => {
   const navigate = useNavigate();
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
+  const [dbInfo, setDbInfo] = useState(null);
+  const [dbImages, setDbImages] = useState([]);
+  const [dbActivities, setDbActivities] = useState([]);
+  const [activeModal, setActiveModal] = useState(null);
 
   useEffect(() => {
+    fetchDbInfo();
+    fetchGalleryImages();
+    fetchActivities();
     const handleLangChange = () => {
       setLang(localStorage.getItem("lang") || "marathi");
     };
@@ -31,19 +56,105 @@ const Home = () => {
     };
   }, []);
 
+  const fetchDbInfo = async () => {
+    try {
+      const res = await API.get("/about-history");
+      if (res.data) {
+        setDbInfo(res.data);
+      }
+    } catch (err) {
+      console.log("FETCH DB INFO ERROR:", err);
+    }
+  };
+
+  const fetchGalleryImages = async () => {
+    try {
+      const res = await API.get("/gallery");
+      if (res.data && res.data.length > 0) {
+        setDbImages(res.data);
+      }
+    } catch (err) {
+      console.log("FETCH GALLERY IMAGES ERROR:", err);
+    }
+  };
+
+  const fetchActivities = async () => {
+    try {
+      const res = await API.get("/activities");
+      if (res.data && res.data.length > 0) {
+        setDbActivities(res.data);
+      }
+    } catch (err) {
+      console.log("FETCH ACTIVITIES ERROR:", err);
+    }
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const galleryImages = [
     aboutGanesha,
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCEomG5rqOpviVPKAJB2u3TPGeHPcqrq3cLADrh2Ue1wviaHJt7YjxrVikzjD2SEkX6vFUXcywvnKgpYk3efkVm9RO1IRWYxHTlbp_Q2PfIVYelBcgoUpaw2NaPHTaU-QqFT3HEYA9jVT_6HWUd9Wv438kC9hqcReAbtMrNyCeGrgkyIHN8fiC8laKjsgsWaBSnJ5pUbzKOmFvkRwH38PYcXekbeUjm4GdVX1nOkEH1N4c46bInhqn3e2POgtUl04DMHKI4ffMlSFM",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAhHgjHWfTx0FB2KyiboTf3f8XwXYLX2Dy6ryjkzRJcCEqWp-KKAnC7jwFCka4YIyM1rOmSb-Q37PDyNM8IQPIbnhbZx4i7nJuwLjEBSEBJXHbAZLk-Cr7e2hml7AuiRe1W50ftRUs9V4q6gsazHxgREVOEO_Xo9eseoXIdHs-sXU92OtVYqrTrTvVWD7tvxgbz2VFOPGsRAU7po68mh_bJcjDyNjMyZiyc-iO8DCZa0AuhB0MEJ1Z_GMesrVhtW18NC2iG72p0pb4",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDFeQqWSJqAYdo7PagZeXkqMuMh0beRB6yZvIFO_Oj00btcdilyTqVgfE4IXXPmRdWWsv6UT0m9aK1l6k7-iOcyv6Nv8OzeMS4IvI9vP-xid-RpMIPxdHAfqdfXyls9oKhuxlLlYt3e_MUmJIGAaECd7RpUQlzZZgpSN0yPr8Z_2yoQEORRQxRg17QgseMBj3AxqfZc9qVApP65z2WtQtOEK1jK-6IVB3oVQiApB2CvbSbIVuwYbBLWOBhVIdaRnPsZhMrwGzPEbjQ",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAZFxtwNfx9lJiFuXn-dNUkVQN1qnzWXIghPKPEnTMtLXxg1rxBkLXIutFhjLqkmgHQ-x1vVtA4saSibZh7Nbn4MioAMAOvAfxWb3WWfR2DtpjB1Vxv5nNheFaf7kSMjscZYDQHguBD0QcIuzZpn0vs4bDlZ7lzQvDWfH4FKjGbQs-TcVzwlS64svG_2gEBdHyoDMhUOc8tt7gKPz0zkk0MdD6ZvsN9IjCpW5y3wVGmMpn1kyqYFVhBP4Cl9zInw0xBTzZ38ZyJmOY",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAouLfbwgb8UKSjnQvNQ-YzIQ7Niu4rcpuubf5uH9IAWiDG1McYUoxjtgnbjytT8nytXPqGnQQn8hfdd6VHMY7ghEDT7RSv6yy12NmlOoH3UNLT0DQwhdEu1b5_uMBsj_BfmCYQuDSUYm_y11EcWv6D67rM7qVxPz1IOtmLTojQJA9CcaYgJRJgms3gU65J8NLeZ7X43r7SacQ9qEa7d93uxJQ3PKKb4wS0sFfAtCS9olHGqIgamv_qx-cZGe0-DOX9UJTDsxo7mSc",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuB3XCYop5e8Bp4gmzn6KCakjyrF9IG1YiosW_PuSB4OqGoOjN9kRvjwmLCEDwCyAv5Uc3m3MuonWZ6KoCl4ZbSkB6sfBnAo_XbfxeQqPdzG9uSm5bGJZG5Lz6OPi60nOh762O5OaeZ8BT3LyNlEWpzxd9gujhYGka9JMX6zH6ZO3hvG8jpzTD-7lgroYibn6CVa9B5gfjdYwGGnFCPifdJTMvzpRpRyZYDVsL-YdO3fqTz2N_HnnrEkUvTnOtkjG1iAXijvTw4ZQck"
+    beedPoliceAward,
+    ganarayaAward2014,
+    mandalAartiUtsav,
+    lokmanyaTilakTribute
   ];
+
+  // Limit display list to first 6 items
+  const displayImages = dbImages.length > 0
+    ? dbImages.slice(0, 6).map(img => img.imageUrl)
+    : galleryImages;
+
+  const defaultActivities = [
+    {
+      title: "श्री सूक्तम् हवन सोहळा",
+      titleEn: "Sri Suktam Havan",
+      tag: "धार्मिक",
+      tagEn: "Religious",
+      description: "श्री यज्ञेश्वर सेलुकर महाराज यांच्या मंगल उपस्थितीत श्री सूक्तम् हवन सोहळ्याचे आयोजन करण्यात आले. या सोहळ्यात शेकडो भाविकांनी सहभाग घेऊन पूजेचा लाभ घेतला आणि बाप्पांचे आशीर्वाद मिळवले.",
+      descriptionEn: "Sri Suktam Havan was organized in the auspicious presence of Shri Yadneshwar Selukar Maharaj. Hundreds of devotees participated, took part in the prayers, and received blessings.",
+      imageUrl: sriSuktamHavan
+    },
+    {
+      title: "गणपती अथर्वशीर्ष पठण",
+      titleEn: "Ganpati Atharva Shirsh Pathan",
+      tag: "संस्कार",
+      tagEn: "Values",
+      description: "लहान मुलांसाठी आणि महिलांसाठी सामूहिक गणपती अथर्वशीर्ष पठण उपक्रमाचे आयोजन करण्यात आले. यामुळे मुलांमध्ये धार्मिक संस्कार रुजण्यास मदत होते.",
+      descriptionEn: "Mass chanting of Ganpati Atharva Shirsha was organized for children and women. This initiative helps instill cultural and spiritual values in the young generation.",
+      imageUrl: athavasheershaPathan
+    },
+    {
+      title: "राधा कृष्ण भजन आणि आरती",
+      titleEn: "Radha Krishna Bhajan",
+      tag: "भक्ती",
+      tagEn: "Devotion",
+      description: "श्री गणरायाच्या चरणी भक्तीभावाने राधा कृष्ण भजनाचे आयोजन करण्यात आले. सुमधुर भजनांच्या तालावर भाविक मंत्रमुग्ध झाले आणि आरतीने सोहळ्याची सांगता झाली.",
+      descriptionEn: "Devotional Radha Krishna Bhajans were organized at the feet of Lord Ganesha. Devotees were mesmerized by the sweet musical bhajans, followed by the concluding traditional Aarti.",
+      imageUrl: radhaKrishnaBhajan
+    },
+    {
+      title: "श्री गणेश याग सोहळा",
+      titleEn: "Shree Ganesh Yaag",
+      tag: "यज्ञ",
+      tagEn: "Yajna",
+      description: "मंडळातर्फे सार्वजनिक गणेशोत्सव निमित्त भव्य श्री गणेश याग सोहळ्याचे आयोजन करण्यात आले. यामध्ये मंत्रोच्चाराच्या जयघोषात विधीवत होम-हवन करण्यात आले आणि परिसर भक्तीमय झाला.",
+      descriptionEn: "A grand Shree Ganesh Yaag ceremony was organized by the Mandal on the occasion of Ganesh Utsav. Ritual prayers and fire offerings were performed amidst chanting of sacred mantras.",
+      imageUrl: ganeshYaag
+    },
+    {
+      title: "होळी दहन आणि रंगोत्सव",
+      titleEn: "Holi Dahan & Colour Festival",
+      tag: "उत्सव",
+      tagEn: "Festival",
+      description: "होळी दहन आणि धूळवड उत्साहात साजरी करण्यात आली. सामूहिक होळी प्रज्वलित करून वाईट प्रवृत्तींचे दहन करण्यात आले आणि दुसऱ्या दिवशी रंगांची उधळण करत पारंपरिक आनंद साजरा करण्यात आला.",
+      descriptionEn: "Holi Dahan and the Festival of Colors were celebrated with great joy. The community gathered to light the bonfire, symbols of burning away negativity, followed by colorful celebrations.",
+      imageUrl: holiDahanColor
+    }
+  ];
+
+  const displayActivities = dbActivities.length > 0 ? dbActivities : defaultActivities;
 
   const translations = {
     marathi: {
@@ -276,53 +387,154 @@ const Home = () => {
     }
   };
 
-  const current = translations[lang];
+  const current = { ...translations[lang] };
+  if (dbInfo) {
+    if (lang === "marathi") {
+      current.about = {
+        ...current.about,
+        p1: dbInfo.aboutMr1 || current.about.p1,
+        p2: dbInfo.aboutMr2 || current.about.p2,
+        p3: dbInfo.aboutMr3 || current.about.p3,
+        p4: dbInfo.aboutMr4 || current.about.p4
+      };
+      current.history = {
+        ...current.history,
+        d1990: dbInfo.timeline1990Mr || current.history.d1990,
+        d2010: dbInfo.timeline2010Mr || current.history.d2010,
+        d2024: dbInfo.timeline2024Mr || current.history.d2024
+      };
+    } else {
+      current.about = {
+        ...current.about,
+        p1: dbInfo.aboutEn1 || current.about.p1,
+        p2: dbInfo.aboutEn2 || current.about.p2,
+        p3: dbInfo.aboutEn3 || current.about.p3,
+        p4: dbInfo.aboutEn4 || current.about.p4
+      };
+      current.history = {
+        ...current.history,
+        d1990: dbInfo.timeline1990En || current.history.d1990,
+        d2010: dbInfo.timeline2010En || current.history.d2010,
+        d2024: dbInfo.timeline2024En || current.history.d2024
+      };
+    }
+  }
 
   return (
     <div className="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
       
       {/* 1. HERO BANNER SECTION */}
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div
-            className="w-full h-full bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${homeImg})`,
-            }}
-          />
-          <div className="absolute inset-0 divine-overlay" />
-        </div>
-        <div className="relative z-10 text-center px-gutter max-w-4xl animate-fade-in flex flex-col items-center">
-          <h2 className="font-label-caps text-label-caps text-secondary-container mb-4 tracking-[0.3em] uppercase">
-            {current.hero.sub}
-          </h2>
-          <h1 className="font-display-hero text-display-hero text-white divine-glow mb-2">
-            {current.hero.title}
-          </h1>
-          <p className="font-headline-md text-headline-md text-primary-fixed mb-8 font-normal italic">
-            {current.hero.est}
-          </p>
-          <div className="flex flex-col items-center gap-6">
+      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#180d03] via-[#3d1d02] to-[#120700]">
+        
+        {/* CSS Keyframes for particles and floating Ganesha */}
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes floatPetal {
+            0% { transform: translateY(110vh) translateX(0) scale(0.6) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.35; }
+            90% { opacity: 0.35; }
+            100% { transform: translateY(-10vh) translateX(60px) scale(1.1) rotate(360deg); opacity: 0; }
+          }
+          .floating-particle-item {
+            animation: floatPetal 20s linear infinite;
+          }
+          @keyframes floatGanesha {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0); }
+          }
+          .ganesha-float-animation {
+            animation: floatGanesha 6s ease-in-out infinite;
+          }
+        `}} />
+
+        {/* Ambient Glowing Orbs */}
+        <div className="absolute top-[15%] right-[-5%] lg:right-[10%] w-[320px] md:w-[550px] h-[320px] md:h-[550px] rounded-full bg-gradient-to-br from-amber-500/10 to-orange-500/5 blur-[80px] md:blur-[140px] pointer-events-none z-0" />
+        <div className="absolute bottom-[10%] left-[-10%] w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bg-amber-600/5 blur-[80px] md:blur-[120px] pointer-events-none z-0" />
+
+        {/* Floating Petals/Particles */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-5">
+          {[...Array(12)].map((_, i) => (
             <div
-              onClick={() => {
-                const aboutSec = document.getElementById("about");
-                if (aboutSec) aboutSec.scrollIntoView({ behavior: "smooth" });
+              key={i}
+              className="absolute bg-gradient-to-tr from-amber-400 to-orange-500 rounded-full blur-[1px] opacity-0 floating-particle-item"
+              style={{
+                left: `${(i * 9) + 4}%`,
+                width: `${(i % 3) * 3 + 4}px`,
+                height: `${(i % 3) * 3 + 4}px`,
+                animationDelay: `${i * 1.5}s`,
+                animationDuration: `${15 + (i % 4) * 4}s`
               }}
-              className="w-16 h-16 rounded-full border-2 border-primary-container flex items-center justify-center animate-bounce cursor-pointer hover:bg-primary-container/20 transition-all"
-            >
-              <span className="material-symbols-outlined text-primary-container text-4xl">
-                keyboard_double_arrow_down
-              </span>
-            </div>
-            <span className="font-label-caps text-label-caps text-white/70 uppercase tracking-widest">
-              {current.hero.morya}
-            </span>
-          </div>
+            />
+          ))}
         </div>
 
-        {/* Decorative corner borders - exactly matches template dimensions */}
-        <div className="absolute top-0 left-0 w-32 h-32 border-t-8 border-l-8 border-secondary-container opacity-50 m-container-padding" />
-        <div className="absolute bottom-0 right-0 w-32 h-32 border-b-8 border-r-8 border-secondary-container opacity-50 m-container-padding" />
+        {/* 2-Column Hero Grid Wrapper */}
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 pt-20 pb-16">
+          
+          {/* Left: Text/Branding Contents */}
+          <div className="space-y-6 md:space-y-8 text-center max-w-2xl flex flex-col items-center mx-auto lg:mx-0 relative z-20">
+            <div className="flex flex-col items-center gap-4 w-full">
+              {/* Sacred Heading above Logo */}
+              <div className="flex items-center gap-3 text-xs md:text-sm font-bold tracking-widest uppercase select-none mb-1">
+                <div className="h-[1px] w-8 md:w-12 bg-gradient-to-r from-transparent to-[#F6C453]/60" />
+                <span 
+                  className="bg-gradient-to-r from-[#FFE9A3] via-[#F6C453] to-[#D89000] bg-clip-text text-transparent filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] font-serif"
+                  style={{ WebkitTextFillColor: "transparent" }}
+                >
+                  ॥ श्री विघ्नहर्ताय नमः ॥
+                </span>
+                <div className="h-[1px] w-8 md:w-12 bg-gradient-to-l from-transparent to-[#F6C453]/60" />
+              </div>
+
+              {/* Circular Logo on top with glowing ring and spotlight background */}
+              <div className="relative p-1.5 rounded-full border border-amber-400/40 shadow-[0_0_20px_rgba(246,196,83,0.3)] bg-amber-950/20 my-2">
+                <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(246,196,83,0.2)_0%,transparent_70%)] blur-md pointer-events-none" />
+                <img
+                  src={mandalLogoCircular}
+                  alt="Mandal Logo"
+                  className="relative z-10 w-24 h-24 md:w-28 md:h-28 object-contain select-none rounded-full"
+                />
+              </div>
+              
+              {/* One-line Title in AMS Chhatrapati Calligraphy font */}
+              <h1 
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide text-white whitespace-nowrap pt-8 pb-6 pl-4 pr-4 select-none"
+                style={{
+                  fontFamily: lang === "marathi" ? "'AMS Chhatrapati', 'AMSChhatrapati', var(--font-display-hero)" : "var(--font-display-hero)",
+                  lineHeight: "1.45",
+                  textShadow: "0 2px 5px rgba(0, 0, 0, 0.75)",
+                  fontSize: lang === "marathi" ? undefined : "clamp(1.5rem, 4.5vw, 3.25rem)"
+                }}
+              >
+                {lang === "marathi" ? "ivaGnahtaa_ imaPa ma/DL" : "Vighnaharta Mitra Mandal"}
+              </h1>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 text-amber-200/90 font-medium text-sm md:text-base mt-6">
+              <span className="bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 shadow-inner">
+                {lang === "marathi" ? "स्थापना: १९९०" : "Established: 1990"}
+              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              <span className="bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 shadow-inner">
+                {lang === "marathi" ? "विघ्नहर्ता चौक, बीड" : "Vighnaharta Chowk, Beed"}
+              </span>
+            </div>
+
+          </div>
+
+          {/* Right: Large Lord Ganesha Image without background, with dynamic floating animation */}
+          <div className="flex justify-center items-center relative select-none z-10">
+            {/* Spinning decorative aura rings */}
+            <div className="absolute w-[300px] md:w-[480px] h-[300px] md:h-[480px] rounded-full bg-amber-500/5 border border-amber-500/10 animate-[spin_60s_linear_infinite]" />
+            <div className="absolute w-[350px] md:w-[540px] h-[350px] md:h-[540px] rounded-full bg-orange-500/3 border border-orange-500/5 animate-[spin_90s_linear_infinite] [animation-direction:reverse]" />
+            
+            <img
+              src={ganeshDivineHero}
+              alt="Lord Ganesha"
+              className="relative z-10 w-full max-w-[320px] md:max-w-[460px] lg:max-w-[480px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
+            />
+          </div>
+        </div>
       </section>
 
       {/* 2. ABOUT MANDAL SECTION */}
@@ -365,6 +577,49 @@ const Home = () => {
                 {current.about.p4}
               </p>
             )}
+
+            {/* 3 POP-UPS TRIGGER CARDS */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
+              {/* Card 1: About Us */}
+              <button
+                onClick={() => setActiveModal("details")}
+                className="flex flex-col items-center justify-center p-5 bg-[#FAF7DC] border-2 border-secondary-container rounded-xl shadow-md hover:shadow-lg hover:bg-secondary-container/20 transition-all duration-300 group cursor-pointer text-center"
+              >
+                <span className="material-symbols-outlined text-[#ff7a00] text-3xl mb-2 group-hover:scale-110 transition-transform">
+                  info
+                </span>
+                <span className="font-bold text-on-background text-sm">
+                  {lang === "marathi" ? "आमच्याबद्दल" : "About Us"}
+                </span>
+              </button>
+
+              {/* Card 2: Executive Committee */}
+              <button
+                onClick={() => setActiveModal("committee")}
+                className="flex flex-col items-center justify-center p-5 bg-[#FAF7DC] border-2 border-secondary-container rounded-xl shadow-md hover:shadow-lg hover:bg-secondary-container/20 transition-all duration-300 group cursor-pointer text-center"
+              >
+                <span className="material-symbols-outlined text-[#ff7a00] text-3xl mb-2 group-hover:scale-110 transition-transform">
+                  groups
+                </span>
+                <span className="font-bold text-on-background text-sm">
+                  {lang === "marathi" ? "विद्यमान कार्यकारी मंडळ" : "Executive Committee"}
+                </span>
+              </button>
+
+              {/* Card 3: Glorious Journey */}
+              <button
+                onClick={() => setActiveModal("journey")}
+                className="flex flex-col items-center justify-center p-5 bg-[#FAF7DC] border-2 border-secondary-container rounded-xl shadow-md hover:shadow-lg hover:bg-secondary-container/20 transition-all duration-300 group cursor-pointer text-center"
+              >
+                <span className="material-symbols-outlined text-[#ff7a00] text-3xl mb-2 group-hover:scale-110 transition-transform">
+                  history_edu
+                </span>
+                <span className="font-bold text-on-background text-sm">
+                  {lang === "marathi" ? "गौरवशाली इतिहास" : "Glorious Journey"}
+                </span>
+              </button>
+            </div>
+
             <div className="grid grid-cols-2 gap-8 pt-8">
               <div className="p-6 bg-surface-container rounded-lg border-l-4 border-primary">
                 <h4 className="font-headline-md text-headline-md text-primary">
@@ -387,94 +642,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. HISTORICAL TIMELINE SECTION */}
-      <section
-        className="py-section-gap px-container-padding bg-on-background text-white relative overflow-hidden"
-        id="history"
-      >
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-24">
-            <h2 className="font-display-hero text-headline-lg golden-text-gradient mb-4">
-              {current.history.title}
-            </h2>
-            <div className="w-24 h-1 bg-secondary-container mx-auto" />
-          </div>
 
-          <div className="relative space-y-16">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/30 hidden md:block -translate-x-1/2" />
-
-            {/* 1990: Text Left, Image Right */}
-            <div className="flex flex-col md:flex-row items-center gap-12 relative">
-              <div className="md:w-1/2 md:text-right">
-                <h3 className="font-display-hero text-headline-lg text-primary-fixed">
-                  {current.history.y1990}
-                </h3>
-                <p className="font-body-lg text-body-lg text-surface-variant">
-                  {current.history.d1990}
-                </p>
-              </div>
-              
-              {/* Node (maps to rounded-full which has 12px border radius, rendering a rounded square) */}
-              <div className="w-8 h-8 rounded-full bg-primary-container border-4 border-on-background z-10 shrink-0 shadow-[0_0_15px_rgba(255,153,51,0.5)] hidden md:block" />
-              
-              <div className="md:w-1/2 w-full">
-                {/* No image for 1990 */}
-              </div>
-            </div>
-
-            {/* 2010: Text Right, Image Left */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-12 relative">
-              <div className="md:w-1/2">
-                <h3 className="font-display-hero text-headline-lg text-primary-fixed">
-                  {current.history.y2010}
-                </h3>
-                <p className="font-body-lg text-body-lg text-surface-variant">
-                  {current.history.d2010}
-                </p>
-              </div>
-              
-              {/* Node */}
-              <div className="w-8 h-8 rounded-full bg-primary-container border-4 border-on-background z-10 shrink-0 shadow-[0_0_15px_rgba(255,153,51,0.5)] hidden md:block" />
-              
-              <div className="md:w-1/2 w-full">
-                <img
-                  className="rounded-lg aspect-video object-cover w-full shadow-lg border border-white/10"
-                  src={timeline2010}
-                  alt="Mandal Group Photo 2010"
-                />
-              </div>
-            </div>
-
-            {/* 2024: Text Left, Image Right */}
-            <div className="flex flex-col md:flex-row items-center gap-12 relative">
-              <div className="md:w-1/2 md:text-right">
-                <h3 className="font-display-hero text-headline-lg text-primary-fixed">
-                  {current.history.y2024}
-                </h3>
-                <p className="font-body-lg text-body-lg text-surface-variant">
-                  {current.history.d2024}
-                </p>
-              </div>
-              
-              {/* Node */}
-              <div className="w-8 h-8 rounded-full bg-primary-container border-4 border-on-background z-10 shrink-0 shadow-[0_0_15px_rgba(255,153,51,0.5)] hidden md:block" />
-              
-              <div className="md:w-1/2 w-full">
-                <img
-                  className="rounded-lg aspect-video object-cover w-full shadow-lg border border-white/10"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC95HoUVmhDk4FzLW0xGJqWJA2Aa7M48WJP75S09bdVIZZ9GrlDDCn7_G5ysROkx940T4srNZmYloSnZSgLtB7IVOdxlGQwytETDRlzvijYZqbuelrra_0ZSJeqWTBdAhzIUXh3B5Ek2JlipoVjV8cMeGU1LhAcBvJTkWCze8ou2jXdlWRIlcgoKmGubbsOD6b-dsvBFqxc09XKy-k37QZV_MP_6t7QG6OvHBH8lbvXScooW_y85gR0CABhwjXUcJQCh6O642GxbHU"
-                  alt="Luminous gate night view 2024"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 4. SOCIAL & CULTURAL ACTIVITIES SECTION */}
       <section
-        className="py-section-gap px-container-padding bg-surface"
+        className="py-section-gap px-container-padding bg-[#FAF7DC]/15"
         id="activities"
       >
         <div className="text-center mb-20">
@@ -484,64 +656,57 @@ const Home = () => {
           <h2 className="font-headline-lg text-headline-lg text-on-background mt-2">
             {current.activities.title}
           </h2>
+          <div className="w-24 h-1 bg-primary mx-auto mt-4" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Card 1 */}
-          <div className="group bg-white p-unit shadow-xl border-t-4 border-primary transition-transform hover:-translate-y-4 rounded border border-outline-variant/20">
-            <div className="overflow-hidden mb-6 rounded">
-              <img
-                className="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-500"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEr85RcMA3ZBdg0KWRvpCvYCVk59DpxGaPZQxFEj4c23dyVyUjzZ5VLu82QtNJvfqUrA5L4SVci2yeJXNIEhu6ZHaXSWbqDrU5Atvk3sPQwYZK0jfy-IKKrmqcQGXHSD4eGhrxrjs6Mu9dwTn78t8XTVJA4-uTVDmacmwsKQ2NLNpL7Gy5p_uAbusaBK6GyLggR7sJiZazU54kco5D7VUf0IR9GzoFBGtgkCYtC8kNjGig-pJ27ZkHjjmmAoGtnmZM3ibzqkrN4mo"
-                alt="Procession performance"
-              />
-            </div>
-            <div className="px-6 pb-8">
-              <h3 className="font-headline-md text-headline-md text-on-background mb-4">
-                {current.activities.c1Title}
-              </h3>
-              <p className="text-on-surface-variant font-body-md leading-relaxed text-sm">
-                {current.activities.c1Desc}
-              </p>
-            </div>
-          </div>
 
-          {/* Card 2 */}
-          <div className="group bg-white p-unit shadow-xl border-t-4 border-primary transition-transform hover:-translate-y-4 rounded border border-outline-variant/20">
-            <div className="overflow-hidden mb-6 rounded">
-              <img
-                className="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-500"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5yFW_LBFKACCPZcPR1wgHEw4gXOPCTSx6DmsJ5XclQUlC52JH3r87K4xyR6qruefcHj8DIVSMDbXzGVLWEtfyZ_A-0VOX-gdQwjmhHoM5Pst6_1XN2eMT3tOU7EYDInMIrPgyrOZGMER_k0XGQX5ZcUWKA0j4mfq3NH_WIhgx2SUdutxeATuqDdJLYCXd55y3G95CVtVCdmvBhYTn79in1rYdMWiG5hP4w3_HYdAmDYsvcntXk5C7X2kQhLBtHDgD0WIcXJ9-oNM"
-                alt="Blood donation activity"
-              />
-            </div>
-            <div className="px-6 pb-8">
-              <h3 className="font-headline-md text-headline-md text-on-background mb-4">
-                {current.activities.c2Title}
-              </h3>
-              <p className="text-on-surface-variant font-body-md leading-relaxed text-sm">
-                {current.activities.c2Desc}
-              </p>
-            </div>
-          </div>
+        <div className="max-w-6xl mx-auto space-y-24">
+          {displayActivities.map((act, idx) => {
+            const isEven = idx % 2 === 0;
+            const displayTitle = lang === "marathi" ? act.title : (act.titleEn || act.title);
+            const displayTag = lang === "marathi" ? act.tag : (act.tagEn || act.tag);
+            const displayDesc = lang === "marathi" ? act.description : (act.descriptionEn || act.description);
 
-          {/* Card 3 */}
-          <div className="group bg-white p-unit shadow-xl border-t-4 border-primary transition-transform hover:-translate-y-4 rounded border border-outline-variant/20">
-            <div className="overflow-hidden mb-6 rounded">
-              <img
-                className="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-500"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu7ODGa2HmZWAEiuU7MS6nlGQ82NrFmyGicJtdPIRrA26kwvyr-S3weZhqzDjmxocEsiFha_VAFEHGqiix9_7HoN-0KAlhLZ-b5yVhYBhEVy7O6v4k7pRpAFGNxm4WD2sbkaBz8Qg6tkFpIV2J7tDl09QYZJbCOlsN736fBqAb2dNPIuKFS14V6spFBCiN_C3b-_08iQjb1Wk5dF1-WFQAHvQ-4FkCHyM-GzzIzFWu5GPWjoQS3Hco9LNCDJc8oJGnaG_XsGNT8M8"
-                alt="Mythological Play on stage"
-              />
-            </div>
-            <div className="px-6 pb-8">
-              <h3 className="font-headline-md text-headline-md text-on-background mb-4">
-                {current.activities.c3Title}
-              </h3>
-              <p className="text-on-surface-variant font-body-md leading-relaxed text-sm">
-                {current.activities.c3Desc}
-              </p>
-            </div>
-          </div>
+            return (
+              <div
+                key={act._id || idx}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+              >
+                {/* Text Block - on left if even, right if odd */}
+                <div className={`space-y-6 ${!isEven ? "lg:order-2" : ""}`}>
+                  <div
+                    className={`bg-white p-8 md:p-10 shadow-xl rounded-xl border border-outline-variant/10 ${
+                      isEven ? "border-l-8 border-primary" : "border-r-8 border-primary"
+                    }`}
+                  >
+                    {displayTag && (
+                      <span className="font-label-caps text-xs text-[#d84315] font-extrabold uppercase tracking-widest block mb-2">
+                        {displayTag}
+                      </span>
+                    )}
+                    <h3 className="font-display-hero text-2xl md:text-3xl font-extrabold text-on-background mb-4 font-serif">
+                      {displayTitle}
+                    </h3>
+                    <p className="text-on-surface-variant font-body-md leading-relaxed text-sm md:text-base text-justify">
+                      {displayDesc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Image Block - on right if even, left if odd */}
+                <div className={`flex justify-center items-center ${!isEven ? "lg:order-1" : ""}`}>
+                  <div className="bg-white p-3 shadow-xl rounded-2xl border border-outline-variant/15 w-full max-w-xl">
+                    <div className="overflow-hidden rounded-xl">
+                      <img
+                        className="w-full h-auto object-contain hover:scale-103 transition-transform duration-500 rounded-xl"
+                        src={act.imageUrl}
+                        alt={displayTitle}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -569,7 +734,7 @@ const Home = () => {
 
         {/* Masonry-style column grid matching the template HTML columns */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-gutter space-y-gutter">
-          {galleryImages.map((src, i) => (
+          {displayImages.map((src, i) => (
             <div
               key={i}
               className="break-inside-avoid shadow-lg cursor-pointer overflow-hidden rounded-lg border border-outline-variant/10"
@@ -808,27 +973,16 @@ const Home = () => {
 
           {/* Location Map Graphic */}
           <div className="h-[500px] bg-surface-container rounded-xl overflow-hidden shadow-lg border border-outline-variant relative">
-            <div
-              className="w-full h-full bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtOstaP5gffv70y5SjpI8cC4kYZQbUeEhfKCY8-aQhh53liHq2q8-E6sUlDf5DoOTYEpa66TQFGyWid9fYg9keAi1j6ojFJ8bTRqGl_jAepOzNoYZOaHkSSX_QtT-jLk5-DYoM24835PXb_ECM0Tvwi7hhYVHmgN48lUdi_JiRAFLjaZdiT7qzwwgtI5BOUSoVFHYtrGw6eJmZTAyfDKXb69WE0BisYZVGaYrDtUeqwoLk24ph5DE7vKymdzoHAq2l3rZVBF8Hag0')",
-              }}
-            >
-              <div className="w-full h-full flex items-center justify-center bg-black/5">
-                <div className="bg-white p-4 rounded shadow-2xl flex flex-col items-center border border-outline-variant/10">
-                  <span
-                    className="material-symbols-outlined text-primary text-4xl animate-bounce"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    location_on
-                  </span>
-                  <span className="font-bold text-on-background mt-2 text-xs md:text-sm font-label-caps">
-                    {current.contact.mapMarker}
-                  </span>
-                </div>
-              </div>
-            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.6595280323722!2d75.76022137414726!3d18.99063815464892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc52b000a0a2cf3%3A0x90f7441ea36d8859!2sShree%20Vighnaharta%20Ganesh%20Mandir%2CBeed!5e0!3m2!1sen!2sin!4v1784914638915!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Shree Vighnaharta Ganesh Mandir Beed Map"
+            />
           </div>
         </div>
       </section>
@@ -843,6 +997,119 @@ const Home = () => {
       >
         <span className="material-symbols-outlined text-xl">arrow_upward</span>
       </button>
+
+      {/* 🔮 3 ABOUT MODAL POP-UPS */}
+      {activeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-[#FAF7DC] border-4 border-[#ff7a00] rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative animate-scale-in">
+            <button
+              onClick={() => setActiveModal(null)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#ff7a00]/10 text-[#ff7a00] hover:bg-[#ff7a00]/20 flex items-center justify-center cursor-pointer transition-all"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+
+            {activeModal === "details" && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b-2 border-secondary-container pb-3">
+                  <span className="material-symbols-outlined text-[#ff7a00] text-3xl">info</span>
+                  <h3 className="font-display-hero text-xl text-[#ff7a00] font-bold">
+                    {lang === "marathi" ? "आमच्याबद्दल सविस्तर माहिती" : "About Us Information"}
+                  </h3>
+                </div>
+                <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
+                  {lang === "marathi"
+                    ? "१९९० सालापासून बीड शहराच्या सांस्कृतिक आणि सामाजिक जीवनात मोलाचे योगदान देणारे आमचे ‘विघ्नहर्ता मित्र मंडळ’ भक्ती, सेवा आणि संस्कृतीचे केंद्र आहे. दरवर्षी गणेशोत्सवाचे भव्य आयोजन करतानाच आम्ही वर्षभर रक्तदान, आरोग्य आणि पर्यावरण संरक्षणाचे काम करतो."
+                    : "Since 1990, Vighnaharta Mitra Mandal has been an active religious and social community center in Beed city. Beyond organizing public Ganesh festivals, we actively participate in environmental, educational, and healthcare drives."}
+                </p>
+                <div className="flex gap-4 pt-4">
+                  <button
+                    onClick={() => {
+                      setActiveModal(null);
+                      navigate("/about/details");
+                    }}
+                    className="flex-1 py-3 bg-gradient-to-r from-[#ff7a00] to-[#ffb347] text-white font-bold rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer text-center text-sm"
+                  >
+                    {lang === "marathi" ? "सविस्तर वाचा 🚀" : "Read More 🚀"}
+                  </button>
+                  <button
+                    onClick={() => setActiveModal(null)}
+                    className="px-6 py-3 border-2 border-gray-300 rounded-full text-gray-700 font-bold hover:bg-gray-100 transition-all cursor-pointer text-sm"
+                  >
+                    {lang === "marathi" ? "बंद करा" : "Close"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {activeModal === "committee" && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b-2 border-[#ff7a00]/30 pb-3">
+                  <span className="material-symbols-outlined text-[#ff7a00] text-3xl">groups</span>
+                  <h3 className="font-display-hero text-xl text-[#ff7a00] font-bold">
+                    {lang === "marathi" ? "विद्यमान कार्यकारी मंडळ" : "Executive Committee"}
+                  </h3>
+                </div>
+                <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
+                  {lang === "marathi"
+                    ? "आमच्या मंडळाचे विद्यमान कार्यकारी मंडळ अत्यंत निष्ठेने आणि सेवाभावाने कार्यरत आहे. मंडळाचे अध्यक्ष गणेश जोशी यांच्या नेतृत्वाखाली सर्व सदस्य शिस्तबद्ध नियोजन आणि पारदर्शकता जपून उत्सव यशस्वी करतात."
+                    : "Under the leadership of our President Ganesh Joshi, the Executive Committee manages all social and devotional activities transparently, maintaining community unity and spiritual traditions."}
+                </p>
+                <div className="flex gap-4 pt-4">
+                  <button
+                    onClick={() => {
+                      setActiveModal(null);
+                      navigate("/about/committee");
+                    }}
+                    className="flex-1 py-3 bg-gradient-to-r from-[#ff7a00] to-[#ffb347] text-white font-bold rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer text-center text-sm"
+                  >
+                    {lang === "marathi" ? "सविस्तर वाचा 🚀" : "Read More 🚀"}
+                  </button>
+                  <button
+                    onClick={() => setActiveModal(null)}
+                    className="px-6 py-3 border-2 border-gray-300 rounded-full text-gray-700 font-bold hover:bg-gray-100 transition-all cursor-pointer text-sm"
+                  >
+                    {lang === "marathi" ? "बंद करा" : "Close"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {activeModal === "journey" && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b-2 border-secondary-container pb-3">
+                  <span className="material-symbols-outlined text-[#ff7a00] text-3xl">history_edu</span>
+                  <h3 className="font-display-hero text-xl text-[#ff7a00] font-bold">
+                    {lang === "marathi" ? "मंडळाचा गौरवशाली इतिहास" : "Glorious History"}
+                  </h3>
+                </div>
+                <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
+                  {lang === "marathi"
+                    ? "१९९० पासून सुरू झालेली विघ्नहर्ता मित्र मंडळाची वाटचाल आज ३६ वर्षांहून अधिक काळ यशस्वीपणे सुरू आहे. एका छोट्या मांडवातून सुरू झालेला हा प्रवास आज भव्य डिजिटल उत्सव आणि व्यापक समाजोपयोगी उपक्रमांपर्यंत पोहोचला आहे."
+                    : "For over 36 years since 1990, Vighnaharta Mitra Mandal has grown from a humble street pandal to a digitally-enabled community center supporting education, health, and local heritage in Beed."}
+                </p>
+                <div className="flex gap-4 pt-4">
+                  <button
+                    onClick={() => {
+                      setActiveModal(null);
+                      navigate("/about/journey");
+                    }}
+                    className="flex-1 py-3 bg-gradient-to-r from-[#ff7a00] to-[#ffb347] text-white font-bold rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer text-center text-sm"
+                  >
+                    {lang === "marathi" ? "सविस्तर वाचा 🚀" : "Read More 🚀"}
+                  </button>
+                  <button
+                    onClick={() => setActiveModal(null)}
+                    className="px-6 py-3 border-2 border-gray-300 rounded-full text-gray-700 font-bold hover:bg-gray-100 transition-all cursor-pointer text-sm"
+                  >
+                    {lang === "marathi" ? "बंद करा" : "Close"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
