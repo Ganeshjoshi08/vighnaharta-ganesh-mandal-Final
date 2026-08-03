@@ -39,6 +39,7 @@ app.use("/api/gallery", require("./routes/galleryRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/announcements", require("./routes/announcementRoutes"));
 app.use("/api/activities", require("./routes/activityRoutes"));
+app.use("/api/mantras", require("./routes/mantraRoutes"));
 
 //--------------------------------------------------
 // 🏠 BASE ROUTE

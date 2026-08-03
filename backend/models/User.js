@@ -45,6 +45,15 @@ const userSchema = new mongoose.Schema(
       default: false
     },
 
+    otpResendCount: {
+      type: Number,
+      default: 0
+    },
+
+    otpLastSent: {
+      type: Date
+    },
+
     // 📱 OPTIONAL FUTURE
     phone: {
       type: String

@@ -6,7 +6,8 @@ const {
   login,
   verifyOTP,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  resendOTP
 } = require("../controllers/authController");
 
 const { protect, isAdmin } = require("../middleware/authMiddleware");
@@ -29,6 +30,9 @@ router.post("/forgot-password", forgotPassword);
 
 // 🔒 Reset password (OTP + new password)
 router.post("/reset-password", resetPassword);
+
+// 🔁 Resend OTP (signup or password reset)
+router.post("/resend-otp", resendOTP);
 
 //--------------------------------------------------
 // 🔥 EXTRA (PRO FEATURES)

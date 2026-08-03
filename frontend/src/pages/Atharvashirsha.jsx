@@ -7,6 +7,7 @@ const Atharvashirsha = () => {
 
       <div
         style={content}
+        className="responsive-content-card"
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow =
             "0 25px 60px rgba(255,122,0,0.35)";

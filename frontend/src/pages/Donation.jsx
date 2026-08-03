@@ -138,7 +138,8 @@ const container = {
 const card = {
   padding: "40px",
   borderRadius: "16px",
-  width: "350px",
+  maxWidth: "350px",
+  width: "100%",
   textAlign: "center",
   background: "#ffffff",
   border: "1px solid #eee",

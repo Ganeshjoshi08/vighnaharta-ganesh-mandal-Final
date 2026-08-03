@@ -64,47 +64,47 @@
   --font-body-md: "Noto Serif", "Noto Serif Devanagari", serif;
   --font-label-caps: "Libre Franklin", sans-serif;
 
-  /* Font Sizes and properties */
-  --text-display-hero: 72px;
-  --text-display-hero--line-height: 84px;
+  /* Font Sizes and properties (Dynamic Clamp Responsive Typography) */
+  --text-display-hero: clamp(38px, 8vw, 72px);
+  --text-display-hero--line-height: clamp(48px, 9vw, 84px);
   --text-display-hero--letter-spacing: -0.02em;
   --text-display-hero--font-weight: 900;
 
-  --text-display-hero-mobile: 48px;
-  --text-display-hero-mobile--line-height: 56px;
+  --text-display-hero-mobile: clamp(28px, 6vw, 48px);
+  --text-display-hero-mobile--line-height: clamp(36px, 7vw, 56px);
   --text-display-hero-mobile--font-weight: 900;
 
-  --text-headline-lg: 40px;
-  --text-headline-lg--line-height: 48px;
+  --text-headline-lg: clamp(26px, 5vw, 40px);
+  --text-headline-lg--line-height: clamp(34px, 6vw, 48px);
   --text-headline-lg--font-weight: 700;
 
-  --text-headline-lg-mobile: 32px;
-  --text-headline-lg-mobile--line-height: 40px;
+  --text-headline-lg-mobile: clamp(22px, 4vw, 32px);
+  --text-headline-lg-mobile--line-height: clamp(28px, 5vw, 40px);
   --text-headline-lg-mobile--font-weight: 700;
 
-  --text-headline-md: 28px;
-  --text-headline-md--line-height: 36px;
+  --text-headline-md: clamp(20px, 4vw, 28px);
+  --text-headline-md--line-height: clamp(26px, 5vw, 36px);
   --text-headline-md--font-weight: 600;
 
-  --text-body-lg: 18px;
-  --text-body-lg--line-height: 28px;
+  --text-body-lg: clamp(15px, 2.5vw, 18px);
+  --text-body-lg--line-height: clamp(22px, 3.5vw, 28px);
   --text-body-lg--font-weight: 400;
 
-  --text-body-md: 16px;
-  --text-body-md--line-height: 24px;
+  --text-body-md: clamp(14px, 2vw, 16px);
+  --text-body-md--line-height: clamp(20px, 3vw, 24px);
   --text-body-md--font-weight: 400;
 
-  --text-label-caps: 12px;
-  --text-label-caps--line-height: 16px;
+  --text-label-caps: clamp(10px, 1.5vw, 12px);
+  --text-label-caps--line-height: clamp(14px, 2vw, 16px);
   --text-label-caps--letter-spacing: 0.1em;
   --text-label-caps--font-weight: 700;
 
-  /* Spacing values mapping */
-  --spacing-safe-area-mobile: 20px;
-  --spacing-section-gap: 120px;
+  /* Spacing values mapping (Dynamic Clamp Responsive Spacers) */
+  --spacing-safe-area-mobile: 16px;
+  --spacing-section-gap: clamp(48px, 8vw, 120px);
   --spacing-gutter: 24px;
   --spacing-unit: 8px;
-  --spacing-container-padding: 64px;
+  --spacing-container-padding: clamp(16px, 5vw, 64px);
 
   /* Custom Border Radius corresponding to original config */
   --radius-DEFAULT: 0.125rem;
@@ -167,8 +167,79 @@ html[lang="english"] {
   --font-headline-lg: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-headline-lg-mobile: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-headline-md: "SF Pro", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Optimized English Typography sizes to prevent layout expansion */
+  --text-display-hero: clamp(32px, 6.5vw, 60px);
+  --text-display-hero--line-height: clamp(40px, 7.5vw, 72px);
+
+  --text-headline-lg: clamp(22px, 4vw, 34px);
+  --text-headline-lg--line-height: clamp(28px, 5vw, 42px);
+
+  --text-headline-md: clamp(18px, 3vw, 24px);
+  --text-headline-md--line-height: clamp(24px, 4vw, 30px);
+
+  --text-body-lg: clamp(14px, 2.5vw, 16px);
+  --text-body-lg--line-height: clamp(20px, 3.5vw, 24px);
+
+  --text-body-md: clamp(13px, 2vw, 15px);
+  --text-body-md--line-height: clamp(18px, 3vw, 22px);
+}
+
+/* English specific spacing adjustments to prevent layout overflow */
+html[lang="english"] nav {
+  gap: clamp(1rem, 2vw, 1.75rem) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-headline-lg);
+}
+
+/* Custom Responsive Helper Overrides */
+@media (max-width: 1023px) {
+  .about-details-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .about-mission-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .journey-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Prevent horizontal scrolling on pages with fixed width elements */
+  body, html {
+    overflow-x: hidden;
+  }
+  
+  /* Ensure all layout grids wrap nicely */
+  .gallery-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Make inline content boxes have responsive padding on mobile */
+  .responsive-content-card {
+    padding: 18px !important;
+    font-size: clamp(14px, 4vw, 17px) !important;
+    line-height: 1.8 !important;
+  }
+
+  /* Admin Dashboard Mobile Overrides */
+  .admin-wrapper {
+    flex-direction: column !important;
+    padding-top: 70px !important;
+  }
+  .admin-sidebar {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  }
+  .admin-main {
+    padding: 15px !important;
+  }
+  .admin-stats {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
 }

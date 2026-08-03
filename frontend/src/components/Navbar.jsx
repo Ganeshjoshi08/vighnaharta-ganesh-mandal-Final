@@ -367,7 +367,7 @@ const Navbar = () => {
         </div>
 
         {/* AUTH BUTTONS */}
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           {token ? (
             <button
               onClick={handleLogout}
@@ -392,7 +392,7 @@ const Navbar = () => {
         {/* SUPPORT US BUTTON - EXACT MATCH TO THE SCREENSHOT GOLD ACTION BUTTON */}
         <button
           onClick={() => navigate("/donation")}
-          className={`px-6 py-2 rounded font-label-caps text-xs font-bold tracking-widest transition-all active:scale-95 shadow-md shrink-0 border ${
+          className={`hidden sm:block px-6 py-2 rounded font-label-caps text-xs font-bold tracking-widest transition-all active:scale-95 shadow-md shrink-0 border ${
             isMantras
               ? "bg-[#8f4e00] text-white border-[#733e00] hover:bg-[#784200]"
               : "bg-primary text-white border-[#735c00] hover:bg-secondary"
@@ -528,10 +528,33 @@ const Navbar = () => {
           </span>
           <span
             onClick={() => handleNavClick("contact")}
-            className="block py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary"
+            className="block py-2 font-label-caps text-sm uppercase tracking-wider font-bold hover:text-primary mb-2"
           >
             {current.contact}
           </span>
+          <div className="flex flex-col gap-3 mt-2 pt-4 border-t border-gray-100 sm:hidden">
+            {token ? (
+              <button
+                onClick={() => { setOpen(false); handleLogout(); }}
+                className="w-full py-2.5 rounded font-label-caps text-xs font-bold tracking-widest uppercase bg-red-50 text-red-600 border border-red-100 transition-colors"
+              >
+                {current.logout}
+              </button>
+            ) : (
+              <button
+                onClick={() => { setOpen(false); navigate("/auth"); }}
+                className="w-full py-2.5 rounded font-label-caps text-xs font-bold tracking-widest uppercase bg-amber-500/10 text-primary border border-amber-500/20 hover:bg-amber-500/20 transition-all"
+              >
+                {current.login}
+              </button>
+            )}
+            <button
+              onClick={() => { setOpen(false); navigate("/donation"); }}
+              className="w-full py-2.5 rounded font-label-caps text-xs font-bold tracking-widest uppercase bg-[#8f4e00] text-white border border-[#733e00] hover:bg-[#784200]"
+            >
+              {current.darshan}
+            </button>
+          </div>
         </div>
       )}
     </header>

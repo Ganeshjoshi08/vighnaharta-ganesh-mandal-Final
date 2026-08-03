@@ -33,6 +33,7 @@ import ManageAnnouncements from "./pages/ManageAnnouncements";
 import ManageEvents from "./pages/ManageEvents";
 import ManageGallery from "./pages/ManageGallery"; // ✅ ADD
 import ManageActivities from "./pages/ManageActivities";
+import ManageMantras from "./pages/ManageMantras";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -147,6 +148,15 @@ function App() {
           element={
             <PrivateRoute>
               <ManageActivities />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/mantras"
+          element={
+            <PrivateRoute>
+              <ManageMantras />
             </PrivateRoute>
           }
         />

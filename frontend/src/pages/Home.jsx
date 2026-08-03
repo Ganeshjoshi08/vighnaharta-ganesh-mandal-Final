@@ -495,10 +495,9 @@ const Home = () => {
                   className="relative z-10 w-24 h-24 md:w-28 md:h-28 object-contain select-none rounded-full"
                 />
               </div>
-              
               {/* One-line Title in AMS Chhatrapati Calligraphy font */}
               <h1 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide text-white whitespace-nowrap pt-8 pb-6 pl-4 pr-4 select-none"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide text-white whitespace-nowrap pt-8 pb-6 pl-4 pr-4 select-none w-full text-center"
                 style={{
                   fontFamily: lang === "marathi" ? "'AMS Chhatrapati', 'AMSChhatrapati', var(--font-display-hero)" : "var(--font-display-hero)",
                   lineHeight: "1.45",

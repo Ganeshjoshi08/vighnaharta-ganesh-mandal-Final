@@ -66,7 +66,7 @@ const Gallery = () => {
       {loading ? (
         <p style={loadingText}>{text[lang].loading}</p>
       ) : (
-        <div style={grid}>
+        <div style={grid} className="gallery-main-grid">
           {images.length === 0 ? (
             <p style={loadingText}>{text[lang].noImages}</p>
           ) : (
@@ -141,7 +141,7 @@ const loadingText = {
 /* 🔥 GRID */
 const grid = {
   display: "grid",
-  gridTemplateColumns: "repeat(3, 1fr)",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
   gap: "20px"
 };
 

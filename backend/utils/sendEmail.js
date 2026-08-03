@@ -2,7 +2,10 @@ const nodemailer = require("nodemailer");
 
 const sendOTP = async (email, otp) => {
   try {
-    // 🔥 FIX: transporter ko reusable + safe bana
+    if (!process.env.EMAIL || !process.env.EMAIL_PASS) {
+      throw new Error("Missing EMAIL or EMAIL_PASS environment variables in backend .env");
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -11,25 +14,23 @@ const sendOTP = async (email, otp) => {
       }
     });
 
-    // 🔥 OPTIONAL: verify connection (debug ke liye)
+    // Explicitly verify the SMTP connection credentials before sending
     await transporter.verify();
 
     await transporter.sendMail({
-      from: `"Vighnaharta 🙏" <${process.env.EMAIL}>`, // 🔥 better sender
+      from: `"Vighnaharta 🙏" <${process.env.EMAIL}>`,
       to: email,
-      subject: "OTP Verification",
-      text: `Your OTP is ${otp}`
+      subject: "OTP Verification Code",
+      text: `Your OTP is ${otp}. This code is valid for 10 minutes.`
     });
 
-    console.log("✅ OTP sent successfully");
+    console.log(`✅ OTP sent successfully to: ${email}`);
+    return true;
 
   } catch (err) {
-    console.log("❌ Email error:", err.message);
-
-    // 🔥 IMPORTANT: throw mat kar warna signup fail ho jayega
-    // throw err; ❌ remove this
-
-    return false; // safe fallback
+    console.error("❌ Nodemailer sendOTP failed with detailed stack:");
+    console.error(err.stack || err);
+    return false;
   }
 };
 

@@ -94,26 +94,27 @@ const Admin = () => {
     location.pathname === path ? activeLink : link;
 
   return (
-    <div style={wrapper}>
+    <div style={wrapper} className="admin-wrapper">
       {/* SIDEBAR (UNCHANGED DARK) */}
-      <div style={sidebar}>
+      <div style={sidebar} className="admin-sidebar">
         <h2 style={{ color: "#ff7a00" }}>Admin Panel</h2>
 
         <Link to="/admin" style={isActive("/admin")}>Dashboard</Link>
         <Link to="/admin/events" style={isActive("/admin/events")}>Manage Events</Link>
         <Link to="/admin/gallery" style={isActive("/admin/gallery")}>📸 Manage Gallery</Link>
         <Link to="/admin/activities" style={isActive("/admin/activities")}>🎯 Manage Activities</Link>
+        <Link to="/admin/mantras" style={isActive("/admin/mantras")}>🕉️ Manage Mantras</Link>
         <Link to="/admin/announcements" style={isActive("/admin/announcements")}>Announcements</Link>
         <Link to="/admin/donations" style={isActive("/admin/donations")}>Donations</Link>
         <Link to="/admin/users" style={isActive("/admin/users")}>Users</Link>
       </div>
 
       {/* MAIN WHITE AREA */}
-      <div style={main}>
+      <div style={main} className="admin-main">
         <h1 style={title}>⚙️ Admin Dashboard</h1>
 
         {/* STATS */}
-        <div style={statsContainer}>
+        <div style={statsContainer} className="admin-stats">
           <div style={statCard}>👤 {users.length} Users</div>
           <div style={statCard}>💰 {donations.length} Donations</div>
           <div style={statCard}>🎉 {events.length} Events</div>

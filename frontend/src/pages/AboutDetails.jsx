@@ -121,7 +121,7 @@ const AboutDetails = () => {
       </header>
 
       {/* TOP ROW: TWO COLUMN GRID */}
-      <div style={grid}>
+      <div style={grid} className="about-details-grid">
         
         {/* LEFT COLUMN: GANESHA FRAME */}
         <div style={leftCol}>

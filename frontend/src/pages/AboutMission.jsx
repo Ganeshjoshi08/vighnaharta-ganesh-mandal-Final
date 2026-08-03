@@ -21,7 +21,7 @@ const AboutMission = () => {
       </header>
 
       {/* TWO COLUMN GRID FOR VISION & MISSION */}
-      <div style={grid}>
+      <div style={grid} className="about-mission-grid">
         
         {/* VISION BLOCK */}
         <div style={card}>

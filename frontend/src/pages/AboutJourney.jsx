@@ -90,7 +90,7 @@ const AboutJourney = () => {
                 <span>{isMarathi ? m.titleMr : m.titleEn}</span>
               </h3>
               
-              <div style={cardGrid}>
+              <div style={cardGrid} className="journey-card-grid">
                 {/* Text Block */}
                 <div style={textCol}>
                   <p style={cardDesc}>{isMarathi ? m.descMr : m.descEn}</p>

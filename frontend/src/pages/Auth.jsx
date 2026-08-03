@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
 
@@ -14,8 +14,20 @@ const Auth = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
 
   const navigate = useNavigate();
+
+  // Handle Resend OTP Countdown
+  useEffect(() => {
+    let interval;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,49 +50,72 @@ const Auth = () => {
       }
 
       else if (mode === "signup") {
-        await API.post("/auth/signup", {
+        const res = await API.post("/auth/signup", {
           name: form.name,
           email: form.email.toLowerCase().trim(),
           password: form.password
         });
 
-        alert("OTP sent to email 📧");
+        alert(res.data.msg || "OTP sent to email 📧");
+        setResendTimer(60);
         setMode("verify");
       }
 
       else if (mode === "verify") {
-        await API.post("/auth/verify-otp", {
+        const res = await API.post("/auth/verify-otp", {
           email: form.email.toLowerCase().trim(),
           otp: form.otp
         });
 
-        alert("Account verified ✅");
+        alert(res.data.msg || "Account verified ✅");
         setMode("login");
       }
 
       else if (mode === "forgot") {
-        await API.post("/auth/forgot-password", {
+        const res = await API.post("/auth/forgot-password", {
           email: form.email.toLowerCase().trim(),
         });
 
-        alert("OTP sent 📧");
+        alert(res.data.msg || "OTP sent 📧");
+        setResendTimer(60);
         setMode("reset");
       }
 
       else if (mode === "reset") {
-        await API.post("/auth/reset-password", {
+        const res = await API.post("/auth/reset-password", {
           email: form.email.toLowerCase().trim(),
           otp: form.otp,
           newPassword: form.newPassword
         });
 
-        alert("Password reset successful 🔥");
+        alert(res.data.msg || "Password reset successful 🔥");
         setMode("login");
       }
 
     } catch (err) {
-      console.log(err);
-      alert(err.response?.data?.msg || "Error ❌");
+      console.error("Auth Request Error:", err);
+      // Display the exact backend error message or Axios network error
+      const backendError = err.response?.data?.msg || err.response?.data?.message || err.message || "Connection failed. Please try again.";
+      alert(backendError);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendOTP = async () => {
+    if (loading || resendTimer > 0) return;
+    setLoading(true);
+
+    try {
+      const res = await API.post("/auth/resend-otp", {
+        email: form.email.toLowerCase().trim()
+      });
+      alert(res.data.msg || "OTP resent successfully! 📧");
+      setResendTimer(60);
+    } catch (err) {
+      console.error("Resend OTP Error:", err);
+      const backendError = err.response?.data?.msg || err.response?.data?.message || err.message || "Failed to resend OTP.";
+      alert(backendError);
     } finally {
       setLoading(false);
     }
@@ -147,14 +182,34 @@ const Auth = () => {
         )}
 
         {(mode === "verify" || mode === "reset") && (
-          <input
-            placeholder="Enter OTP"
-            style={input}
-            value={form.otp}
-            onChange={(e) =>
-              setForm({ ...form, otp: e.target.value })
-            }
-          />
+          <div style={{ width: "100%", textAlign: "left" }}>
+            <input
+              placeholder="Enter OTP"
+              style={input}
+              value={form.otp}
+              onChange={(e) =>
+                setForm({ ...form, otp: e.target.value })
+              }
+            />
+            <p style={{ fontSize: "11px", color: "#8f4e00", margin: "2px 0 10px 4px", fontWeight: "600" }}>
+              * OTP is valid for 10 minutes. Check your inbox & spam.
+            </p>
+            
+            <div style={{ textAlign: "right", paddingRight: "4px" }}>
+              {resendTimer > 0 ? (
+                <span style={{ fontSize: "12px", color: "#888", fontWeight: "bold" }}>
+                  Resend OTP in {resendTimer}s
+                </span>
+              ) : (
+                <span
+                  onClick={handleResendOTP}
+                  style={resendBtnStyle}
+                >
+                  Resend OTP
+                </span>
+              )}
+            </div>
+          </div>
         )}
 
         {mode === "reset" && (
@@ -207,7 +262,7 @@ const Auth = () => {
             </>
           )}
 
-          {(mode === "forgot" || mode === "reset") && (
+          {(mode === "forgot" || mode === "reset" || mode === "verify") && (
             <>
               <br />
               <span onClick={() => setMode("login")} style={switchBtn}>
@@ -228,14 +283,15 @@ const container = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  background: "#ffffff", // ✅ FIXED
+  background: "#ffffff",
   padding: "20px"
 };
 
 const card = {
   padding: "40px",
   borderRadius: "18px",
-  width: "360px",
+  maxWidth: "360px",
+  width: "100%",
   textAlign: "center",
   background: "#ffffff",
   border: "1px solid #eee",
@@ -286,6 +342,14 @@ const switchBtn = {
   cursor: "pointer",
   fontWeight: "bold",
   marginLeft: "5px"
+};
+
+const resendBtnStyle = {
+  cursor: "pointer",
+  fontSize: "12px",
+  color: "#ff7a00",
+  fontWeight: "bold",
+  textDecoration: "underline"
 };
 
 export default Auth;
