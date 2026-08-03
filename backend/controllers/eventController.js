@@ -1,5 +1,6 @@
 const Event = require("../models/Event");
 const Registration = require("../models/Registration");
+const { logActivity, createNotification } = require("../utils/activityLogger");
 
 // 🔐 Validation
 const isValidTitle = (title) => {
@@ -77,6 +78,14 @@ exports.createEvent = async (req, res) => {
 
     await event.save();
 
+    await logActivity(req.user.name, `Event Created: ${event.title}`);
+    await createNotification(
+      "EVENT",
+      "New Event Created 📅",
+      `Event "${event.title}" has been created for ${event.date.toLocaleDateString()}.`,
+      "/events"
+    );
+
     res.status(201).json({
       msg: "Event created 🎉",
       event
@@ -107,6 +116,8 @@ exports.deleteEvent = async (req, res) => {
 
     await event.deleteOne();
 
+    await logActivity(req.user.name, `Event Deleted: ${event.title}`);
+
     res.json({ msg: "Event deleted successfully ❌" });
 
   } catch (err) {
@@ -134,6 +145,14 @@ exports.registerForEvent = async (req, res) => {
     });
 
     await newRegistration.save();
+
+    await logActivity(newRegistration.fullName, `Event Registration: ${newRegistration.competition}`);
+    await createNotification(
+      "USER_REGISTRATION",
+      "New Event Registration 🎟️",
+      `${newRegistration.fullName} registered for "${newRegistration.competition}".`,
+      "/admin"
+    );
 
     res.status(201).json({
       msg: "Registration successful 🎉",

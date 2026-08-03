@@ -195,11 +195,9 @@ const AboutCommittee = () => {
             </p>
           </div>
           <div style={footerRight}>
-            <a href="#" style={footerLink}>{isMarathi ? "Privacy Policy" : "Privacy Policy"}</a>
-            <a href="#" style={footerLink}>{isMarathi ? "Terms of Service" : "Terms of Service"}</a>
-            <a href="#" onClick={() => navigate("/events")} style={footerLink}>{isMarathi ? "Volunteer Signup" : "Volunteer Signup"}</a>
-            <a href="#" onClick={() => navigate("/donation")} style={footerLink}>{isMarathi ? "Live Stream" : "Live Stream"}</a>
-            <a href="#" style={footerLink}>{isMarathi ? "Aarti Timings" : "Aarti Timings"}</a>
+            <a href="#" onClick={() => navigate("/privacy")} style={footerLink}>{isMarathi ? "गोपनीयता धोरण" : "Privacy Policy"}</a>
+            <a href="#" onClick={() => navigate("/terms")} style={footerLink}>{isMarathi ? "अटी व शर्ती" : "Terms of Service"}</a>
+            <a href="#" onClick={() => navigate("/copyright")} style={footerLink}>{isMarathi ? "कॉपीराइट नोटीस" : "Copyright Notice"}</a>
           </div>
         </div>
       </footer>

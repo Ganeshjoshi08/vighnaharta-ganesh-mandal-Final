@@ -557,36 +557,20 @@ const Events = () => {
         </form>
       </div>
 
-      {/* BECOME A VOLUNTEER SECTION */}
+      {/* VIEW TIMINGS SECTION */}
       <div className="mt-24 text-center max-w-xl px-6 flex flex-col items-center gap-4">
-        {/* Hand icon with heart */}
-        <div className="text-[#8f4e00] mb-2 animate-pulse">
-          <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        </div>
-
         <h2 className="font-display-hero text-3xl font-extrabold text-[#5C4017]">
-          {currentUI.volunteer.title}
+          {lang === "english" ? "Mandal Utsav Timings" : "मंडळ उत्सव वेळापत्रक"}
         </h2>
         <p className="text-sm text-[#6d3a00]/70 leading-relaxed font-medium">
-          {currentUI.volunteer.desc}
+          {lang === "english" ? "Check out the daily rituals, morning/evening Aarti and Prasad distributions." : "आरती, महाप्रसाद आणि दर्शनाच्या वेळा जाणून घ्या."}
         </p>
-
-        <div className="flex flex-wrap justify-center gap-4 mt-4 w-full">
-          <button 
-            onClick={() => setShowVolunteerModal(true)}
-            className="bg-[#8f4e00] hover:bg-[#733e00] text-white text-[10px] font-black uppercase tracking-widest py-3 px-8 rounded-sm transition-all active:scale-97 cursor-pointer"
-          >
-            {currentUI.volunteer.signUpBtn}
-          </button>
-          <button 
-            onClick={() => setShowTimingsModal(true)}
-            className="border border-[#8f4e00] text-[#8f4e00] hover:bg-[#8f4e00]/10 text-[10px] font-black uppercase tracking-widest py-3 px-8 rounded-sm transition-all active:scale-97 cursor-pointer"
-          >
-            {currentUI.volunteer.viewTimingsBtn}
-          </button>
-        </div>
+        <button 
+          onClick={() => setShowTimingsModal(true)}
+          className="bg-[#8f4e00] hover:bg-[#733e00] text-white text-[10px] font-black uppercase tracking-widest py-3 px-8 rounded-sm transition-all active:scale-97 cursor-pointer"
+        >
+          {lang === "english" ? "View Timings" : "वेळापत्रक पहा"}
+        </button>
       </div>
 
       {/* -------------------- SUCCESS / TICKET CONFIRMATION MODAL -------------------- */}
@@ -652,100 +636,7 @@ const Events = () => {
         </div>
       )}
 
-      {/* -------------------- VOLUNTEER SIGNUP MODAL -------------------- */}
-      {showVolunteerModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-md bg-[#FEFCEB] border-4 border-[#8f4e00] rounded-sm p-6 md:p-8 shadow-2xl">
-            <div className="absolute inset-1.5 border border-[#8f4e00]/30 rounded-sm pointer-events-none" />
 
-            {/* Close trigger */}
-            <button 
-              onClick={() => setShowVolunteerModal(false)}
-              className="absolute top-4 right-4 text-[#5C4017] hover:text-[#8f4e00] font-bold text-lg cursor-pointer"
-            >
-              ✕
-            </button>
-
-            <div className="text-center mb-6">
-              <h3 className="font-display-hero text-xl md:text-2xl font-black text-[#5C4017]">
-                {lang === "english" ? "Volunteer Registration" : "स्वयंसेवक नोंदणी"}
-              </h3>
-              <p className="text-xs text-[#8f4e00]/70 font-semibold mt-1">
-                {lang === "english" ? "Serve Ganesha, Serve Society" : "गणेश सेवा हीच समाज सेवा"}
-              </p>
-            </div>
-
-            {volunteerSuccess ? (
-              <div className="flex flex-col items-center text-center p-6 bg-green-50 border border-green-200 rounded-sm">
-                <span className="text-3xl mb-2">🌸</span>
-                <span className="text-sm font-bold text-green-800">
-                  {lang === "english" ? "Submission Successful!" : "नोंदणी यशस्वी झाली!"}
-                </span>
-                <p className="text-xs text-green-700/80 mt-2 leading-relaxed font-semibold">
-                  {lang === "english" 
-                    ? "Thank you for volunteering. Our coordinators will contact you shortly." 
-                    : "स्वयंसेवक बनल्याबद्दल धन्यवाद. आमचे समन्वयक लवकरच तुमच्याशी संपर्क साधतील."}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleVolunteerSubmit} className="flex flex-col gap-4 relative z-10">
-                <div className="flex flex-col gap-1">
-                  <label className="text-[10px] font-bold text-[#5C4017] tracking-wider uppercase font-label-caps">
-                    {lang === "english" ? "YOUR NAME" : "तुमचे नाव"}
-                  </label>
-                  <input 
-                    type="text"
-                    value={volunteerForm.name}
-                    onChange={(e) => setVolunteerForm({...volunteerForm, name: e.target.value})}
-                    placeholder={lang === "english" ? "Enter your name" : "नाव प्रविष्ट करा"}
-                    className="border border-[#d8c39e]/70 bg-white/50 px-3 py-2 rounded-sm text-sm text-[#271b05] focus:outline-none focus:border-[#8f4e00]"
-                    required
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="text-[10px] font-bold text-[#5C4017] tracking-wider uppercase font-label-caps">
-                    {lang === "english" ? "CONTACT PHONE" : "फोन नंबर"}
-                  </label>
-                  <input 
-                    type="tel"
-                    value={volunteerForm.phone}
-                    onChange={(e) => setVolunteerForm({...volunteerForm, phone: e.target.value})}
-                    placeholder={lang === "english" ? "+91 00000 00000" : "+९१ ००००० ०००००"}
-                    className="border border-[#d8c39e]/70 bg-white/50 px-3 py-2 rounded-sm text-sm text-[#271b05] focus:outline-none focus:border-[#8f4e00]"
-                    required
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="text-[10px] font-bold text-[#5C4017] tracking-wider uppercase font-label-caps">
-                    {lang === "english" ? "SERVICE AREA" : "सेवेचे क्षेत्र"}
-                  </label>
-                  <select
-                    value={volunteerForm.area}
-                    onChange={(e) => setVolunteerForm({...volunteerForm, area: e.target.value})}
-                    className="border border-[#d8c39e]/70 bg-white/50 px-3 py-2 rounded-sm text-sm text-[#271b05] focus:outline-none focus:border-[#8f4e00] cursor-pointer"
-                    required
-                  >
-                    <option value="" disabled>{lang === "english" ? "Select service area" : "क्षेत्र निवडा"}</option>
-                    <option value="Prasad">{lang === "english" ? "Prasad Distribution (प्रसाद वाटप)" : "प्रसाद वाटप"}</option>
-                    <option value="Crowd">{lang === "english" ? "Crowd Management (गर्दी व्यवस्थापन)" : "गर्दी व्यवस्थापन"}</option>
-                    <option value="Medical">{lang === "english" ? "Medical Camp Support (वैद्यकीय मदत)" : "वैद्यकीय मदत"}</option>
-                    <option value="Decoration">{lang === "english" ? "Decoration & Lights (सजावट)" : "सजावट"}</option>
-                  </select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="bg-[#8f4e00] hover:bg-[#733e00] text-white text-[10px] font-black uppercase tracking-widest py-3 px-6 rounded-sm w-full mt-2 transition-all active:scale-97 cursor-pointer"
-                >
-                  {lang === "english" ? "SUBMIT APPLICATION" : "अर्ज सादर करा"}
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* -------------------- VIEW TIMINGS MODAL -------------------- */}
       {showTimingsModal && (

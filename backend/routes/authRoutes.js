@@ -7,7 +7,8 @@ const {
   verifyOTP,
   forgotPassword,
   resetPassword,
-  resendOTP
+  resendOTP,
+  logout
 } = require("../controllers/authController");
 
 const { protect, isAdmin } = require("../middleware/authMiddleware");
@@ -24,6 +25,9 @@ router.post("/verify-otp", verifyOTP);
 
 // ✅ Login
 router.post("/login", login);
+
+// 🚪 Logout
+router.post("/logout", protect, logout);
 
 // 🔁 Forgot password (send OTP)
 router.post("/forgot-password", forgotPassword);

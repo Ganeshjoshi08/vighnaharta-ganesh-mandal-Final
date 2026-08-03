@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
+import { useSettings } from "../context/SettingsContext";
 import qrImg from "../assets/qr.png";
 import homeImg from "../assets/HOME_IMG.jpg";
 import aboutGanesha from "../assets/about_ganesha.jpg";
@@ -25,12 +26,41 @@ import mandalLogoCircular from "../assets/mandal_logo_circular.png";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { settings, hero } = useSettings();
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
   const [dbInfo, setDbInfo] = useState(null);
   const [dbImages, setDbImages] = useState([]);
   const [dbActivities, setDbActivities] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(null);
+
+  const isCalligraphyFont = (text) => {
+    if (!text) return false;
+    return !/[\u0900-\u097F]/.test(text);
+  };
+
+  useEffect(() => {
+    if (!hero?.countdownDate) return;
+    const target = new Date(hero.countdownDate).getTime();
+    if (isNaN(target)) return;
+
+    const interval = setInterval(() => {
+      const distance = target - Date.now();
+      if (distance < 0) {
+        setTimeLeft(null);
+        clearInterval(interval);
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        setTimeLeft({ days, hours, minutes, seconds });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [hero?.countdownDate]);
 
   useEffect(() => {
     fetchDbInfo();
@@ -388,6 +418,22 @@ const Home = () => {
   };
 
   const current = { ...translations[lang] };
+
+  if (settings) {
+    if (current.contact) {
+      current.contact.addrVal = lang === "marathi" ? settings.addressMr : settings.addressEn;
+      current.contact.phoneVal = settings.phoneNumber;
+      current.contact.emailVal = settings.email;
+    }
+  }
+  if (hero) {
+    if (current.hero) {
+      current.hero.title = lang === "marathi" ? hero.titleMr : hero.titleEn;
+      current.hero.sub = lang === "marathi" ? hero.subMr : hero.subEn;
+      current.hero.est = lang === "marathi" ? hero.subtitleMr : hero.subtitleEn;
+    }
+  }
+
   if (dbInfo) {
     if (lang === "marathi") {
       current.about = {
@@ -490,7 +536,7 @@ const Home = () => {
               <div className="relative p-1.5 rounded-full border border-amber-400/40 shadow-[0_0_20px_rgba(246,196,83,0.3)] bg-amber-950/20 my-2">
                 <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(246,196,83,0.2)_0%,transparent_70%)] blur-md pointer-events-none" />
                 <img
-                  src={mandalLogoCircular}
+                  src={settings?.logoUrl ? `http://localhost:5000${settings.logoUrl}` : mandalLogoCircular}
                   alt="Mandal Logo"
                   className="relative z-10 w-24 h-24 md:w-28 md:h-28 object-contain select-none rounded-full"
                 />
@@ -499,25 +545,65 @@ const Home = () => {
               <h1 
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide text-white whitespace-nowrap pt-8 pb-6 pl-4 pr-4 select-none w-full text-center"
                 style={{
-                  fontFamily: lang === "marathi" ? "'AMS Chhatrapati', 'AMSChhatrapati', var(--font-display-hero)" : "var(--font-display-hero)",
+                  fontFamily: (lang === "marathi" && isCalligraphyFont(hero?.titleMr || "ivaGnahtaa_ imaPa ma/DL")) ? "'AMS Chhatrapati', 'AMSChhatrapati', var(--font-display-hero)" : "var(--font-display-hero)",
                   lineHeight: "1.45",
                   textShadow: "0 2px 5px rgba(0, 0, 0, 0.75)",
                   fontSize: lang === "marathi" ? undefined : "clamp(1.5rem, 4.5vw, 3.25rem)"
                 }}
               >
-                {lang === "marathi" ? "ivaGnahtaa_ imaPa ma/DL" : "Vighnaharta Mitra Mandal"}
+                {current.hero.title}
               </h1>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3 text-amber-200/90 font-medium text-sm md:text-base mt-6">
               <span className="bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 shadow-inner">
-                {lang === "marathi" ? "स्थापना: १९९०" : "Established: 1990"}
+                {lang === "marathi" ? (hero?.subtitleMr?.split("•")[0]?.trim() || "स्थापना: १९९०") : (hero?.subtitleEn?.split("•")[0]?.trim() || "Established: 1990")}
               </span>
               <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
               <span className="bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 shadow-inner">
-                {lang === "marathi" ? "विघ्नहर्ता चौक, बीड" : "Vighnaharta Chowk, Beed"}
+                {lang === "marathi" ? (hero?.subtitleMr?.split("•")[1]?.trim() || "विघ्नहर्ता चौक, बीड") : (hero?.subtitleEn?.split("•")[1]?.trim() || "Vighnaharta Chowk, Beed")}
               </span>
             </div>
+
+            {/* Countdown Widget */}
+            {timeLeft && (
+              <div className="flex lg:hidden gap-4 text-center justify-center mt-6 bg-black/40 backdrop-blur-md p-4 rounded-xl border border-amber-500/30 w-full max-w-sm z-30">
+                <div className="flex-1">
+                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.days}</span>
+                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Days</span>
+                </div>
+                <span className="text-amber-400 text-2xl font-bold self-center animate-pulse">:</span>
+                <div className="flex-1">
+                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.hours}</span>
+                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Hours</span>
+                </div>
+                <span className="text-amber-400 text-2xl font-bold self-center animate-pulse">:</span>
+                <div className="flex-1">
+                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.minutes}</span>
+                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Mins</span>
+                </div>
+                <span className="text-amber-400 text-2xl font-bold self-center animate-pulse">:</span>
+                <div className="flex-1">
+                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.seconds}</span>
+                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Secs</span>
+                </div>
+              </div>
+            )}
+
+            {/* Hero CTA buttons */}
+            {hero?.buttons && hero.buttons.length > 0 && (
+              <div className="flex lg:hidden flex-wrap gap-4 justify-center mt-6 z-30">
+                {hero.buttons.map((btn, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => btn.link.startsWith("http") ? window.open(btn.link, "_blank") : navigate(btn.link)}
+                    className="px-6 py-2.5 rounded-full font-bold text-sm tracking-wide text-amber-950 bg-gradient-to-r from-amber-400 to-[#F6C453] hover:from-amber-300 hover:to-[#FFE9A3] hover:scale-105 active:scale-95 transition-all shadow-lg cursor-pointer"
+                  >
+                    {lang === "marathi" ? btn.textMr : btn.textEn}
+                  </button>
+                ))}
+              </div>
+            )}
 
           </div>
 
@@ -528,7 +614,7 @@ const Home = () => {
             <div className="absolute w-[350px] md:w-[540px] h-[350px] md:h-[540px] rounded-full bg-orange-500/3 border border-orange-500/5 animate-[spin_90s_linear_infinite] [animation-direction:reverse]" />
             
             <img
-              src={ganeshDivineHero}
+              src={hero?.heroImage ? `http://localhost:5000${hero.heroImage}` : ganeshDivineHero}
               alt="Lord Ganesha"
               className="relative z-10 w-full max-w-[320px] md:max-w-[460px] lg:max-w-[480px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
             />

@@ -1,4 +1,5 @@
 const Activity = require("../models/Activity");
+const { logActivity, createNotification } = require("../utils/activityLogger");
 
 //--------------------------------------------------
 // 📥 GET ALL ACTIVITIES
@@ -45,6 +46,14 @@ exports.addActivity = async (req, res) => {
 
     await act.save();
 
+    await logActivity(req.user.name, `Activity Added: ${act.title}`);
+    await createNotification(
+      "ACTIVITY",
+      "New Activity Added 🎯",
+      `Activity "${act.title}" has been published.`,
+      "/#activities"
+    );
+
     res.status(201).json({
       msg: "Activity added ✅",
       activity: act
@@ -82,6 +91,8 @@ exports.updateActivity = async (req, res) => {
 
     await act.save();
 
+    await logActivity(req.user.name, `Activity Updated: ${act.title}`);
+
     res.json({
       msg: "Activity updated ✅",
       activity: act
@@ -102,7 +113,11 @@ exports.deleteActivity = async (req, res) => {
       return res.status(403).json({ msg: "Access denied ❌" });
     }
 
-    await Activity.findByIdAndDelete(req.params.id);
+    const act = await Activity.findById(req.params.id);
+    if (act) {
+      await Activity.findByIdAndDelete(req.params.id);
+      await logActivity(req.user.name, `Activity Deleted: ${act.title}`);
+    }
     res.json({ msg: "Activity deleted ✅" });
   } catch (err) {
     console.log("DELETE ACTIVITY ERROR:", err);

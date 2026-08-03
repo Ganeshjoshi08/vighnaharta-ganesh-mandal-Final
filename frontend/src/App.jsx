@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import API from "./api/api";
+import { SettingsProvider } from "./context/SettingsContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -10,6 +12,9 @@ import Donation from "./pages/Donation";
 import Atharvashirsha from "./pages/Atharvashirsha";
 import Announcements from "./pages/Announcements";
 import Mantras from "./pages/Mantras";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Copyright from "./pages/Copyright";
 
 // New About Pages
 import AboutDetails from "./pages/AboutDetails";
@@ -55,8 +60,93 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const trackPage = async () => {
+      try {
+        let sessionToken = sessionStorage.getItem("sessionToken");
+        if (!sessionToken) {
+          sessionToken = "sess_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+          sessionStorage.setItem("sessionToken", sessionToken);
+        }
+
+        const ua = navigator.userAgent;
+        let browser = "Other";
+        if (ua.includes("Firefox")) browser = "Firefox";
+        else if (ua.includes("SamsungBrowser")) browser = "Samsung Browser";
+        else if (ua.includes("Opera") || ua.includes("OPR")) browser = "Opera";
+        else if (ua.includes("Trident")) browser = "IE";
+        else if (ua.includes("Edge") || ua.includes("Edg")) browser = "Edge";
+        else if (ua.includes("Chrome")) browser = "Chrome";
+        else if (ua.includes("Safari")) browser = "Safari";
+
+        let os = "Other";
+        if (ua.includes("Windows")) os = "Windows";
+        else if (ua.includes("Macintosh")) os = "MacOS";
+        else if (ua.includes("Android")) os = "Android";
+        else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+        else if (ua.includes("Linux")) os = "Linux";
+
+        let deviceType = "Desktop";
+        if (/Mobi|Android|iPhone/i.test(ua)) deviceType = "Mobile";
+        else if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
+
+        await API.post("/analytics/track", {
+          sessionId: sessionToken,
+          path: location.pathname,
+          referrer: document.referrer || "Direct",
+          browser,
+          deviceType,
+          os
+        });
+      } catch (err) {
+        console.error("Tracking error:", err);
+      }
+    };
+
+    trackPage();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    let interval;
+    const startHeartbeat = () => {
+      clearInterval(interval);
+      interval = setInterval(async () => {
+        if (document.visibilityState === "visible") {
+          try {
+            const sessionToken = sessionStorage.getItem("sessionToken");
+            if (sessionToken) {
+              await API.post("/analytics/track", {
+                sessionId: sessionToken,
+                path: location.pathname,
+                heartbeat: true
+              });
+            }
+          } catch (err) {
+            // ignore
+          }
+        }
+      }, 30000);
+    };
+
+    startHeartbeat();
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        startHeartbeat();
+      } else {
+        clearInterval(interval);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [location.pathname]);
+
   return (
-    <>
+    <SettingsProvider>
       {!hideLayout && <Navbar />}
 
       <Routes>
@@ -69,6 +159,9 @@ function App() {
         <Route path="/atharva" element={<Atharvashirsha />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/mantras" element={<Mantras />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/copyright" element={<Copyright />} />
 
         {/* ℹ️ ABOUT SUB-CHANNELS */}
         <Route path="/about/details" element={<AboutDetails />} />
@@ -174,7 +267,7 @@ function App() {
       </Routes>
 
       {!hideLayout && <Footer />}
-    </>
+    </SettingsProvider>
   );
 }
 

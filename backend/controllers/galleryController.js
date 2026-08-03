@@ -1,4 +1,5 @@
 const Gallery = require("../models/Gallery");
+const { logActivity, createNotification } = require("../utils/activityLogger");
 
 //--------------------------------------------------
 // 📥 GET ALL IMAGES
@@ -37,6 +38,14 @@ exports.addImage = async (req, res) => {
     });
 
     await img.save();
+
+    await logActivity(req.user.name, `Gallery Image Uploaded: ${img.title || "Untitled"}`);
+    await createNotification(
+      "GALLERY",
+      "New Gallery Image 🖼️",
+      `Image "${img.title || "Untitled"}" has been uploaded in category "${img.category}".`,
+      "/gallery"
+    );
 
     res.status(201).json({
       msg: "Image uploaded 🖼️",
@@ -87,7 +96,11 @@ exports.updateImage = async (req, res) => {
 //--------------------------------------------------
 exports.deleteImage = async (req, res) => {
   try {
-    await Gallery.findByIdAndDelete(req.params.id);
+    const img = await Gallery.findById(req.params.id);
+    if (img) {
+      await Gallery.findByIdAndDelete(req.params.id);
+      await logActivity(req.user ? req.user.name : "Admin", `Gallery Image Deleted: ${img.title || "Untitled"}`);
+    }
     res.json({ msg: "Deleted ✅" });
   } catch (err) {
     console.log("DELETE ERROR:", err);

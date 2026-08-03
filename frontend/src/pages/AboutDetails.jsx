@@ -172,13 +172,10 @@ const AboutDetails = () => {
         </h2>
         <p style={ctaText}>
           {isMarathi 
-            ? "आमच्याकडे समाजासाठी काही देण्याची इच्छा असेल, तर आमच्या स्वयंसेवक टीममध्ये सामील व्हा." 
-            : "If you wish to contribute to the community, join our active volunteer team."}
+            ? "मंडळाच्या विविध सामाजिक व धार्मिक उपक्रमांना मदत करण्यासाठी आपले अमूल्य योगदान द्या." 
+            : "Support the Mandal's various social and religious activities with your invaluable contribution."}
         </p>
         <div style={btnGroup}>
-          <button onClick={() => setShowVolunteerModal(true)} style={volunteerBtn}>
-            Volunteer Signup
-          </button>
           <button onClick={() => navigate("/donation")} style={donateBtn}>
             Donate Now
           </button>
@@ -189,61 +186,14 @@ const AboutDetails = () => {
       <footer style={footerStyle}>
         <h3 style={footerLogo}>{isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}</h3>
         <div style={footerLinks}>
-          <a href="#" style={footerLink}>Privacy Policy</a>
-          <a href="#" style={footerLink}>Terms of Service</a>
-          <a href="#" onClick={() => setShowVolunteerModal(true)} style={footerLink}>Volunteer Signup</a>
-          <a href="#" onClick={() => navigate("/donation")} style={footerLink}>Temple Timing</a>
+          <a href="#" onClick={() => navigate("/privacy")} style={footerLink}>Privacy Policy</a>
+          <a href="#" onClick={() => navigate("/terms")} style={footerLink}>Terms of Service</a>
+          <a href="#" onClick={() => navigate("/copyright")} style={footerLink}>Copyright Notice</a>
         </div>
         <p style={copyright}>
           © 2026 {isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}. Developed by Ganesh Joshi
         </p>
       </footer>
-
-      {/* VOLUNTEER REGISTRATION MODAL */}
-      {showVolunteerModal && (
-        <div style={modalOverlay}>
-          <div style={modalCard}>
-            <h3 style={modalTitle}>{isMarathi ? "स्वयंसेवक नोंदणी" : "Volunteer Registration"}</h3>
-            {volunteerSuccess ? (
-              <div style={successMessage}>
-                🎉 {isMarathi ? "नोंदणी यशस्वी झाली! आम्ही लवकरच संपर्क करू." : "Registration Successful! We will contact you soon."}
-              </div>
-            ) : (
-              <form onSubmit={handleVolunteerSubmit} style={modalForm}>
-                <input
-                  placeholder={isMarathi ? "पूर्ण नाव" : "Full Name"}
-                  value={volunteerForm.name}
-                  onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
-                  style={modalInput}
-                  required
-                />
-                <input
-                  placeholder={isMarathi ? "संपर्क क्रमांक" : "Contact Number"}
-                  value={volunteerForm.phone}
-                  onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
-                  style={modalInput}
-                  required
-                />
-                <input
-                  placeholder={isMarathi ? "पत्ता / परिसर" : "Area / Address"}
-                  value={volunteerForm.area}
-                  onChange={(e) => setVolunteerForm({ ...volunteerForm, area: e.target.value })}
-                  style={modalInput}
-                  required
-                />
-                <div style={modalBtns}>
-                  <button type="submit" style={modalSubmitBtn}>
-                    {isMarathi ? "नोंदणी करा" : "Register"}
-                  </button>
-                  <button type="button" onClick={() => setShowVolunteerModal(false)} style={modalCloseBtn}>
-                    {isMarathi ? "बंद करा" : "Close"}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
 
     </div>
   );

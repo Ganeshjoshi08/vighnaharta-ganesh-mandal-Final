@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logoImg from "../assets/logo.jpeg";
+import { useSettings } from "../context/SettingsContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -120,6 +121,11 @@ const Navbar = () => {
   };
 
   const current = navText[lang];
+  const { settings } = useSettings();
+  const titleText = settings?.websiteName || current.title;
+  const subText = settings ? (lang === "marathi" ? settings.addressMr : settings.addressEn) : current.sub;
+  const logoSrc = settings?.logoUrl ? `http://localhost:5000${settings.logoUrl}` : logoImg;
+
   const isMantras = location.pathname === "/mantras" || location.pathname === "/events";
 
   const isHome = location.pathname === "/";
@@ -147,7 +153,7 @@ const Navbar = () => {
           }}
         >
           <img
-            src={logoImg}
+            src={logoSrc}
             alt="Mandal Logo"
             className="w-10 h-10 rounded-full border border-secondary shadow-sm flex-shrink-0"
           />
@@ -163,7 +169,7 @@ const Navbar = () => {
                   : "text-white"
               }`}
             >
-              {current.title}
+              {titleText}
             </span>
             <span
               className={`text-[8px] md:text-[9px] font-label-caps uppercase tracking-widest font-semibold whitespace-nowrap ${
@@ -174,7 +180,7 @@ const Navbar = () => {
                   : "text-white/80"
               }`}
             >
-              {current.sub}
+              {subText}
             </span>
           </div>
         </div>

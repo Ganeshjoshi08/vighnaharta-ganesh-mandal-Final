@@ -1,4 +1,5 @@
 const Donation = require("../models/Donation");
+const { logActivity, createNotification } = require("../utils/activityLogger");
 
 // 🔐 Validation functions
 const isValidName = (name) => {
@@ -68,6 +69,14 @@ exports.createDonation = async (req, res) => {
     });
 
     await donation.save();
+
+    await logActivity(donation.name, `Donation Received: ₹${donation.amount}`);
+    await createNotification(
+      "DONATION",
+      "New Donation Received 💰",
+      `${donation.name} donated ₹${donation.amount}.`,
+      "/admin/donations"
+    );
 
     res.status(201).json({
       msg: "Donation successful 🙏",

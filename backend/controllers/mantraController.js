@@ -1,6 +1,7 @@
 const Mantra = require("../models/Mantra");
 const fs = require("fs");
 const path = require("path");
+const { logActivity, createNotification } = require("../utils/activityLogger");
 
 //--------------------------------------------------
 // 📂 LOCAL FILE CLEANUP HELPERS
@@ -89,6 +90,14 @@ exports.addMantra = async (req, res) => {
 
     await mantra.save();
 
+    await logActivity(req.user ? req.user.name : "Admin", `Mantra Added: ${mantra.mantraNameEn}`);
+    await createNotification(
+      "MANTRA",
+      "New Mantra Added 🕉️",
+      `Mantra "${mantra.mantraNameEn}" has been published.`,
+      "/mantras"
+    );
+
     res.status(201).json({ success: true, msg: "Mantra created successfully 🎉", data: mantra });
 
   } catch (err) {
@@ -165,6 +174,8 @@ exports.updateMantra = async (req, res) => {
 
     await mantra.save();
 
+    await logActivity(req.user ? req.user.name : "Admin", `Mantra Updated: ${mantra.mantraNameEn}`);
+
     res.status(200).json({ success: true, msg: "Mantra updated successfully 🎉", data: mantra });
 
   } catch (err) {
@@ -192,6 +203,8 @@ exports.deleteMantra = async (req, res) => {
     }
 
     await Mantra.findByIdAndDelete(id);
+
+    await logActivity(req.user ? req.user.name : "Admin", `Mantra Deleted: ${mantra.mantraNameEn}`);
 
     res.status(200).json({ success: true, msg: "Mantra deleted successfully 🗑️" });
 

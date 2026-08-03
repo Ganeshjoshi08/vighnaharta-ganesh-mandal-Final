@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+import { useSettings } from "../context/SettingsContext";
 
 const Footer = () => {
   const [lang, setLang] = useState(localStorage.getItem("lang") || "marathi");
@@ -19,11 +20,11 @@ const Footer = () => {
     marathi: {
       title: "श्री विघ्नहर्ता मित्र मंडळ",
       tag: "श्रद्धा • सेवा • संस्कृती",
-      privacy: "Privacy Policy",
-      terms: "Terms of Service",
-      volunteer: "Volunteer Signup",
-      timings: "Temple Timing",
-      copyright: "© 2024 श्री विघ्नहर्ता मित्र मंडळ. Developed by Ganesh Joshi",
+      privacy: "गोपनीयता धोरण",
+      terms: "अटी व शर्ती",
+      copyrightNotice: "कॉपीराइट नोटीस",
+      timings: "उत्सव वेळापत्रक",
+      copyright: "© 2026 श्री विघ्नहर्ता मित्र मंडळ. Developed by Ganesh Joshi",
       dev: "Developed by Ganesh Joshi",
       chant: "“गणपती बाप्पा मोरया, पुढच्या वर्षी लवकर या!”"
     },
@@ -31,16 +32,21 @@ const Footer = () => {
       title: "Shree Vighnaharta Mitra Mandal",
       tag: "DEVOTION • SERVICE • CULTURE",
       privacy: "Privacy Policy",
-      terms: "Terms of Service",
-      volunteer: "Volunteer Signup",
-      timings: "Temple Timing",
-      copyright: "© 2024 श्री विघ्नहर्ता मित्र मंडळ. Developed by Ganesh Joshi",
+      terms: "Terms & Conditions",
+      copyrightNotice: "Copyright Notice",
+      timings: "Utsav Timings",
+      copyright: "© 2026 Shree Vighnaharta Mitra Mandal. Developed by Ganesh Joshi",
       dev: "Developed by Ganesh Joshi",
       chant: "“Ganpati Bappa Morya, Pudhchya Varshi Lavkar Ya!”"
     }
   };
 
   const current = footerText[lang];
+  const { settings } = useSettings();
+  const titleText = settings?.websiteName || current.title;
+  const tagText = settings ? (lang === "marathi" ? settings.footerTextMr : settings.footerTextEn) : current.tag;
+  const copyrightText = settings ? (lang === "marathi" ? settings.copyrightMr : settings.copyrightEn) : current.copyright;
+
   const isMantras = location.pathname === "/mantras";
 
   return (
@@ -49,31 +55,28 @@ const Footer = () => {
     }`}>
       <div className="mb-4">
         <span className="font-headline-md text-3xl text-primary-fixed mb-2 block font-black">
-          {current.title}
+          {titleText}
         </span>
         <p className="font-label-caps text-xs text-surface-variant/60 uppercase tracking-[0.2em] font-bold">
-          {current.tag}
+          {tagText}
         </p>
       </div>
 
       <nav className="flex flex-wrap justify-center gap-6 md:gap-8 mb-4 text-xs md:text-sm">
-        <a href="#about" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
-          {current.privacy}
-        </a>
-        <a href="#about" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
+        <Link to="/terms" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
           {current.terms}
-        </a>
-        <a href="#about" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
-          {current.volunteer}
-        </a>
-        <a href="#about" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
-          {current.timings}
-        </a>
+        </Link>
+        <Link to="/privacy" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
+          {current.privacy}
+        </Link>
+        <Link to="/copyright" className="font-label-caps uppercase tracking-wider text-surface-variant hover:text-primary-fixed transition-colors">
+          {current.copyrightNotice}
+        </Link>
       </nav>
 
       <div className="space-y-1 text-xs md:text-sm">
         <p className="text-surface-variant/80 font-medium">
-          {current.copyright}
+          {copyrightText}
         </p>
       </div>
 

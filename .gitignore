@@ -1,0 +1,26 @@
+# Environment configurations containing keys/passwords
+.env
+backend/.env
+frontend/.env
+*.env.local
+
+# Dependency directories
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Production build output
+dist/
+dist-ssr/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Gemini local config
+.gemini/
+
+# System Files
+.DS_Store
+Thumbs.db

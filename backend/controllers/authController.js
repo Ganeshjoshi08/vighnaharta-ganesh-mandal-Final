@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendOTP = require("../utils/sendEmail");
+const { logActivity, createNotification } = require("../utils/activityLogger");
 
 //--------------------------------------------------
 // 🔍 DEBUG REQUEST LOGGER (Toggleable)
@@ -144,6 +145,15 @@ exports.verifyOTP = async (req, res) => {
 
     await user.save();
 
+    // Log activity & create notification
+    await logActivity(user.name, "New User Registration");
+    await createNotification(
+      "USER_REGISTRATION",
+      "New User Registered 🎉",
+      `${user.name} (${user.email}) registered and verified their account.`,
+      "/admin/users"
+    );
+
     res.status(200).json({ success: true, msg: "Account verified ✅", message: "Account verified ✅" });
 
   } catch (err) {
@@ -196,6 +206,9 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
+
+    // Log login activity
+    await logActivity(user.name, user.isAdmin ? "Admin Login" : "User Login");
 
     res.status(200).json({
       success: true,
@@ -383,5 +396,20 @@ exports.resendOTP = async (req, res) => {
   } catch (err) {
     console.error("🔥 RESEND OTP ERROR STACK:", err);
     res.status(500).json({ success: false, msg: "Server error during resending OTP", message: err.message });
+  }
+};
+
+//--------------------------------------------------
+// 🚪 LOGOUT
+//--------------------------------------------------
+exports.logout = async (req, res) => {
+  try {
+    if (req.user) {
+      await logActivity(req.user.name, req.user.isAdmin ? "Admin Logout" : "User Logout");
+    }
+    res.status(200).json({ success: true, msg: "Logged out successfully 🚪" });
+  } catch (err) {
+    console.error("🔥 LOGOUT ERROR STACK:", err);
+    res.status(500).json({ success: false, msg: "Server error during logout", message: err.message });
   }
 };
