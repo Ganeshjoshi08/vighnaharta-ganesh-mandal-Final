@@ -60,7 +60,9 @@ app.get("/api/test-email", async (req, res) => {
   try {
     const nodemailer = require("nodemailer");
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS
