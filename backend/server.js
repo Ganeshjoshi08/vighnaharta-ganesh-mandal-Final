@@ -56,6 +56,29 @@ app.use("/api/analytics", require("./routes/analyticsRoutes"));
 //--------------------------------------------------
 // 🏠 BASE ROUTE
 //--------------------------------------------------
+app.get("/api/test-email", async (req, res) => {
+  try {
+    const nodemailer = require("nodemailer");
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+    await transporter.verify();
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: "joshiganeshcsmss@gmail.com",
+      subject: "Render SMTP Verification Test",
+      text: "Connection is successful!"
+    });
+    res.json({ success: true, message: "SMTP connection verified and test email sent successfully!" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, stack: err.stack });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("🙏 Vighnaharta API running successfully 🚀");
 });
