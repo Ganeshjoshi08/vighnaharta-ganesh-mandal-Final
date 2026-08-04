@@ -1137,8 +1137,8 @@ const Home = () => {
                 </div>
                 <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
                   {lang === "marathi"
-                    ? "आमच्या मंडळाचे विद्यमान कार्यकारी मंडळ अत्यंत निष्ठेने आणि सेवाभावाने कार्यरत आहे. मंडळाचे अध्यक्ष गणेश जोशी यांच्या नेतृत्वाखाली सर्व सदस्य शिस्तबद्ध नियोजन आणि पारदर्शकता जपून उत्सव यशस्वी करतात."
-                    : "Under the leadership of our President Ganesh Joshi, the Executive Committee manages all social and devotional activities transparently, maintaining community unity and spiritual traditions."}
+                    ? "आमच्या मंडळाचे विद्यमान कार्यकारी मंडळ अत्यंत निष्ठेने आणि सेवाभावाने कार्यरत आहे. मंडळाचे अध्यक्ष शुभम जोशी यांच्या नेतृत्वाखाली सर्व सदस्य शिस्तबद्ध नियोजन आणि पारदर्शकता जपून उत्सव यशस्वी करतात."
+                    : "Under the leadership of our President Shubham Joshi, the Executive Committee manages all social and devotional activities transparently, maintaining community unity and spiritual traditions."}
                 </p>
                 <div className="flex gap-4 pt-4">
                   <button
