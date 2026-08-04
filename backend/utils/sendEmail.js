@@ -23,7 +23,7 @@ const sendOTP = async (email, otp) => {
     });
 
     // Explicitly verify the SMTP connection credentials before sending
-    await transporter.verify();
+    // await transporter.verify();
 
     await transporter.sendMail({
       from: `"Vighnaharta 🙏" <${process.env.EMAIL}>`,
