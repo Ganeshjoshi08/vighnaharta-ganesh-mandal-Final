@@ -20,8 +20,8 @@ const sendOTP = async (email, otp) => {
 
     const transporter = nodemailer.createTransport({
       host: smtpIp,
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false, // Use STARTTLS on port 587
       connectionTimeout: 10000,
       greetingTimeout: 10000,
       socketTimeout: 10000,
