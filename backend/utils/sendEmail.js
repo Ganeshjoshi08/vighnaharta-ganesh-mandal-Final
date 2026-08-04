@@ -10,6 +10,12 @@ const sendOTP = async (email, otp) => {
       host: "smtp.gmail.com",
       port: 465,
       secure: true,
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
+      dnsLookup: (hostname, options, callback) => {
+        require("dns").lookup(hostname, { family: 4 }, callback);
+      },
       auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS
