@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 
 const SettingsContext = createContext();
 
@@ -38,6 +38,21 @@ export const SettingsProvider = ({ children }) => {
       window.removeEventListener("settingsUpdated", handleUpdate);
     };
   }, []);
+
+  // Update document favicon dynamically when settings fetch is successful
+  useEffect(() => {
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    }
+    if (settings && settings.faviconUrl) {
+      link.href = `${BACKEND_URL}${settings.faviconUrl}`;
+    } else {
+      link.href = "/favicon.png";
+    }
+  }, [settings]);
 
   return (
     <SettingsContext.Provider value={{ settings, hero, refreshSettings: fetchSettings, loading }}>
