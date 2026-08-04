@@ -1,45 +1,46 @@
-const nodemailer = require("nodemailer");
-const dns = require("dns");
-
-// Force Node.js to prioritize IPv4 DNS resolution process-wide
-if (typeof dns.setDefaultResultOrder === "function") {
-  dns.setDefaultResultOrder("ipv4first");
-}
-
 const sendOTP = async (email, otp) => {
   try {
-    if (!process.env.EMAIL || !process.env.EMAIL_PASS) {
-      throw new Error("Missing EMAIL or EMAIL_PASS environment variables in backend .env");
+    const apiKey = process.env.RESEND_API_KEY || process.env.EMAIL_PASS;
+    
+    if (!apiKey) {
+      throw new Error("Missing Resend API Key");
     }
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // port 587 uses STARTTLS
-      connectionTimeout: 15000,
-      greetingTimeout: 15000,
-      socketTimeout: 15000,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASS
-      }
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "Vighnaharta 🙏 <onboarding@resend.dev>",
+        to: email,
+        subject: "OTP Verification Code",
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px; max-width: 500px;">
+            <h2 style="color: #735c00;">विघ्नहर्ता गणेश मंडळ</h2>
+            <p>Your OTP verification code is:</p>
+            <div style="font-size: 24px; font-weight: bold; color: #8c0c05; background: #fcf8e3; padding: 10px; text-align: center; border-radius: 4px; letter-spacing: 4px;">
+              ${otp}
+            </div>
+            <p style="margin-top: 15px; font-size: 12px; color: #666;">This code is valid for 10 minutes. Please do not share this OTP with anyone.</p>
+          </div>
+        `
+      })
     });
 
-    // Explicitly verify the SMTP connection credentials before sending
-    await transporter.verify();
+    const data = await response.json();
 
-    await transporter.sendMail({
-      from: `"Vighnaharta 🙏" <${process.env.EMAIL}>`,
-      to: email,
-      subject: "OTP Verification Code",
-      text: `Your OTP is ${otp}. This code is valid for 10 minutes.`
-    });
-
-    console.log(`✅ OTP sent successfully to: ${email}`);
-    return true;
+    if (response.ok) {
+      console.log(`✅ Resend OTP sent successfully to: ${email}`, data);
+      return true;
+    } else {
+      console.error("❌ Resend API response error:", data);
+      return false;
+    }
 
   } catch (err) {
-    console.error("❌ Nodemailer sendOTP failed with detailed stack:");
+    console.error("❌ Resend sendOTP failed with error:");
     console.error(err.stack || err);
     return false;
   }

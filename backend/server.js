@@ -58,33 +58,26 @@ app.use("/api/analytics", require("./routes/analyticsRoutes"));
 //--------------------------------------------------
 app.get("/api/test-email", async (req, res) => {
   try {
-    const nodemailer = require("nodemailer");
-    const dns = require("dns");
-
-    if (typeof dns.setDefaultResultOrder === "function") {
-      dns.setDefaultResultOrder("ipv4first");
+    const apiKey = process.env.RESEND_API_KEY || process.env.EMAIL_PASS;
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "Vighnaharta 🙏 <onboarding@resend.dev>",
+        to: "joshiganeshcsmss@gmail.com",
+        subject: "Render Resend Verification Test",
+        html: "<p>Resend HTTP API connection is successful!</p>"
+      })
+    });
+    const data = await response.json();
+    if (response.ok) {
+      res.json({ success: true, message: "Resend HTTP API sent test email successfully!", data });
+    } else {
+      res.status(500).json({ success: false, error: data });
     }
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // port 587 uses STARTTLS
-      connectionTimeout: 15000,
-      greetingTimeout: 15000,
-      socketTimeout: 15000,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-    await transporter.verify();
-    await transporter.sendMail({
-      from: process.env.EMAIL,
-      to: "joshiganeshcsmss@gmail.com",
-      subject: "Render SMTP Verification Test",
-      text: "Connection is successful!"
-    });
-    res.json({ success: true, message: "SMTP connection verified and test email sent successfully!" });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message, stack: err.stack });
   }
