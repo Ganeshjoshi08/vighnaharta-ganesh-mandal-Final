@@ -1,5 +1,10 @@
 const nodemailer = require("nodemailer");
-const dns = require("dns").promises;
+const dns = require("dns");
+
+// Force Node.js to prioritize IPv4 DNS resolution process-wide
+if (typeof dns.setDefaultResultOrder === "function") {
+  dns.setDefaultResultOrder("ipv4first");
+}
 
 const sendOTP = async (email, otp) => {
   try {
@@ -7,27 +12,13 @@ const sendOTP = async (email, otp) => {
       throw new Error("Missing EMAIL or EMAIL_PASS environment variables in backend .env");
     }
 
-    // Resolve smtp.gmail.com to IPv4 dynamically
-    let smtpIp = "smtp.gmail.com";
-    try {
-      const ips = await dns.resolve4("smtp.gmail.com");
-      if (ips && ips.length > 0) {
-        smtpIp = ips[0];
-      }
-    } catch (dnsErr) {
-      console.error("DNS resolve4 failed, using default hostname:", dnsErr.message);
-    }
-
     const transporter = nodemailer.createTransport({
-      host: smtpIp,
+      host: "smtp.gmail.com",
       port: 587,
-      secure: false, // Use STARTTLS on port 587
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
-      tls: {
-        servername: "smtp.gmail.com"
-      },
+      secure: false, // port 587 uses STARTTLS
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS

@@ -59,29 +59,19 @@ app.use("/api/analytics", require("./routes/analyticsRoutes"));
 app.get("/api/test-email", async (req, res) => {
   try {
     const nodemailer = require("nodemailer");
-    const dns = require("dns").promises;
+    const dns = require("dns");
 
-    // Resolve smtp.gmail.com to IPv4 dynamically
-    let smtpIp = "smtp.gmail.com";
-    try {
-      const ips = await dns.resolve4("smtp.gmail.com");
-      if (ips && ips.length > 0) {
-        smtpIp = ips[0];
-      }
-    } catch (dnsErr) {
-      console.error("DNS resolve4 failed, using default hostname:", dnsErr.message);
+    if (typeof dns.setDefaultResultOrder === "function") {
+      dns.setDefaultResultOrder("ipv4first");
     }
 
     const transporter = nodemailer.createTransport({
-      host: smtpIp,
+      host: "smtp.gmail.com",
       port: 587,
-      secure: false, // Use STARTTLS on port 587
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
-      tls: {
-        servername: "smtp.gmail.com"
-      },
+      secure: false, // port 587 uses STARTTLS
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS
