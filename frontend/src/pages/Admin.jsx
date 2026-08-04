@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 
 // Helper components for Native SVG Charting
 const SVGAreaChart = ({ data, color = "#ff7a00", gradId = "grad1" }) => {
@@ -1143,7 +1143,7 @@ const Admin = () => {
                   />
                   {heroForm.heroImage && (
                     <div className="mt-2 h-16 w-16 border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
-                      <img src={`http://localhost:5000${heroForm.heroImage}`} alt="Ganesha setup" className="h-full w-full object-contain" />
+                      <img src={`${BACKEND_URL}${heroForm.heroImage}`} alt="Ganesha setup" className="h-full w-full object-contain" />
                     </div>
                   )}
                 </div>
@@ -1158,7 +1158,7 @@ const Admin = () => {
                   />
                   {heroForm.bgImage && (
                     <div className="mt-2 h-16 w-32 border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
-                      <img src={`http://localhost:5000${heroForm.bgImage}`} alt="Background setup" className="h-full w-full object-cover" />
+                      <img src={`${BACKEND_URL}${heroForm.bgImage}`} alt="Background setup" className="h-full w-full object-cover" />
                     </div>
                   )}
                 </div>
@@ -1392,7 +1392,7 @@ const Admin = () => {
                   />
                   {settingsForm.logoUrl && (
                     <div className="mt-2 h-16 w-16 border border-slate-200 rounded-full overflow-hidden bg-slate-50">
-                      <img src={`http://localhost:5000${settingsForm.logoUrl}`} alt="Mandal logo setup" className="h-full w-full object-cover" />
+                      <img src={`${BACKEND_URL}${settingsForm.logoUrl}`} alt="Mandal logo setup" className="h-full w-full object-cover" />
                     </div>
                   )}
                 </div>
@@ -1407,7 +1407,7 @@ const Admin = () => {
                   />
                   {settingsForm.faviconUrl && (
                     <div className="mt-2 h-10 w-10 border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-1">
-                      <img src={`http://localhost:5000${settingsForm.faviconUrl}`} alt="favicon setup" className="h-full w-full object-contain" />
+                      <img src={`${BACKEND_URL}${settingsForm.faviconUrl}`} alt="favicon setup" className="h-full w-full object-contain" />
                     </div>
                   )}
                 </div>

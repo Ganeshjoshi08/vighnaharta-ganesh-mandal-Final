@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logoImg from "../assets/logo.jpeg";
 import { useSettings } from "../context/SettingsContext";
+import { BACKEND_URL } from "../api/api";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ const Navbar = () => {
   const { settings } = useSettings();
   const titleText = settings?.websiteName || current.title;
   const subText = settings ? (lang === "marathi" ? settings.addressMr : settings.addressEn) : current.sub;
-  const logoSrc = settings?.logoUrl ? `http://localhost:5000${settings.logoUrl}` : logoImg;
+  const logoSrc = settings?.logoUrl ? `${BACKEND_URL}${settings.logoUrl}` : logoImg;
 
   const isMantras = location.pathname === "/mantras" || location.pathname === "/events";
 

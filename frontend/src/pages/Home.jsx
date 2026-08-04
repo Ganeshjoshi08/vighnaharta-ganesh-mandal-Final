@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 import { useSettings } from "../context/SettingsContext";
 import qrImg from "../assets/qr.png";
 import homeImg from "../assets/HOME_IMG.jpg";
@@ -536,7 +536,7 @@ const Home = () => {
               <div className="relative p-1.5 rounded-full border border-amber-400/40 shadow-[0_0_20px_rgba(246,196,83,0.3)] bg-amber-950/20 my-2">
                 <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(246,196,83,0.2)_0%,transparent_70%)] blur-md pointer-events-none" />
                 <img
-                  src={settings?.logoUrl ? `http://localhost:5000${settings.logoUrl}` : mandalLogoCircular}
+                  src={settings?.logoUrl ? `${BACKEND_URL}${settings.logoUrl}` : mandalLogoCircular}
                   alt="Mandal Logo"
                   className="relative z-10 w-24 h-24 md:w-28 md:h-28 object-contain select-none rounded-full"
                 />
@@ -614,7 +614,7 @@ const Home = () => {
             <div className="absolute w-[350px] md:w-[540px] h-[350px] md:h-[540px] rounded-full bg-orange-500/3 border border-orange-500/5 animate-[spin_90s_linear_infinite] [animation-direction:reverse]" />
             
             <img
-              src={hero?.heroImage ? `http://localhost:5000${hero.heroImage}` : ganeshDivineHero}
+              src={hero?.heroImage ? `${BACKEND_URL}${hero.heroImage}` : ganeshDivineHero}
               alt="Lord Ganesha"
               className="relative z-10 w-full max-w-[320px] md:max-w-[460px] lg:max-w-[480px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
             />

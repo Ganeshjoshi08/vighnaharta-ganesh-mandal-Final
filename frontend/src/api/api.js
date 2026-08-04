@@ -1,7 +1,11 @@
 import axios from "axios";
 
+export const BACKEND_URL = import.meta.env.PROD
+  ? "https://vighnahartabackend.onrender.com"
+  : "http://localhost:5000";
+
 const API = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.PROD ? `${BACKEND_URL}/api` : "/api",
   withCredentials: true // 🔥 ADD THIS
 });
 
@@ -22,7 +26,7 @@ API.interceptors.request.use(
 const cleanUrls = (obj) => {
   if (obj === null || obj === undefined) return obj;
   if (typeof obj === 'string') {
-    return obj.replace(/http:\/\/localhost:5000/g, "");
+    return obj.replace(/http:\/\/localhost:5000/g, "").replace(/https:\/\/vighnahartabackend\.onrender\.com/g, "");
   }
   if (Array.isArray(obj)) {
     return obj.map(cleanUrls);
