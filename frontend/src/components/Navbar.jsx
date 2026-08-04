@@ -160,7 +160,7 @@ const Navbar = () => {
           />
           <div className="flex flex-col min-w-0">
             <span
-              className={`font-headline-md font-bold tracking-wide whitespace-nowrap ${
+              className={`font-headline-md font-bold tracking-wide truncate block max-w-[150px] xs:max-w-[200px] sm:max-w-xs md:max-w-md lg:max-w-none ${
                 lang === "english" ? "text-base sm:text-lg md:text-xl" : "text-lg md:text-2xl"
               } ${
                 isMantras
@@ -173,7 +173,7 @@ const Navbar = () => {
               {titleText}
             </span>
             <span
-              className={`text-[8px] md:text-[9px] font-label-caps uppercase tracking-widest font-semibold whitespace-nowrap ${
+              className={`text-[8px] md:text-[9px] font-label-caps uppercase tracking-widest font-semibold truncate block max-w-[150px] xs:max-w-[200px] sm:max-w-xs md:max-w-md lg:max-w-none ${
                 isMantras
                   ? "text-[#8f4e00]/70"
                   : scrolled || location.pathname !== "/"

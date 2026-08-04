@@ -470,7 +470,7 @@ const Home = () => {
     <div className="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
       
       {/* 1. HERO BANNER SECTION */}
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#180d03] via-[#3d1d02] to-[#120700]">
+      <section className="relative min-h-screen lg:h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#180d03] via-[#3d1d02] to-[#120700]">
         
         {/* CSS Keyframes for particles and floating Ganesha */}
         <style dangerouslySetInnerHTML={{__html: `
@@ -631,7 +631,7 @@ const Home = () => {
           <div className="relative group">
             <div className="absolute -inset-4 border-2 border-primary/20 transition-transform group-hover:scale-105" />
             <img
-              className="w-full aspect-[4/5] object-cover shadow-2xl relative z-10 border-4 border-white"
+              className="w-full h-auto max-h-[500px] object-contain shadow-2xl relative z-10 border-4 border-white bg-amber-950/5 mx-auto"
               src={aboutGanesha}
               alt="Mandal Ganesha Murti"
             />
