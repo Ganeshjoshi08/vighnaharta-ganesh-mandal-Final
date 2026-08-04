@@ -1,57 +1,50 @@
 # 🕉️ Shree Vighnaharta Ganesh Mandal Portal
 
-A premium, full-stack devotional web application built using the **MERN Stack** to manage, display, and coordinate festival activities digitally for Shree Vighnaharta Ganesh Mandal.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
+
+A premium, full-stack devotional web application built using the **MERN Stack** to manage, display, and coordinate festival activities digitally for Shree Vighnaharta Ganesh Mandal, Beed.
 
 ---
 
 ## 🌟 Key Features
 
-### 🏠 Devotional Homepage
-- **Countdown Timer**: Real-time ticker counting down to the Ganesh Chaturthi festival.
-- **Dynamic Ganesha Showcase**: Section displaying Ganesha Murti images with editable history text blocks.
-- **Journey Timeline**: Interactive milestone timelines showing important milestones of the Mandal (from 1990 to today).
+### 🏠 Devotional Homepage & Premium UI
+- **Devotional Theme**: Sleek dark and golden theme honoring traditional colors.
+- **Countdown Widget**: Dynamic countdown to the upcoming Ganesh Chaturthi.
+- **Mandal History Timeline**: Interactive milestone timelines charting the Mandal's growth since 1990.
+- **Aarti & Mantra Console**: Complete digital library of traditional hymns (Ganesh Aarti, Shrisukta) formatted in elegant Devanagari typography.
 
-### 📅 Event Management & DB Registration
-- **Event Highlights**: Details on competitions (e.g., Box Cricket, Esports BGMI, etc.) with `COMING SOON` overlays.
-- **MongoDB Registration Hook**: Attendee signup forms connected to database storage.
-- **Dynamic Devotee Tickets**: Auto-generates a unique Devotee Registration Ticket ID (e.g., `VMM-XXXXX`) upon successful database entry.
+### 📅 Event Coordination & Devotee Registration
+- **Event Management**: Public display of cultural and sports competitions (Box Cricket, BGMI, etc.).
+- **Automatic Devotee Tickets**: Auto-generates a unique Devotee Registration Ticket ID (e.g., `VMM-XXXXX`) upon successful registration.
+- **Secure Authentication**: Secure Sign Up & Log In with OTP verification delivered straight to user email addresses via **Resend's API**.
 
-### 📖 Devotional Mantras & Aarti Console
-- **Traditional Texts**: Complete traditional lyrics of **Ganesh Aarti** and **Shrisukta**.
-- **Devanagari Typography**: Custom font loading (using *SF Pro* and *ITF Devanagari Marathi*) for clean Marathi display.
+### 📸 Photos & Highlights Gallery
+- **Dynamic Photo Grid**: Interactive media gallery displaying celebrations categorized by Smart Ganesh, Social, Religious, and Cultural activities.
+- **Announcement Banner**: Dynamic notifications managed by admins.
 
-### 📸 Photo Gallery & Announcements
-- **Interactive Gallery**: Showcase of past celebrations with photo lightbox displays.
-- **Dynamic Announcements**: Real-time banner notices and announcements published by admins.
+### 💰 Donation Portal
+- **Devotee Contributions**: Fully integrated QR-based donation module.
+- **Transaction Logs**: Securely records and tracks all donation logs in the database.
 
-### 💰 Secure Donation Portal
-- **Devotee Contributions**: Fully integrated donation options with a QR payment interface.
-- **Transaction Logs**: Devotees' contributions are registered in database collections.
-
-### ⚙️ Admin Console Dashboard
-- **Content Management**: Control panel for uploading gallery photos, managing banners, and creating events.
-- **Devotee Registration Logs**: Comprehensive overview of all user accounts and competition registries.
-- **Live Text Editor**: Edit the Homepage "About us" text block and timeline milestones dynamically without touching code.
+### ⚙️ Full-Featured Admin Panel
+- **Realtime Dashboard**: Overview of total user signups, event registrations, and donation metrics.
+- **Mandal Settings Manager**: Upload logos, edit banners, update address/contact details, and modify home screen text blocks dynamically.
+- **Notification Center**: Realtime alerts on user activities.
 
 ---
 
-## 🛠️ Technical Architecture & Tech Stack
+## 🛠️ Technical Architecture
 
-### Frontend
-- **Framework**: React.js (Vite compiler engine)
-- **Routing**: React Router DOM (v6)
-- **Styling**: Vanilla CSS (Tailwind variables mapped dynamically)
-- **HTTP Client**: Axios (configured interceptors for session authentication and CORS settings)
-
-### Backend
-- **Server Framework**: Node.js & Express.js
-- **Authentication**: JSON Web Tokens (JWT) & bcryptjs passwords hashing
-- **File Uploads**: Multer storage configuration
-- **CORS Configuration**: Supports ports `5173`, `5174`, and `5175` for local environment stability
-
-### Database
-- **Provider**: MongoDB Atlas
-- **Object Modeling**: Mongoose (strict schemas and validation rules)
+- **Frontend**: React (Vite compiler), React Router DOM (v6), Vanilla CSS (Tailwind variables mapped dynamically).
+- **Backend**: Node.js & Express.js server, Resend API integration for email dispatch.
+- **Database**: MongoDB Atlas (strict schemas & validation via Mongoose).
+- **Security**: Password hashing using bcryptjs, route authorization via JWT tokens.
 
 ---
 
@@ -61,22 +54,23 @@ A premium, full-stack devotional web application built using the **MERN Stack** 
 vighnaharta-ganesh-mandal/
 ├── backend/
 │   ├── config/             # DB connection settings
-│   ├── controllers/        # Route controllers (Auth, Donations, Events, etc.)
+│   ├── controllers/        # Controllers (Auth, Donations, Events, settings, etc.)
 │   ├── middleware/         # Admin protection and Auth verification
-│   ├── models/             # Mongoose schemas (User, Event, Registration, etc.)
+│   ├── models/             # Mongoose schemas (User, Event, Settings, etc.)
 │   ├── routes/             # Express API endpoints
-│   ├── uploads/            # Local media files uploads folder
+│   ├── utils/              # Email sending utilities (Resend API)
 │   └── server.js           # Server startup script
 │
 └── frontend/
+    ├── vercel.json         # SPA router configuration for Vercel
     ├── src/
-    │   ├── api/            # Axios API config
-    │   ├── assets/         # Images, logs, and icons
-    │   ├── components/     # Reusable layout components (Navbar, Footer)
-    │   ├── pages/          # Page layouts (Home, Mantras, Events, Admin, etc.)
+    │   ├── api/            # Axios API config with credentials
+    │   ├── assets/         # Fonts, icons, and logo assets
+    │   ├── components/     # Reusable components (Navbar, Footer)
+    │   ├── pages/          # Page views (Home, Mantras, Events, Admin, etc.)
     │   ├── App.jsx         # App router config
-    │   ├── index.css       # Global design tokens
-    │   └── main.jsx        # App mounting configuration
+    │   ├── index.css       # Styling tokens and Tailwind configurations
+    │   └── main.jsx        # Mounting point
 ```
 
 ---
@@ -84,8 +78,8 @@ vighnaharta-ganesh-mandal/
 ## 🚀 Installation & Configuration
 
 ### Prerequisites
-- Node.js installed locally
-- MongoDB database instance (local or Atlas)
+- Node.js (v18+)
+- MongoDB database (local or Atlas)
 
 ### Step 1: Configure Environment Variables
 
@@ -93,9 +87,10 @@ Create a `.env` file inside the `backend/` directory:
 
 ```env
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_signing_token
-CLIENT_URL=http://localhost:5173
+MONGO_URI=your_mongodb_atlas_connection_uri
+JWT_SECRET=your_jwt_secret_token
+EMAIL=joshiganeshcsmss@gmail.com
+RESEND_API_KEY=your_resend_api_key
 ```
 
 ### Step 2: Install Dependencies
@@ -110,17 +105,33 @@ cd ../frontend
 npm install
 ```
 
-### Step 3: Run the Application
+### Step 3: Run the Application (Development Mode)
 
 ```bash
-# Launch backend server (listening on port 5000)
+# Launch backend server
 cd backend
-npm start
+npm run dev
 
-# Launch frontend server (bound to localhost:5173/5174)
+# Launch frontend server
 cd ../frontend
 npm run dev
 ```
+
+---
+
+## 🌐 Production Deployment
+
+### Frontend (Vercel)
+The frontend is optimized for static hosting on Vercel. 
+- Build command: `npm run build`
+- Output directory: `dist`
+- Route rewrites are handled natively by `vercel.json` to prevent `404 Not Found` errors on page refresh.
+
+### Backend (Render)
+The backend is deployed as a Web Service on Render.
+- Build command: `npm install`
+- Start command: `node server.js`
+- Make sure to configure all environment variables (especially `RESEND_API_KEY` and `MONGO_URI`) in the Render Dashboard under **Environment**.
 
 ---
 
