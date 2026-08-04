@@ -55,33 +55,6 @@ app.use("/api/analytics", require("./routes/analyticsRoutes"));
 
 //--------------------------------------------------
 // 🏠 BASE ROUTE
-//--------------------------------------------------
-app.get("/api/test-email", async (req, res) => {
-  try {
-    const apiKey = process.env.RESEND_API_KEY || process.env.EMAIL_PASS;
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        from: "Vighnaharta 🙏 <onboarding@resend.dev>",
-        to: "joshiganeshcsmss@gmail.com",
-        subject: "Render Resend Verification Test",
-        html: "<p>Resend HTTP API connection is successful!</p>"
-      })
-    });
-    const data = await response.json();
-    if (response.ok) {
-      res.json({ success: true, message: "Resend HTTP API sent test email successfully!", data });
-    } else {
-      res.status(500).json({ success: false, error: data });
-    }
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message, stack: err.stack });
-  }
-});
 
 app.get("/", (req, res) => {
   res.send("🙏 Vighnaharta API running successfully 🚀");
