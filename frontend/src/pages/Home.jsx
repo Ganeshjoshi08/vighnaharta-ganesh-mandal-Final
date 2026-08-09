@@ -523,7 +523,7 @@ const Home = () => {
         </div>
 
         {/* 2-Column Hero Grid Wrapper */}
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 pt-24 pb-28 lg:pb-16">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 pt-20 pb-16">
           
           {/* Left: Text/Branding Contents */}
           <div className="space-y-6 md:space-y-8 text-center max-w-2xl flex flex-col items-center mx-auto lg:mx-0 relative z-20">
@@ -598,20 +598,46 @@ const Home = () => {
               </div>
             )}
 
-            {/* Hero CTA buttons */}
-            {hero?.buttons && hero.buttons.length > 0 && (
-              <div className="flex lg:hidden flex-wrap gap-4 justify-center mt-6 z-30">
-                {hero.buttons.map((btn, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => btn.link.startsWith("http") ? window.open(btn.link, "_blank") : navigate(btn.link)}
-                    className="px-6 py-2.5 rounded-full font-bold text-sm tracking-wide text-amber-950 bg-gradient-to-r from-amber-400 to-[#F6C453] hover:from-amber-300 hover:to-[#FFE9A3] hover:scale-105 active:scale-95 transition-all shadow-lg cursor-pointer"
-                  >
-                    {lang === "marathi" ? btn.textMr : btn.textEn}
-                  </button>
-                ))}
+            {/* Mobile-only inline navigation bar in document flow */}
+            <div className="flex lg:hidden justify-between items-center px-6 py-2 rounded-xl border border-amber-500/20 bg-amber-950/50 backdrop-blur-lg text-white shadow-2xl w-[92%] max-w-sm mx-auto mt-6 z-30">
+              {/* Language switcher */}
+              <div className="flex items-center rounded-full p-0.5 border bg-black/10 border-white/10">
+                <button
+                  onClick={() => {
+                    localStorage.setItem("lang", "english");
+                    window.dispatchEvent(new Event("langChange"));
+                  }}
+                  className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold transition-all ${
+                    lang === "english" ? "bg-primary text-white" : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => {
+                    localStorage.setItem("lang", "marathi");
+                    window.dispatchEvent(new Event("langChange"));
+                  }}
+                  className={`px-2 py-0.5 rounded-full text-[9px] font-bold transition-all ${
+                    lang === "marathi" ? "bg-primary text-white" : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  मराठी
+                </button>
               </div>
-            )}
+
+              {/* Hamburger menu button */}
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new Event("toggleMobileMenu"));
+                }}
+                className="flex items-center justify-center p-1 text-white"
+              >
+                <span className="material-symbols-outlined text-2xl font-bold">
+                  menu
+                </span>
+              </button>
+            </div>
 
           </div>
 

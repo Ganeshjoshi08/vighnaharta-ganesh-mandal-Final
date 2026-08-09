@@ -61,6 +61,16 @@ const Navbar = () => {
     };
   }, [location.pathname]);
 
+  useEffect(() => {
+    const handleToggleMenu = () => {
+      setOpen((prev) => !prev);
+    };
+    window.addEventListener("toggleMobileMenu", handleToggleMenu);
+    return () => {
+      window.removeEventListener("toggleMobileMenu", handleToggleMenu);
+    };
+  }, []);
+
   const changeLang = (selected) => {
     setLang(selected);
     localStorage.setItem("lang", selected);
@@ -134,18 +144,20 @@ const Navbar = () => {
   return (
     <header
       className={`z-50 transition-all duration-500 ${
-        isHome && !scrolled
-          ? "absolute bottom-6 left-1/2 w-[92%] max-w-6xl flex justify-between items-center px-6 md:px-10 py-2 rounded-xl border border-amber-500/20 bg-amber-950/50 backdrop-blur-lg text-white shadow-2xl"
+        open && window.innerWidth < 1024
+          ? "fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-white text-[#111827] shadow-md border-b border-outline-variant/30"
+          : isHome && !scrolled
+          ? "hidden lg:flex absolute bottom-6 left-1/2 w-[92%] max-w-6xl justify-between items-center px-6 md:px-10 py-2 rounded-xl border border-amber-500/20 bg-amber-950/50 backdrop-blur-lg text-white shadow-2xl"
           : isMantras
           ? "fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-16 py-4 bg-[#FAF6E5] text-[#5C4017] border-b border-[#d8c39e]/40 shadow-none"
           : scrolled || location.pathname !== "/"
           ? "fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-16 py-4 bg-white/95 backdrop-blur-md shadow-md border-b border-outline-variant/30 text-[#111827]"
           : "fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-16 py-4 bg-transparent text-white"
       }`}
-      style={isHome && !scrolled ? { transform: "translateX(-50%)", top: "auto" } : {}}
+      style={isHome && !scrolled && !(open && window.innerWidth < 1024) ? { transform: "translateX(-50%)", top: "auto" } : {}}
     >
       {/* LOGO & TITLE */}
-      {!(isHome && !scrolled) && (
+      {(!(isHome && !scrolled) || (open && window.innerWidth < 1024)) && (
         <div
           className="flex items-center gap-2 md:gap-3 cursor-pointer min-w-0 flex-shrink-0"
           onClick={() => {
