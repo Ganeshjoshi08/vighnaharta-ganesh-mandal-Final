@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 import ImageLightbox from "../components/ImageLightbox";
 
 const GalleryCultural = () => {
@@ -19,7 +19,11 @@ const GalleryCultural = () => {
   const fetchImages = async () => {
     try {
       const res = await API.get("/gallery");
-      const filtered = res.data.filter(img => img.category === "Cultural Activities");
+      const resolved = res.data.map(img => ({
+        ...img,
+        imageUrl: img.imageUrl && !img.imageUrl.startsWith("http") ? `${BACKEND_URL}${img.imageUrl}` : img.imageUrl
+      }));
+      const filtered = resolved.filter(img => img.category === "Cultural Activities");
       setImages(filtered);
     } catch (err) {
       console.log(err.message);

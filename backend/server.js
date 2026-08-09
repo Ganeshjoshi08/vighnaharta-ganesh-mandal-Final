@@ -4,7 +4,33 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
 dotenv.config();
-connectDB();
+
+connectDB().then(() => {
+  // 🧹 Clean legacy hardcoded localhost URLs from database
+  const Gallery = require("./models/Gallery");
+  const Activity = require("./models/Activity");
+  
+  const cleanDatabaseUrls = async () => {
+    try {
+      const galleryItems = await Gallery.find({ imageUrl: { $regex: "http://localhost:5000" } });
+      for (let item of galleryItems) {
+        item.imageUrl = item.imageUrl.replace("http://localhost:5000", "");
+        await item.save();
+      }
+      const activityItems = await Activity.find({ imageUrl: { $regex: "http://localhost:5000" } });
+      for (let item of activityItems) {
+        item.imageUrl = item.imageUrl.replace("http://localhost:5000", "");
+        await item.save();
+      }
+      if (galleryItems.length > 0 || activityItems.length > 0) {
+        console.log("🧹 Database image URLs migrated successfully!");
+      }
+    } catch (err) {
+      console.error("Migration error:", err.message);
+    }
+  };
+  cleanDatabaseUrls();
+});
 
 const app = express();
 

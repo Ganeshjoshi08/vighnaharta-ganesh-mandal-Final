@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 import aboutGanesha from "../assets/about_ganesha.jpg";
 import ImageLightbox from "../components/ImageLightbox";
 
@@ -19,9 +19,13 @@ const Gallery = () => {
   const fetchImages = async () => {
     try {
       const res = await API.get("/gallery");
+      const resolved = res.data.map(img => ({
+        ...img,
+        imageUrl: img.imageUrl && !img.imageUrl.startsWith("http") ? `${BACKEND_URL}${img.imageUrl}` : img.imageUrl
+      }));
       setImages([
         { _id: "local_ganesha", imageUrl: aboutGanesha, title: lang === "english" ? "Shree Vighnaharta Ganesha Murti" : "श्री विघ्नहर्ता गणेश मूर्ती" },
-        ...res.data
+        ...resolved
       ]);
     } catch (err) {
       console.log(err.response?.data || err.message);

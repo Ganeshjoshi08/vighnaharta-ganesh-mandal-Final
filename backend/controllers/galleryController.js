@@ -30,7 +30,7 @@ exports.addImage = async (req, res) => {
     }
 
     const img = new Gallery({
-      imageUrl: `http://localhost:5000/uploads/${req.file.filename}`,
+      imageUrl: `/uploads/${req.file.filename}`,
       title: req.body.title || "",
       category: req.body.category || "Smart Ganesh Utsav",
       order: Number(req.body.order) || 0,

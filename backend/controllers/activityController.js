@@ -39,7 +39,7 @@ exports.addActivity = async (req, res) => {
       tagEn: tagEn || "",
       description: description || "",
       descriptionEn: descriptionEn || "",
-      imageUrl: `http://localhost:5000/uploads/${req.file.filename}`,
+      imageUrl: `/uploads/${req.file.filename}`,
       order: Number(order) || 0,
       uploadedBy: req.user._id
     });

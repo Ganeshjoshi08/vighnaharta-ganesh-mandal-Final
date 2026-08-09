@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 import aboutGanesha from "../assets/about_ganesha.jpg";
 import ImageLightbox from "../components/ImageLightbox";
 
@@ -20,8 +20,12 @@ const GallerySmart = () => {
   const fetchImages = async () => {
     try {
       const res = await API.get("/gallery");
+      const resolved = res.data.map(img => ({
+        ...img,
+        imageUrl: img.imageUrl && !img.imageUrl.startsWith("http") ? `${BACKEND_URL}${img.imageUrl}` : img.imageUrl
+      }));
       // Filter images belonging to this category
-      const filtered = res.data.filter(img => img.category === "Smart Ganesh Utsav" || !img.category);
+      const filtered = resolved.filter(img => img.category === "Smart Ganesh Utsav" || !img.category);
       
       // Include the default Ganesha Murti in the Smart section
       setImages([

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../api/api";
+import API, { BACKEND_URL } from "../api/api";
 
 const ManageGallery = () => {
   const [images, setImages] = useState([]);
@@ -15,7 +15,11 @@ const ManageGallery = () => {
   const fetchImages = async () => {
     try {
       const res = await API.get("/gallery");
-      setImages(res.data);
+      const resolved = res.data.map(img => ({
+        ...img,
+        imageUrl: img.imageUrl && !img.imageUrl.startsWith("http") ? `${BACKEND_URL}${img.imageUrl}` : img.imageUrl
+      }));
+      setImages(resolved);
     } catch (err) {
       console.log(err.response?.data || err.message);
     }

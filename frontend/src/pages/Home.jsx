@@ -101,7 +101,11 @@ const Home = () => {
     try {
       const res = await API.get("/gallery");
       if (res.data && res.data.length > 0) {
-        setDbImages(res.data);
+        const resolved = res.data.map(img => ({
+          ...img,
+          imageUrl: img.imageUrl && !img.imageUrl.startsWith("http") ? `${BACKEND_URL}${img.imageUrl}` : img.imageUrl
+        }));
+        setDbImages(resolved);
       }
     } catch (err) {
       console.log("FETCH GALLERY IMAGES ERROR:", err);
@@ -112,7 +116,11 @@ const Home = () => {
     try {
       const res = await API.get("/activities");
       if (res.data && res.data.length > 0) {
-        setDbActivities(res.data);
+        const resolved = res.data.map(act => ({
+          ...act,
+          imageUrl: act.imageUrl && !act.imageUrl.startsWith("http") ? `${BACKEND_URL}${act.imageUrl}` : act.imageUrl
+        }));
+        setDbActivities(resolved);
       }
     } catch (err) {
       console.log("FETCH ACTIVITIES ERROR:", err);
