@@ -523,7 +523,7 @@ const Home = () => {
         </div>
 
         {/* 2-Column Hero Grid Wrapper */}
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 pt-20 pb-16">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 pt-24 pb-28 lg:pb-16">
           
           {/* Left: Text/Branding Contents */}
           <div className="space-y-6 md:space-y-8 text-center max-w-2xl flex flex-col items-center mx-auto lg:mx-0 relative z-20">
@@ -624,7 +624,7 @@ const Home = () => {
             <img
               src={hero?.heroImage ? `${BACKEND_URL}${hero.heroImage}` : ganeshDivineHero}
               alt="Lord Ganesha"
-              className="relative z-10 w-full max-w-[320px] md:max-w-[460px] lg:max-w-[480px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
+              className="relative z-10 w-full max-w-[220px] xs:max-w-[260px] sm:max-w-[300px] md:max-w-[460px] lg:max-w-[480px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
             />
           </div>
         </div>
