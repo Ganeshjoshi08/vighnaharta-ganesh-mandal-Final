@@ -25,6 +25,11 @@ const gallerySchema = new mongoose.Schema(
       default: 0
     },
 
+    cloudinaryPublicId: {
+      type: String,
+      default: null
+    },
+
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
