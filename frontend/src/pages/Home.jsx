@@ -478,7 +478,7 @@ const Home = () => {
     <div className="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
       
       {/* 1. HERO BANNER SECTION */}
-      <section className="relative min-h-screen lg:h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#180d03] via-[#3d1d02] to-[#120700]">
+      <section className="relative min-h-[480px] xs:min-h-[560px] sm:min-h-[750px] md:min-h-screen lg:h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#180d03] via-[#3d1d02] to-[#120700]">
         
         {/* CSS Keyframes for particles and floating Ganesha */}
         <style dangerouslySetInnerHTML={{__html: `
@@ -522,135 +522,18 @@ const Home = () => {
           ))}
         </div>
 
-        {/* 2-Column Hero Grid Wrapper */}
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 pt-20 pb-16">
-          
-          {/* Left: Text/Branding Contents */}
-          <div className="space-y-6 md:space-y-8 text-center max-w-2xl flex flex-col items-center mx-auto lg:mx-0 relative z-20">
-            <div className="flex flex-col items-center gap-4 w-full">
-              {/* Sacred Heading above Logo */}
-              <div className="flex items-center gap-3 text-xs md:text-sm font-bold tracking-widest uppercase select-none mb-1">
-                <div className="h-[1px] w-8 md:w-12 bg-gradient-to-r from-transparent to-[#F6C453]/60" />
-                <span 
-                  className="bg-gradient-to-r from-[#FFE9A3] via-[#F6C453] to-[#D89000] bg-clip-text text-transparent filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] font-serif"
-                  style={{ WebkitTextFillColor: "transparent" }}
-                >
-                  ॥ श्री विघ्नहर्ताय नमः ॥
-                </span>
-                <div className="h-[1px] w-8 md:w-12 bg-gradient-to-l from-transparent to-[#F6C453]/60" />
-              </div>
-
-              {/* Circular Logo on top with glowing ring and spotlight background */}
-              <div className="relative p-1.5 rounded-full border border-amber-400/40 shadow-[0_0_20px_rgba(246,196,83,0.3)] bg-amber-950/20 my-2">
-                <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(246,196,83,0.2)_0%,transparent_70%)] blur-md pointer-events-none" />
-                <img
-                  src={settings?.logoUrl ? `${BACKEND_URL}${settings.logoUrl}` : mandalLogoCircular}
-                  alt="Mandal Logo"
-                  className="relative z-10 w-24 h-24 md:w-28 md:h-28 object-contain select-none rounded-full"
-                />
-              </div>
-              {/* One-line Title in AMS Chhatrapati Calligraphy font */}
-              <h1 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide text-white whitespace-nowrap pt-8 pb-6 pl-4 pr-4 select-none w-full text-center"
-                style={{
-                  fontFamily: (lang === "marathi" && isCalligraphyFont(hero?.titleMr || "ivaGnahtaa_ imaPa ma/DL")) ? "'AMS Chhatrapati', 'AMSChhatrapati', var(--font-display-hero)" : "var(--font-display-hero)",
-                  lineHeight: "1.45",
-                  textShadow: "0 2px 5px rgba(0, 0, 0, 0.75)",
-                  fontSize: lang === "marathi" ? undefined : "clamp(1.5rem, 4.5vw, 3.25rem)"
-                }}
-              >
-                {current.hero.title}
-              </h1>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-3 text-amber-200/90 font-medium text-sm md:text-base mt-6">
-              <span className="bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 shadow-inner">
-                {lang === "marathi" ? (hero?.subtitleMr?.split("•")[0]?.trim() || "स्थापना: १९९०") : (hero?.subtitleEn?.split("•")[0]?.trim() || "Established: 1990")}
-              </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-              <span className="bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 shadow-inner">
-                {lang === "marathi" ? (hero?.subtitleMr?.split("•")[1]?.trim() || "विघ्नहर्ता चौक, बीड") : (hero?.subtitleEn?.split("•")[1]?.trim() || "Vighnaharta Chowk, Beed")}
-              </span>
-            </div>
-
-            {/* Countdown Widget */}
-            {timeLeft && (
-              <div className="flex lg:hidden gap-4 text-center justify-center mt-6 bg-black/40 backdrop-blur-md p-4 rounded-xl border border-amber-500/30 w-full max-w-sm z-30">
-                <div className="flex-1">
-                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.days}</span>
-                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Days</span>
-                </div>
-                <span className="text-amber-400 text-2xl font-bold self-center animate-pulse">:</span>
-                <div className="flex-1">
-                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.hours}</span>
-                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Hours</span>
-                </div>
-                <span className="text-amber-400 text-2xl font-bold self-center animate-pulse">:</span>
-                <div className="flex-1">
-                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.minutes}</span>
-                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Mins</span>
-                </div>
-                <span className="text-amber-400 text-2xl font-bold self-center animate-pulse">:</span>
-                <div className="flex-1">
-                  <span className="block text-2xl md:text-3xl font-extrabold text-amber-400 font-display-hero">{timeLeft.seconds}</span>
-                  <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest">Secs</span>
-                </div>
-              </div>
-            )}
-
-            {/* Mobile-only inline navigation bar in document flow */}
-            <div className="flex lg:hidden justify-between items-center px-6 py-2 rounded-xl border border-amber-500/20 bg-amber-950/50 backdrop-blur-lg text-white shadow-2xl w-[92%] max-w-sm mx-auto mt-6 z-30">
-              {/* Language switcher */}
-              <div className="flex items-center rounded-full p-0.5 border bg-black/10 border-white/10">
-                <button
-                  onClick={() => {
-                    localStorage.setItem("lang", "english");
-                    window.dispatchEvent(new Event("langChange"));
-                  }}
-                  className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold transition-all ${
-                    lang === "english" ? "bg-primary text-white" : "text-white/60 hover:text-white"
-                  }`}
-                >
-                  EN
-                </button>
-                <button
-                  onClick={() => {
-                    localStorage.setItem("lang", "marathi");
-                    window.dispatchEvent(new Event("langChange"));
-                  }}
-                  className={`px-2 py-0.5 rounded-full text-[9px] font-bold transition-all ${
-                    lang === "marathi" ? "bg-primary text-white" : "text-white/60 hover:text-white"
-                  }`}
-                >
-                  मराठी
-                </button>
-              </div>
-
-              {/* Hamburger menu button */}
-              <button
-                onClick={() => {
-                  window.dispatchEvent(new Event("toggleMobileMenu"));
-                }}
-                className="flex items-center justify-center p-1 text-white"
-              >
-                <span className="material-symbols-outlined text-2xl font-bold">
-                  menu
-                </span>
-              </button>
-            </div>
-
-          </div>
-
-          {/* Right: Large Lord Ganesha Image without background, with dynamic floating animation */}
+        {/* Centered Hero Content Wrapper */}
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-16 flex justify-center items-center z-10 pt-4 sm:pt-16 lg:pt-20 pb-4 sm:pb-16">
+          {/* Large Lord Ganesha Image without background, with dynamic floating animation */}
           <div className="flex justify-center items-center relative select-none z-10">
             {/* Spinning decorative aura rings */}
-            <div className="absolute w-[300px] md:w-[480px] h-[300px] md:h-[480px] rounded-full bg-amber-500/5 border border-amber-500/10 animate-[spin_60s_linear_infinite]" />
-            <div className="absolute w-[350px] md:w-[540px] h-[350px] md:h-[540px] rounded-full bg-orange-500/3 border border-orange-500/5 animate-[spin_90s_linear_infinite] [animation-direction:reverse]" />
+            <div className="absolute w-[310px] xs:w-[380px] sm:w-[450px] md:w-[480px] h-[310px] xs:h-[380px] sm:h-[450px] md:h-[480px] rounded-full bg-amber-500/5 border border-amber-500/10 animate-[spin_60s_linear_infinite]" />
+            <div className="absolute w-[340px] xs:w-[420px] sm:w-[500px] md:w-[540px] h-[340px] xs:h-[420px] sm:h-[500px] md:h-[540px] rounded-full bg-orange-500/3 border border-orange-500/5 animate-[spin_90s_linear_infinite] [animation-direction:reverse]" />
             
             <img
               src={hero?.heroImage ? `${BACKEND_URL}${hero.heroImage}` : ganeshDivineHero}
               alt="Lord Ganesha"
-              className="relative z-10 w-full max-w-[220px] xs:max-w-[260px] sm:max-w-[300px] md:max-w-[460px] lg:max-w-[480px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
+              className="relative z-10 w-full max-w-[310px] xs:max-w-[350px] sm:max-w-[430px] md:max-w-[480px] lg:max-w-[500px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] ganesha-float-animation hover:scale-103 transition-transform duration-700"
             />
           </div>
         </div>
