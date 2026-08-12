@@ -3,7 +3,10 @@ const router = express.Router();
 
 const {
   getDonations,
-  createDonation
+  createDonation,
+  createAdminDonation,
+  exportExcel,
+  exportPdfReport
 } = require("../controllers/donationController");
 
 const { protect, isAdmin } = require("../middleware/authMiddleware");
@@ -17,5 +20,8 @@ router.post("/", protect, createDonation);
 
 // 🔒 ADMIN ONLY
 router.get("/", protect, isAdmin, getDonations);
+router.post("/admin-create", protect, isAdmin, createAdminDonation);
+router.get("/export-excel", protect, isAdmin, exportExcel);
+router.get("/export-pdf", protect, isAdmin, exportPdfReport);
 
 module.exports = router;

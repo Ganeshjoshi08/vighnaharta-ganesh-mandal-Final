@@ -44,7 +44,7 @@ const cleanUrls = (obj) => {
 // ⚠️ RESPONSE INTERCEPTOR
 API.interceptors.response.use(
   (res) => {
-    if (res.data) {
+    if (res.data && !(res.data instanceof Blob) && res.config.responseType !== "blob") {
       res.data = cleanUrls(res.data);
     }
     return res;

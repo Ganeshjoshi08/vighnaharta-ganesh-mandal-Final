@@ -4,10 +4,7 @@ const donationSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
-      trim: true,
-      minlength: 3,
-      maxlength: 30
+      trim: true
     },
 
     amount: {
@@ -36,8 +33,33 @@ const donationSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
-    }
+    },
 
+    // 📋 New admin donation details
+    donorName: {
+      type: String,
+      trim: true
+    },
+    mobileNumber: {
+      type: String,
+      trim: true
+    },
+    address: {
+      type: String,
+      trim: true
+    },
+    modeOfDonation: {
+      type: String,
+      enum: ["Cash", "Online"]
+    },
+    receiptNumber: {
+      type: String,
+      unique: true,
+      sparse: true
+    },
+    date: {
+      type: String
+    }
   },
   { timestamps: true }
 );
