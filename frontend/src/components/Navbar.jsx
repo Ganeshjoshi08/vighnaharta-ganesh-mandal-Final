@@ -147,7 +147,9 @@ const Navbar = () => {
         {/* Center: Large Marathi Mandal Name */}
         <div className="text-center flex-1 min-w-0 mx-1 sm:mx-2 pl-4 pr-1">
           <h1
-            className="font-bold text-white text-[15px] xs:text-lg sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] whitespace-nowrap sm:whitespace-normal"
+            className={`font-bold text-white text-[13px] xs:text-[15px] sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] ${
+              lang === "english" ? "whitespace-normal leading-tight" : "whitespace-nowrap"
+            } sm:whitespace-normal`}
             style={{
               fontFamily: (lang === "marathi" && isCalligraphyFont(mandalName))
                 ? "'AMS Chhatrapati', 'AMSChhatrapati', serif"

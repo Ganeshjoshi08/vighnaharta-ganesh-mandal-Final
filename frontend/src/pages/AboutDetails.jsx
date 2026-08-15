@@ -110,7 +110,7 @@ const AboutDetails = () => {
 
   return (
     <div style={container}>
-      
+
       {/* HEADER TITLE */}
       <header style={headerSection}>
         <span style={legacyTag}>{isMarathi ? "आमचा वारसा" : "OUR LEGACY"}</span>
@@ -122,7 +122,7 @@ const AboutDetails = () => {
 
       {/* TOP ROW: TWO COLUMN GRID */}
       <div style={grid} className="about-details-grid">
-        
+
         {/* LEFT COLUMN: GANESHA FRAME */}
         <div style={leftCol}>
           <div style={frameContainer}>
@@ -171,8 +171,8 @@ const AboutDetails = () => {
           {isMarathi ? "मंडळाच्या कार्यात सहभागी व्हा" : "Participate in Mandal Activities"}
         </h2>
         <p style={ctaText}>
-          {isMarathi 
-            ? "मंडळाच्या विविध सामाजिक व धार्मिक उपक्रमांना मदत करण्यासाठी आपले अमूल्य योगदान द्या." 
+          {isMarathi
+            ? "मंडळाच्या विविध सामाजिक व धार्मिक उपक्रमांना मदत करण्यासाठी आपले अमूल्य योगदान द्या."
             : "Support the Mandal's various social and religious activities with your invaluable contribution."}
         </p>
         <div style={btnGroup}>
@@ -191,7 +191,7 @@ const AboutDetails = () => {
           <a href="#" onClick={() => navigate("/copyright")} style={footerLink}>Copyright Notice</a>
         </div>
         <p style={copyright}>
-          © 2026 {isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}. Developed by Ganesh Joshi
+          © 2026 {isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}. Developed by VMM-2026
         </p>
       </footer>
 

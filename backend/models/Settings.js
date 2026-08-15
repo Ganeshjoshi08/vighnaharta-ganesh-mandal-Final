@@ -60,11 +60,11 @@ const settingsSchema = new mongoose.Schema(
     },
     copyrightMr: {
       type: String,
-      default: "© 2024 श्री विघ्नहर्ता मित्र मंडळ. Developed by Ganesh Joshi"
+      default: "© 2024 श्री विघ्नहर्ता मित्र मंडळ. Developed by VMM-2026"
     },
     copyrightEn: {
       type: String,
-      default: "© 2024 Shree Vighnaharta Mitra Mandal. Developed by Ganesh Joshi"
+      default: "© 2024 Shree Vighnaharta Mitra Mandal. Developed by VMM-2026"
     },
     supportEmail: {
       type: String,

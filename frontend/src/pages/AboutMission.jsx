@@ -10,7 +10,7 @@ const AboutMission = () => {
 
   return (
     <div style={container}>
-      
+
       {/* HEADER SECTION */}
       <header style={headerSection}>
         <span style={subtitleStyle}>{isMarathi ? "आमचा संकल्प" : "OUR RESOLVE"}</span>
@@ -22,7 +22,7 @@ const AboutMission = () => {
 
       {/* TWO COLUMN GRID FOR VISION & MISSION */}
       <div style={grid} className="about-mission-grid">
-        
+
         {/* VISION BLOCK */}
         <div style={card}>
           <div style={iconHeader}>
@@ -55,7 +55,7 @@ const AboutMission = () => {
       <footer style={footerStyle}>
         <h3 style={footerLogo}>{isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}</h3>
         <p style={copyright}>
-          © 2026 {isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}. All Rights Reserved. Developed by Ganesh Joshi
+          © 2026 {isMarathi ? "श्री गणेश मंडळ" : "Shri Ganesh Mandal"}. All Rights Reserved. Developed by VMM-2026
         </p>
       </footer>
 

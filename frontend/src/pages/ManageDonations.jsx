@@ -16,7 +16,7 @@ const numberToWords = (num) => {
 
   if ((num = num.toString()).length > 9) return 'Amount Too Large';
   let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-  if (!n) return ''; 
+  if (!n) return '';
   let str = '';
   str += (Number(n[1]) != 0) ? (a[Number(n[1])] || b[Number(n[1])[0]] + ' ' + a[Number(n[1])[1]]) + 'Crore ' : '';
   str += (Number(n[2]) != 0) ? (a[Number(n[2])] || b[Number(n[2])[0]] + ' ' + a[Number(n[2])[1]]) + 'Lakh ' : '';
@@ -53,10 +53,10 @@ const ManageDonations = () => {
   const [amount, setAmount] = useState("");
   const [modeOfDonation, setModeOfDonation] = useState("Online");
   const [address, setAddress] = useState("");
-  
+
   // Selected donation for generating/sharing PDF
   const [selectedDonation, setSelectedDonation] = useState(null);
-  
+
   const receiptRef = useRef(null);
 
   useEffect(() => {
@@ -107,17 +107,17 @@ const ManageDonations = () => {
       });
 
       alert(res.data.msg || "Donation created successfully!");
-      
+
       // Auto-select the newly created donation for immediate receipt download/share option
       setSelectedDonation(res.data.donation);
-      
+
       // Reset form
       setDonorName("");
       setMobileNumber("");
       setAmount("");
       setAddress("");
       setPage(1); // Reset page to 1 to see the new entry
-      
+
       fetchDonations();
     } catch (err) {
       console.error("Donation creation error:", err);
@@ -211,7 +211,7 @@ const ManageDonations = () => {
         const imgWidth = 210;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-        
+
         const blob = pdf.output("blob");
         const file = new File([blob], `Receipt_${donation.receiptNumber}.pdf`, { type: "application/pdf" });
 
@@ -240,7 +240,7 @@ const ManageDonations = () => {
   return (
     <div className="min-h-screen bg-neutral-100 pt-28 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
-        
+
         {/* Header Block */}
         <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
           <h1 className="text-3xl font-extrabold text-neutral-900 flex items-center gap-2">
@@ -271,13 +271,13 @@ const ManageDonations = () => {
 
         {/* Form and History Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
+
           {/* 1. DONATION FORM CARD */}
           <div className="lg:col-span-1 bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm h-fit">
             <h2 className="text-xl font-bold text-neutral-950 mb-6 pb-2 border-b border-neutral-100 flex items-center gap-2">
               <span>📝</span> New Donation Entry
             </h2>
-            
+
             <form onSubmit={handleCreateDonation} className="space-y-5">
               <div>
                 <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
@@ -331,22 +331,20 @@ const ManageDonations = () => {
                   <button
                     type="button"
                     onClick={() => setModeOfDonation("Cash")}
-                    className={`py-2 text-sm font-semibold rounded-lg transition ${
-                      modeOfDonation === "Cash"
+                    className={`py-2 text-sm font-semibold rounded-lg transition ${modeOfDonation === "Cash"
                         ? "bg-white text-neutral-900 shadow-sm"
                         : "text-neutral-500 hover:text-neutral-900"
-                    }`}
+                      }`}
                   >
                     💵 Cash
                   </button>
                   <button
                     type="button"
                     onClick={() => setModeOfDonation("Online")}
-                    className={`py-2 text-sm font-semibold rounded-lg transition ${
-                      modeOfDonation === "Online"
+                    className={`py-2 text-sm font-semibold rounded-lg transition ${modeOfDonation === "Online"
                         ? "bg-white text-neutral-900 shadow-sm"
                         : "text-neutral-500 hover:text-neutral-900"
-                    }`}
+                      }`}
                   >
                     💳 Online
                   </button>
@@ -378,13 +376,13 @@ const ManageDonations = () => {
 
           {/* 2. DONATION LIST TABLE */}
           <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col space-y-6">
-            
+
             {/* Table Header and Export Section */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-neutral-100">
               <h2 className="text-xl font-bold text-neutral-950 flex items-center gap-2">
                 <span>📋</span> Donation History
               </h2>
-              
+
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={handleDownloadExcel}
@@ -455,11 +453,10 @@ const ManageDonations = () => {
                           ₹{d.amount.toLocaleString("en-IN")}
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className={`px-2 py-0.5 rounded-md text-xs font-bold ${
-                            d.modeOfDonation === "Online"
+                          <span className={`px-2 py-0.5 rounded-md text-xs font-bold ${d.modeOfDonation === "Online"
                               ? "bg-blue-50 text-blue-700 border border-blue-200"
                               : "bg-orange-50 text-orange-700 border border-orange-200"
-                          }`}>
+                            }`}>
                             {d.modeOfDonation || "N/A"}
                           </span>
                         </td>
@@ -512,7 +509,7 @@ const ManageDonations = () => {
             )}
 
           </div>
-          
+
         </div>
 
       </div>
@@ -544,7 +541,7 @@ const ManageDonations = () => {
                 overflow: "hidden"
               }}
             >
-              
+
               {/* Background Watermark Ganesha Logo */}
               <div
                 style={{
@@ -566,7 +563,7 @@ const ManageDonations = () => {
 
               {/* Printable Content relative wrapper to overlay watermark */}
               <div style={{ position: "relative", zIndex: 1 }}>
-                
+
                 {/* TOP FESTIVE HEADER / BANNER */}
                 <div
                   style={{
@@ -675,7 +672,7 @@ const ManageDonations = () => {
                           <strong>दिनांक / Date :</strong> {selectedDonation.date || new Date(selectedDonation.createdAt).toLocaleDateString("en-GB")}
                         </td>
                       </tr>
-                      
+
                       <tr style={{ borderTop: "1px solid #e2d6b5" }}>
                         <td colSpan="2" style={{ padding: "12px 0" }}>
                           <strong>वर्गणीदाराचे नाव / Donor Name :</strong> {selectedDonation.donorName || selectedDonation.name}
@@ -716,7 +713,7 @@ const ManageDonations = () => {
                   <div style={{ fontSize: "12px", color: "#666" }}>
                     * This is an official donation receipt generated digitally.
                   </div>
-                  
+
                   {/* Munim Signature & Name */}
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <img
