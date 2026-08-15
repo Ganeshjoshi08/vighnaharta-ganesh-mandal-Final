@@ -73,7 +73,9 @@ const Footer = () => {
 
       <div className="space-y-1 text-xs md:text-sm">
         <p className="text-surface-variant/80 font-medium">
-          {copyrightText}
+          {copyrightText && !copyrightText.includes("Developed by VMM-2026")
+            ? `${copyrightText.replace(/\.?\s*Developed by.*$/gi, "")}. Developed by VMM-2026`
+            : copyrightText}
         </p>
       </div>
 
