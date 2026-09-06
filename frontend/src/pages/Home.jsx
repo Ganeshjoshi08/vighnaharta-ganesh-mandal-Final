@@ -266,8 +266,7 @@ const Home = () => {
           { role: "व्यवस्थापक", name: "श्री. अमोघ बाभुळगांवकर", icon: "⚙️" },
           { role: "विभाग प्रमुख", name: "श्री. सोहम ऋषी", icon: "📍" },
           { role: "विभाग प्रमुख", name: "श्री. सागर जोतकर", icon: "📍" },
-          { role: "पुरोहित प्रमुख", name: "श्री. प्रशांत सरवदे", icon: "🙏" },
-          { role: "सांस्कृतिक प्रमुख", name: "श्री. वेदांत पाटील", icon: "🎨" }
+          { role: "पुरोहित प्रमुख", name: "श्री. प्रशांत सरवदे", icon: "🙏" }
         ],
         womenTitle: "महिला प्रतिनिधी मंडळ",
         womenCommittee: [
@@ -386,8 +385,7 @@ const Home = () => {
           { role: "Manager", name: "Mr. Amogh Babhulgaonkar", icon: "⚙️" },
           { role: "Department Head", name: "Mr. Soham Rishi", icon: "📍" },
           { role: "Department Head", name: "Mr. Sagar Jotkar", icon: "📍" },
-          { role: "Priest Coordinator", name: "Mr. Prashant Sarvade", icon: "🙏" },
-          { role: "Cultural Coordinator", name: "Mr. Vedant Patil", icon: "🎨" }
+          { role: "Priest Coordinator", name: "Mr. Prashant Sarvade", icon: "🙏" }
         ],
         womenTitle: "Women Representatives Committee",
         womenCommittee: [

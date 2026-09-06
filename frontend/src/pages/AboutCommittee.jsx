@@ -167,13 +167,6 @@ const AboutCommittee = () => {
       nameMr: "श्री. प्रशांत सरवदे",
       nameEn: "Mr. Prashant Sarvade",
       icon: "🙏"
-    },
-    {
-      roleMr: "सांस्कृतिक प्रमुख",
-      roleEn: "Cultural Coordinator",
-      nameMr: "श्री. वेदांत पाटील",
-      nameEn: "Mr. Vedant Patil",
-      icon: "🎨"
     }
   ];
 
