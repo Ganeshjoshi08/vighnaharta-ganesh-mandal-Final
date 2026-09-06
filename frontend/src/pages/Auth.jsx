@@ -1,44 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
+import mandalLogo from "../assets/mandallogo.png";
 
 const Auth = () => {
-  const [mode, setMode] = useState("login");
+  const [mode, setMode] = useState("login"); // 'login' | 'signup'
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    otp: "",
-    newPassword: ""
+    firstName: "",
+    lastName: "",
+    phone: "",
+    password: ""
   });
 
   const [loading, setLoading] = useState(false);
-  const [resendTimer, setResendTimer] = useState(0);
-
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
-
-  // Handle Resend OTP Countdown
-  useEffect(() => {
-    let interval;
-    if (resendTimer > 0) {
-      interval = setInterval(() => {
-        setResendTimer((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [resendTimer]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (loading) return;
+    setErrorMsg("");
     setLoading(true);
 
     try {
       if (mode === "login") {
+        if (!form.phone || !form.password) {
+          setErrorMsg("कृपया मोबाईल नंबर आणि पासवर्ड टाका.");
+          setLoading(false);
+          return;
+        }
+
         const res = await API.post("/auth/login", {
-          email: form.email.toLowerCase().trim(),
+          phone: form.phone.trim(),
           password: form.password
         });
 
@@ -47,309 +41,236 @@ const Auth = () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
         navigate(res.data.isAdmin ? "/admin" : "/");
-      }
+      } else {
+        // Direct Signup
+        if (!form.firstName || !form.lastName || !form.phone || !form.password) {
+          setErrorMsg("कृपया नाव, आडनाव, मोबाईल नंबर आणि पासवर्ड टाका.");
+          setLoading(false);
+          return;
+        }
 
-      else if (mode === "signup") {
+        if (form.phone.replace(/\D/g, "").length < 10) {
+          setErrorMsg("कृपया वैध १० अंकी मोबाईल नंबर टाका.");
+          setLoading(false);
+          return;
+        }
+
+        if (form.password.length < 6) {
+          setErrorMsg("पासवर्ड किमान ६ अक्षरांचा असावा.");
+          setLoading(false);
+          return;
+        }
+
         const res = await API.post("/auth/signup", {
-          name: form.name,
-          email: form.email.toLowerCase().trim(),
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+          phone: form.phone.trim(),
           password: form.password
         });
 
-        alert(res.data.msg || "OTP sent to email 📧");
-        setResendTimer(60);
-        setMode("verify");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("isAdmin", String(res.data.isAdmin));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+
+        alert(res.data.msg || "साइन अप यशस्वी झाले! 🎉");
+        navigate(res.data.isAdmin ? "/admin" : "/");
       }
-
-      else if (mode === "verify") {
-        const res = await API.post("/auth/verify-otp", {
-          email: form.email.toLowerCase().trim(),
-          otp: form.otp
-        });
-
-        alert(res.data.msg || "Account verified ✅");
-        setMode("login");
-      }
-
-      else if (mode === "forgot") {
-        const res = await API.post("/auth/forgot-password", {
-          email: form.email.toLowerCase().trim(),
-        });
-
-        alert(res.data.msg || "OTP sent 📧");
-        setResendTimer(60);
-        setMode("reset");
-      }
-
-      else if (mode === "reset") {
-        const res = await API.post("/auth/reset-password", {
-          email: form.email.toLowerCase().trim(),
-          otp: form.otp,
-          newPassword: form.newPassword
-        });
-
-        alert(res.data.msg || "Password reset successful 🔥");
-        setMode("login");
-      }
-
     } catch (err) {
-      console.error("Auth Request Error:", err);
-      // Display the exact backend error message or Axios network error
-      const backendError = err.response?.data?.msg || err.response?.data?.message || err.message || "Connection failed. Please try again.";
-      alert(backendError);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendOTP = async () => {
-    if (loading || resendTimer > 0) return;
-    setLoading(true);
-
-    try {
-      const res = await API.post("/auth/resend-otp", {
-        email: form.email.toLowerCase().trim()
-      });
-      alert(res.data.msg || "OTP resent successfully! 📧");
-      setResendTimer(60);
-    } catch (err) {
-      console.error("Resend OTP Error:", err);
-      const backendError = err.response?.data?.msg || err.response?.data?.message || err.message || "Failed to resend OTP.";
-      alert(backendError);
+      console.error("Auth Error:", err);
+      const backendError =
+        err.response?.data?.msg ||
+        err.response?.data?.message ||
+        "लॉगिन / साइन अप करण्यात त्रुटी आली. कृपया पुन्हा प्रयत्न करा.";
+      setErrorMsg(backendError);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={container}>
-      <form
-        onSubmit={handleSubmit}
-        style={card}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 30px 70px rgba(255,122,0,0.35)";
-          e.currentTarget.style.transform = "translateY(-5px)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 20px 40px rgba(255,122,0,0.15)";
-          e.currentTarget.style.transform = "translateY(0)";
-        }}
-      >
-        <h2 style={title}>
-          {mode === "login" && "Welcome Back 👋"}
-          {mode === "signup" && "Create Account 🚀"}
-          {mode === "verify" && "Verify OTP 🔢"}
-          {mode === "forgot" && "Forgot Password 🔁"}
-          {mode === "reset" && "Reset Password 🔒"}
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#200b02] via-[#381403] to-[#1a0801] p-4 sm:p-6 font-serif">
+      <div className="w-full max-w-md bg-white/95 rounded-3xl shadow-2xl border-2 border-[#D4AF37] p-8 sm:p-10 relative overflow-hidden backdrop-blur-md">
+        
+        {/* Subtle decorative background glow */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl pointer-events-none" />
 
-        {mode === "signup" && (
-          <input
-            placeholder="Name"
-            style={input}
-            value={form.name}
-            onChange={(e) =>
-              setForm({ ...form, name: e.target.value })
-            }
-          />
-        )}
+        {/* Logo & Header */}
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 mx-auto mb-3 bg-[#FAF8F2] p-2 rounded-2xl border border-[#D4AF37]/40 shadow-sm flex items-center justify-center">
+            <img src={mandalLogo} alt="Mandal Logo" className="w-full h-full object-contain" />
+          </div>
+          <h1 className="text-2xl font-black text-[#4a1c02] tracking-wide">
+            विघ्नहर्ता मित्र मंडळ
+          </h1>
+          <p className="text-xs text-neutral-500 font-sans mt-1">
+            {mode === "login" ? "आपल्या खात्यामध्ये लॉगिन करा" : "नवीन खाते तयार करा"}
+          </p>
+        </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          style={input}
-          value={form.email}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              email: e.target.value.toLowerCase()
-            })
-          }
-        />
+        {/* Tab Switcher */}
+        <div className="flex bg-[#FAF8F2] p-1 rounded-xl border border-neutral-200 mb-6 font-sans">
+          <button
+            type="button"
+            onClick={() => {
+              setMode("login");
+              setErrorMsg("");
+            }}
+            className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${
+              mode === "login"
+                ? "bg-[#4a1c02] text-[#FFE9A3] shadow-md"
+                : "text-neutral-600 hover:text-neutral-900"
+            }`}
+          >
+            लॉगिन (Login)
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setMode("signup");
+              setErrorMsg("");
+            }}
+            className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${
+              mode === "signup"
+                ? "bg-[#4a1c02] text-[#FFE9A3] shadow-md"
+                : "text-neutral-600 hover:text-neutral-900"
+            }`}
+          >
+            साइन अप (Sign Up)
+          </button>
+        </div>
 
-        {(mode === "login" || mode === "signup") && (
-          <input
-            type="password"
-            placeholder="Password"
-            style={input}
-            value={form.password}
-            onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
-            }
-          />
-        )}
-
-        {(mode === "verify" || mode === "reset") && (
-          <div style={{ width: "100%", textAlign: "left" }}>
-            <input
-              placeholder="Enter OTP"
-              style={input}
-              value={form.otp}
-              onChange={(e) =>
-                setForm({ ...form, otp: e.target.value })
-              }
-            />
-            <p style={{ fontSize: "11px", color: "#8f4e00", margin: "2px 0 10px 4px", fontWeight: "600" }}>
-              * OTP is valid for 10 minutes. Check your inbox & spam.
-            </p>
-            
-            <div style={{ textAlign: "right", paddingRight: "4px" }}>
-              {resendTimer > 0 ? (
-                <span style={{ fontSize: "12px", color: "#888", fontWeight: "bold" }}>
-                  Resend OTP in {resendTimer}s
-                </span>
-              ) : (
-                <span
-                  onClick={handleResendOTP}
-                  style={resendBtnStyle}
-                >
-                  Resend OTP
-                </span>
-              )}
-            </div>
+        {/* Error Alert Message */}
+        {errorMsg && (
+          <div className="mb-5 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-sans font-medium flex items-center gap-2">
+            <span>⚠️</span>
+            <span>{errorMsg}</span>
           </div>
         )}
 
-        {mode === "reset" && (
-          <input
-            type="password"
-            placeholder="New Password"
-            style={input}
-            value={form.newPassword}
-            onChange={(e) =>
-              setForm({ ...form, newPassword: e.target.value })
-            }
-          />
-        )}
-
-        <button style={btn} disabled={loading}>
-          {loading ? "Please wait..." : (
-            mode === "login" ? "Login" :
-            mode === "signup" ? "Signup" :
-            mode === "verify" ? "Verify OTP" :
-            mode === "forgot" ? "Send OTP" :
-            "Reset Password"
-          )}
-        </button>
-
-        <p style={switchText}>
-          {mode === "login" && (
-            <>
-              Don't have account?
-              <span onClick={() => setMode("signup")} style={switchBtn}>
-                Signup
-              </span>
-            </>
-          )}
-
+        <form onSubmit={handleSubmit} className="space-y-4 font-sans">
           {mode === "signup" && (
-            <>
-              Already have account?
-              <span onClick={() => setMode("login")} style={switchBtn}>
-                Login
-              </span>
-            </>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-bold text-neutral-700 mb-1">
+                  नाव (First Name) *
+                </label>
+                <input
+                  type="text"
+                  placeholder="उदा. गणेश"
+                  required
+                  value={form.firstName}
+                  onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-[#D4AF37] focus:ring-2 focus:ring-amber-500/20 outline-none text-sm transition bg-white"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-neutral-700 mb-1">
+                  आडनाव (Last Name) *
+                </label>
+                <input
+                  type="text"
+                  placeholder="उदा. जोशी"
+                  required
+                  value={form.lastName}
+                  onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-[#D4AF37] focus:ring-2 focus:ring-amber-500/20 outline-none text-sm transition bg-white"
+                />
+              </div>
+            </div>
           )}
 
-          {mode === "login" && (
-            <>
-              <br />
-              <span onClick={() => setMode("forgot")} style={switchBtn}>
-                Forgot Password?
-              </span>
-            </>
-          )}
+          <div>
+            <label className="block text-xs font-bold text-neutral-700 mb-1">
+              मोबाईल नंबर (Mobile Number) *
+            </label>
+            <div className="relative">
+              <span className="absolute left-3.5 top-2.5 text-neutral-400 text-sm">📱</span>
+              <input
+                type="tel"
+                placeholder="10-digit number (उदा. 9876543210)"
+                required
+                maxLength={10}
+                value={form.phone}
+                onChange={(e) =>
+                  setForm({ ...form, phone: e.target.value.replace(/\D/g, "") })
+                }
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-[#D4AF37] focus:ring-2 focus:ring-amber-500/20 outline-none text-sm transition bg-white"
+              />
+            </div>
+          </div>
 
-          {(mode === "forgot" || mode === "reset" || mode === "verify") && (
-            <>
-              <br />
-              <span onClick={() => setMode("login")} style={switchBtn}>
-                Back to Login
+          <div>
+            <label className="block text-xs font-bold text-neutral-700 mb-1">
+              पासवर्ड (Password) *
+            </label>
+            <div className="relative">
+              <span className="absolute left-3.5 top-2.5 text-neutral-400 text-sm">🔒</span>
+              <input
+                type="password"
+                placeholder="किमान ६ अक्षरे"
+                required
+                minLength={6}
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-[#D4AF37] focus:ring-2 focus:ring-amber-500/20 outline-none text-sm transition bg-white"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full mt-2 py-3 bg-gradient-to-r from-[#4a1c02] via-[#612403] to-[#4a1c02] text-[#FFE9A3] hover:from-[#381403] hover:to-[#381403] rounded-xl font-bold text-sm tracking-wide uppercase border border-[#D4AF37]/60 shadow-lg hover:shadow-xl transition transform active:scale-98 disabled:opacity-70 cursor-pointer"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="animate-spin text-base">⏳</span> कृपया प्रतीक्षा करा...
               </span>
-            </>
+            ) : mode === "login" ? (
+              "लॉगिन करा (Login)"
+            ) : (
+              "साइन अप करा (Sign Up)"
+            )}
+          </button>
+        </form>
+
+        {/* Footer switch prompt */}
+        <div className="text-center mt-6 pt-4 border-t border-neutral-200 text-xs text-neutral-600 font-sans">
+          {mode === "login" ? (
+            <p>
+              खाते नाही का?{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setMode("signup");
+                  setErrorMsg("");
+                }}
+                className="text-[#4a1c02] font-bold hover:underline ml-1"
+              >
+                नवीन खाते तयार करा (Sign Up)
+              </button>
+            </p>
+          ) : (
+            <p>
+              आधीच खाते आहे?{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setMode("login");
+                  setErrorMsg("");
+                }}
+                className="text-[#4a1c02] font-bold hover:underline ml-1"
+              >
+                येथे लॉगिन करा (Login)
+              </button>
+            </p>
           )}
-        </p>
-      </form>
+        </div>
+
+      </div>
     </div>
   );
-};
-
-/* 🔥 WHITE BACKGROUND */
-
-const container = {
-  minHeight: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  background: "#ffffff",
-  padding: "20px"
-};
-
-const card = {
-  padding: "40px",
-  borderRadius: "18px",
-  maxWidth: "360px",
-  width: "100%",
-  textAlign: "center",
-  background: "#ffffff",
-  border: "1px solid #eee",
-  boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
-  transition: "all 0.3s ease"
-};
-
-const title = {
-  marginBottom: "20px",
-  color: "#ff5a00",
-  fontWeight: "700"
-};
-
-const input = {
-  width: "100%",
-  padding: "12px",
-  margin: "10px 0",
-  borderRadius: "10px",
-  border: "1px solid #ffd6bf",
-  background: "#fff",
-  color: "#333",
-  outline: "none",
-  transition: "0.3s",
-  boxShadow: "0 2px 6px rgba(255,122,0,0.08)"
-};
-
-const btn = {
-  width: "100%",
-  padding: "12px",
-  borderRadius: "999px",
-  border: "none",
-  marginTop: "15px",
-  background: "linear-gradient(135deg,#ff7a00,#ff3c00)",
-  color: "#fff",
-  fontWeight: "bold",
-  cursor: "pointer",
-  boxShadow: "0 8px 20px rgba(255,122,0,0.3)",
-  transition: "0.3s"
-};
-
-const switchText = {
-  marginTop: "15px",
-  color: "#777"
-};
-
-const switchBtn = {
-  color: "#ff6a00",
-  cursor: "pointer",
-  fontWeight: "bold",
-  marginLeft: "5px"
-};
-
-const resendBtnStyle = {
-  cursor: "pointer",
-  fontSize: "12px",
-  color: "#ff7a00",
-  fontWeight: "bold",
-  textDecoration: "underline"
 };
 
 export default Auth;

@@ -2,28 +2,41 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
+    firstName: {
+      type: String,
+      trim: true
+    },
+
+    lastName: {
+      type: String,
+      trim: true
+    },
+
     name: {
       type: String,
       required: true,
+      trim: true
+    },
+
+    phone: {
+      type: String,
       trim: true,
-      minlength: 3,
-      maxlength: 30
+      sparse: true,
+      index: true
     },
 
     email: {
       type: String,
-      required: true,
-      unique: true, // ✅ already index
       lowercase: true,
       trim: true,
-      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email"]
+      sparse: true
     },
 
     password: {
       type: String,
       required: true,
       minlength: 6,
-      select: false   // 🔥 HIDE PASSWORD
+      select: false
     },
 
     isAdmin: {
@@ -31,45 +44,14 @@ const userSchema = new mongoose.Schema(
       default: false
     },
 
-    // 🔐 OTP SYSTEM
-    otp: {
-      type: String
-    },
-
-    otpExpiry: {
-      type: Date
-    },
-
     isVerified: {
       type: Boolean,
-      default: false
-    },
-
-    otpResendCount: {
-      type: Number,
-      default: 0
-    },
-
-    otpLastSent: {
-      type: Date
-    },
-
-    // 📱 OPTIONAL FUTURE
-    phone: {
-      type: String
+      default: true
     }
   },
   {
     timestamps: true
   }
 );
-
-// ❌ duplicate index remove already ✔️
-
-// 🔥 AUTO REMOVE OTP AFTER VERIFY
-userSchema.methods.clearOTP = function () {
-  this.otp = null;
-  this.otpExpiry = null;
-};
 
 module.exports = mongoose.model("User", userSchema);
