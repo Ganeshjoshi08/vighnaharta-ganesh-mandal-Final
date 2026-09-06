@@ -44,9 +44,18 @@ app.use(cors({
       "http://localhost:5174",
       "http://localhost:5175",
       "https://vighnhartamitramandal.vercel.app",
-      "https://www.vighnhartamitramandal.vercel.app"
+      "https://www.vighnhartamitramandal.vercel.app",
+      "https://vighnhartamitramandal.com",
+      "https://www.vighnhartamitramandal.com",
+      "http://vighnhartamitramandal.com",
+      "http://www.vighnhartamitramandal.com"
     ];
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith(".vercel.app") ||
+      origin.endsWith("vighnhartamitramandal.com")
+    ) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
