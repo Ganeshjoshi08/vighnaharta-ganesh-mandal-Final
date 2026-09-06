@@ -100,17 +100,30 @@ const Navbar = () => {
             </button>
           </div>
           <span className="text-amber-500/30">|</span>
-          {/* Admin / Login */}
+          {/* Admin / User / Login */}
           {user ? (
             <div className="flex items-center gap-3">
-              <span
-                onClick={() => navigate("/admin")}
-                className="cursor-pointer hover:text-white flex items-center gap-1 font-bold text-amber-400 transition-colors"
-              >
-                <span className="material-symbols-outlined text-[14px]">admin_panel_settings</span>
-                {lang === "marathi" ? "डॅशबोर्ड" : "Dashboard"}
-              </span>
-              <span className="text-amber-500/30">|</span>
+              {(user?.isAdmin === true || localStorage.getItem("isAdmin") === "true") && (
+                <>
+                  <span
+                    onClick={() => navigate("/admin")}
+                    className="cursor-pointer hover:text-white flex items-center gap-1 font-bold text-amber-400 transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-[14px]">admin_panel_settings</span>
+                    {lang === "marathi" ? "डॅशबोर्ड" : "Dashboard"}
+                  </span>
+                  <span className="text-amber-500/30">|</span>
+                </>
+              )}
+              {!(user?.isAdmin === true || localStorage.getItem("isAdmin") === "true") && (
+                <>
+                  <span className="text-amber-300 font-medium">
+                    {lang === "marathi" ? "नमस्कार, " : "Hi, "}
+                    <span className="font-bold">{user.firstName || user.name?.split(" ")[0] || "User"}</span>
+                  </span>
+                  <span className="text-amber-500/30">|</span>
+                </>
+              )}
               <span
                 onClick={handleLogout}
                 className="cursor-pointer hover:text-white flex items-center gap-1 transition-colors"
