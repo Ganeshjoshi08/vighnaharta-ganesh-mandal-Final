@@ -239,52 +239,58 @@ const Home = () => {
         btn: "SEE ALL"
       },
       committee: {
-        title: "मंडळ कार्यकारिणी समिती",
-        topRow: [
-          { role: "अध्यक्ष", name: "शुभम जोशी" },
-          { role: "मुख्यसचिव", name: "कौस्तुभ गुळजकर" },
-          { role: "कार्याध्यक्ष", name: "अक्षय कुलकर्णी" },
-          { role: "उपाध्यक्ष", name: "उमेश कुलकर्णी" },
-          { role: "उपाध्यक्ष", name: "मयुरेश कव्हाळे" },
-          { role: "कोषाध्यक्ष", name: "गौरव कुलकर्णी" }
+        title: "मंडळ कार्यकारिणी समिती २०२६",
+        sub: "स्मार्ट गणेशोत्सव २०२६",
+        advisoryTitle: "मुख्य मार्गदर्शक मंडळ",
+        founderPresident: { role: "संस्थापक अध्यक्ष", name: "श्री. शुभम (विक्की) जोशी" },
+        advisoryBoard: [
+          { role: "मुख्य सचिव", name: "श्री. कौस्तुभ गुळजकर" },
+          { role: "मुख्य सचिव", name: "श्री. उमेश कुलकर्णी" },
+          { role: "कार्याध्यक्ष", name: "श्री. अक्षय मिलिंद कुलकर्णी" }
         ],
-        grid: [
-          [
-            { name: "मंदार कुलकर्णी", role: "सचिव" },
-            { name: "गिरीश सेलमोकर", role: "सचिव" },
-            { name: "प्रशांत जोतकर", role: "सहकोषाध्यक्ष" },
-            { name: "श्रेयस आवढाळ", role: "विभाग प्रमुख" },
-            { name: "अक्षय अ. कुलकर्णी", role: "प्रसिद्धी प्रमुख" }
-          ],
-          [
-            { name: "अमोघ बाभुळगावकर", role: "व्यवस्थापक" },
-            { name: "सोहम ऋषी", role: "व्यवस्थापक" },
-            { name: "सार्थक गोले", role: "व्यवस्थापक" },
-            { name: "गणेश जोशी", role: "सोशल मीडिया प्रमुख" },
-            { name: "वरद कुलकर्णी", role: "सोशल मीडिया प्रमुख" }
-          ],
-          [
-            { name: "सागर जोतकर", role: "कार्यवाहक" },
-            { name: "कुणाल कुलकर्णी", role: "कार्यवाहक" },
-            { name: "यशराज कापसे", role: "कार्यवाहक" },
-            { name: "प्रशांत सरवदे", role: "पुरोहित प्रमुख" },
-            { name: "भाग्येश जोशी", role: "समन्वयक" }
-          ],
-          [
-            { name: "मयूर लवंडे", role: "सदस्य" },
-            { name: "प्रतीक देशमुख", role: "सदस्य" },
-            { name: "सुयोग जोशी", role: "सदस्य" },
-            { name: "यज्ञेश कुलकर्णी", role: "सदस्य" },
-            { name: "सर्वेश बर्दापूरकर", role: "सदस्य" }
-          ],
-          [
-            { name: "", role: "" },
-            { name: "अर्णव पांडव", role: "सदस्य" },
-            { name: "शंभू पाटील", role: "सदस्य" },
-            { name: "समर्थ क्षीरसागर", role: "सदस्य" },
-            { name: "", role: "" }
-          ]
-        ]
+        execTitle: "नवीन कार्यकारिणी",
+        executiveCommittee: [
+          { role: "अध्यक्ष", name: "श्री. गौरव कुलकर्णी", icon: "👑" },
+          { role: "कार्याध्यक्ष", name: "श्री. अक्षय मिलिंद कुलकर्णी", icon: "🎖️" },
+          { role: "उपाध्यक्ष", name: "श्री. मयुरेश कव्हाळे", icon: "⚡" },
+          { role: "सचिव", name: "श्री. मंदार कुलकर्णी", icon: "📝" },
+          { role: "सचिव", name: "श्री. गिरीश सेलमोरकर", icon: "📝" },
+          { role: "कोषाध्यक्ष", name: "श्री. प्रशांत जोतकर", icon: "💰" },
+          { role: "सोशल मिडिया प्रमुख", name: "श्री. अक्षय अजित कुलकर्णी", icon: "📣" },
+          { role: "सोशल मिडिया प्रमुख", name: "श्री. गणेश जोशी", icon: "📣" },
+          { role: "सोशल मिडिया प्रमुख", name: "श्री. कुणाल कुलकर्णी", icon: "📣" },
+          { role: "कार्यवाहक", name: "श्री. सार्थक गोले", icon: "💼" },
+          { role: "कार्यवाहक", name: "श्री. वरद कुलकर्णी", icon: "💼" },
+          { role: "सहकार्यवाहक", name: "श्री. प्रतीक देशमुख", icon: "🤝" },
+          { role: "व्यवस्थापक", name: "श्री. श्रेयस अवधाळ", icon: "⚙️" },
+          { role: "व्यवस्थापक", name: "श्री. अमोघ बाभुळगांवकर", icon: "⚙️" },
+          { role: "विभाग प्रमुख", name: "श्री. सोहम ऋषी", icon: "📍" },
+          { role: "विभाग प्रमुख", name: "श्री. सागर जोतकर", icon: "📍" },
+          { role: "पुरोहित प्रमुख", name: "श्री. प्रशांत सरवदे", icon: "🙏" },
+          { role: "सांस्कृतिक प्रमुख", name: "श्री. वेदांत पाटील", icon: "🎨" }
+        ],
+        womenTitle: "महिला प्रतिनिधी मंडळ",
+        womenCommittee: [
+          { name: "कु. पूर्वा पातोदकर" },
+          { name: "कु. सावी तट्टे" },
+          { name: "कु. शिवाणी खडकीकर" },
+          { name: "कु. श्रावणी रुईकर" }
+        ],
+        membersTitle: "सदस्य",
+        generalMembers: [
+          { name: "भाग्येश जोशी" },
+          { name: "यशराज कापसे" },
+          { name: "मानस जोशी" },
+          { name: "मयूर लवंडे" },
+          { name: "सुयोग जोशी" },
+          { name: "यज्ञेश कुलकर्णी" },
+          { name: "सर्वेश बर्दापूरकर" },
+          { name: "अर्णव पांडव" },
+          { name: "शंभू पाटील" },
+          { name: "समर्थ क्षीरसागर" },
+          { name: "प्रसाद बाभुळगावकर" }
+        ],
+        viewAllBtn: "संपूर्ण कार्यकारिणी पहा"
       },
       donations: {
         title: "देणगी आणि सहकार्य",
@@ -353,52 +359,58 @@ const Home = () => {
         btn: "SEE ALL"
       },
       committee: {
-        title: "Mandal Executive Committee",
-        topRow: [
-          { role: "President", name: "Shubham Joshi" },
-          { role: "General Secretary", name: "Kaustubh Gulajkar" },
-          { role: "Executive President", name: "Akshay Kulkarni" },
-          { role: "Vice President", name: "Umesh Kulkarni" },
-          { role: "Vice President", name: "Mayuresh Kavhale" },
-          { role: "Treasurer", name: "Gaurav Kulkarni" }
+        title: "Mandal Executive Committee 2026",
+        sub: "Smart Ganeshotsav 2026",
+        advisoryTitle: "Founder & Advisory Board",
+        founderPresident: { role: "Founder President", name: "Mr. Shubham (Vikki) Joshi" },
+        advisoryBoard: [
+          { role: "Chief Secretary", name: "Mr. Kaustubh Gulajkar" },
+          { role: "Chief Secretary", name: "Mr. Umesh Kulkarni" },
+          { role: "Working President", name: "Mr. Akshay Milind Kulkarni" }
         ],
-        grid: [
-          [
-            { name: "Mandar Kulkarni", role: "Secretary" },
-            { name: "Girish Selmokar", role: "Secretary" },
-            { name: "Prashant Jotkar", role: "Co-Treasurer" },
-            { name: "Shreyas Avhadhal", role: "Department Head" },
-            { name: "Akshay A. Kulkarni", role: "Publicity Chief" }
-          ],
-          [
-            { name: "Amogh Babhulgaonkar", role: "Manager" },
-            { name: "Soham Rishi", role: "Manager" },
-            { name: "Sarthak Gole", role: "Manager" },
-            { name: "Ganesh Joshi", role: "Social Media Head" },
-            { name: "Varad Kulkarni", role: "Social Media Head" }
-          ],
-          [
-            { name: "Sagar Jotkar", role: "Organizer" },
-            { name: "Kunal Kulkarni", role: "Organizer" },
-            { name: "Yashraj Kapse", role: "Organizer" },
-            { name: "Prashant Sarvade", role: "Chief Priest" },
-            { name: "Bhagyesh Joshi", role: "Coordinator" }
-          ],
-          [
-            { name: "Mayur Lawande", role: "Member" },
-            { name: "Pratik Deshmukh", role: "Member" },
-            { name: "Suyog Joshi", role: "Member" },
-            { name: "Yajnesh Kulkarni", role: "Member" },
-            { name: "Sarvesh Bardapurkar", role: "Member" }
-          ],
-          [
-            { name: "", role: "" },
-            { name: "Arnav Pandav", role: "Member" },
-            { name: "Shambhu Patil", role: "Member" },
-            { name: "Samarth Kshirsagar", role: "Member" },
-            { name: "", role: "" }
-          ]
-        ]
+        execTitle: "New Executive Committee",
+        executiveCommittee: [
+          { role: "President", name: "Mr. Gaurav Kulkarni", icon: "👑" },
+          { role: "Working President", name: "Mr. Akshay Milind Kulkarni", icon: "🎖️" },
+          { role: "Vice President", name: "Mr. Mayuresh Kavhale", icon: "⚡" },
+          { role: "Secretary", name: "Mr. Mandar Kulkarni", icon: "📝" },
+          { role: "Secretary", name: "Mr. Girish Selmokar", icon: "📝" },
+          { role: "Treasurer", name: "Mr. Prashant Jotkar", icon: "💰" },
+          { role: "Social Media Head", name: "Mr. Akshay Ajit Kulkarni", icon: "📣" },
+          { role: "Social Media Head", name: "Mr. Ganesh Joshi", icon: "📣" },
+          { role: "Social Media Head", name: "Mr. Kunal Kulkarni", icon: "📣" },
+          { role: "Executive Coordinator", name: "Mr. Sarthak Gole", icon: "💼" },
+          { role: "Executive Coordinator", name: "Mr. Varad Kulkarni", icon: "💼" },
+          { role: "Joint Coordinator", name: "Mr. Pratik Deshmukh", icon: "🤝" },
+          { role: "Manager", name: "Mr. Shreyas Avadhal", icon: "⚙️" },
+          { role: "Manager", name: "Mr. Amogh Babhulgaonkar", icon: "⚙️" },
+          { role: "Department Head", name: "Mr. Soham Rishi", icon: "📍" },
+          { role: "Department Head", name: "Mr. Sagar Jotkar", icon: "📍" },
+          { role: "Priest Coordinator", name: "Mr. Prashant Sarvade", icon: "🙏" },
+          { role: "Cultural Coordinator", name: "Mr. Vedant Patil", icon: "🎨" }
+        ],
+        womenTitle: "Women Representatives Committee",
+        womenCommittee: [
+          { name: "Miss Purva Patodkar" },
+          { name: "Miss Savi Tatte" },
+          { name: "Miss Shivani Khadkikar" },
+          { name: "Miss Shravani Ruikar" }
+        ],
+        membersTitle: "General Members",
+        generalMembers: [
+          { name: "Bhagyesh Joshi" },
+          { name: "Yashraj Kapse" },
+          { name: "Manas Joshi" },
+          { name: "Mayur Lawande" },
+          { name: "Suyog Joshi" },
+          { name: "Yajnesh Kulkarni" },
+          { name: "Sarvesh Bardapurkar" },
+          { name: "Arnav Pandav" },
+          { name: "Shambhu Patil" },
+          { name: "Samarth Kshirsagar" },
+          { name: "Prasad Babhulgaonkar" }
+        ],
+        viewAllBtn: "View Full Committee"
       },
       donations: {
         title: "Donations & Support",
@@ -757,90 +769,118 @@ const Home = () => {
         className="py-section-gap px-container-padding bg-surface-container-low"
         id="committee"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+        <div className="max-w-6xl mx-auto space-y-10">
+          <div className="text-center">
+            <span className="text-tertiary font-label-caps font-bold tracking-[0.2em] text-xs md:text-sm uppercase block mb-2">
+              {current.committee.sub}
+            </span>
             <h2 className="font-headline-lg text-headline-lg text-on-background">
               {current.committee.title}
             </h2>
             <div className="w-24 h-1 bg-tertiary mx-auto mt-4" />
           </div>
 
-          <div className="bg-white/90 p-6 md:p-12 rounded-xl shadow-xl border border-tertiary/10 max-w-5xl mx-auto font-body-md text-center">
+          {/* 1. Founder & Advisory Board */}
+          <div className="bg-white/95 p-6 md:p-8 rounded-2xl shadow-lg border border-tertiary/20 max-w-5xl mx-auto space-y-6">
+            <h3 className="text-center font-bold text-lg md:text-xl text-[#4a1c02] border-b border-tertiary/20 pb-2">
+              • {current.committee.advisoryTitle} •
+            </h3>
             
-            {/* Top row - Executive Committee */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-8 gap-x-2 md:gap-x-0">
-              {current.committee.topRow.map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className={`flex flex-col items-center justify-center px-2 py-4 ${
-                    idx < current.committee.topRow.length - 1 ? 'md:border-r border-tertiary/20' : ''
-                  }`}
-                >
-                  <span className="text-tertiary text-sm font-bold tracking-wide mb-1 font-label-caps">
-                    {item.role}
-                  </span>
-                  <span className="text-on-background text-base md:text-lg font-bold font-serif">
-                    {item.name}
-                  </span>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch">
+              {/* Founder President Highlight */}
+              <div className="md:col-span-1 bg-gradient-to-b from-[#FCF9F2] to-amber-50/60 p-5 rounded-xl border-2 border-[#D4AF37] text-center flex flex-col items-center justify-center shadow-sm">
+                <span className="text-2xl mb-1 select-none">👑</span>
+                <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block mb-1">
+                  {current.committee.founderPresident.role}
+                </span>
+                <span className="text-base md:text-lg font-black text-neutral-900">
+                  {current.committee.founderPresident.name}
+                </span>
+              </div>
+
+              {/* Advisory Secretaries */}
+              <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {current.committee.advisoryBoard.map((item, idx) => (
+                  <div key={idx} className="bg-white p-4 rounded-xl border border-tertiary/15 text-center flex flex-col items-center justify-center shadow-sm hover:border-[#D4AF37] transition">
+                    <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                      {item.role}
+                    </span>
+                    <span className="text-sm md:text-base font-bold text-neutral-900">
+                      {item.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Executive Committee */}
+          <div className="bg-white/95 p-6 md:p-8 rounded-2xl shadow-lg border border-tertiary/20 max-w-5xl mx-auto space-y-6">
+            <h3 className="text-center font-bold text-lg md:text-xl text-[#4a1c02] border-b border-tertiary/20 pb-2">
+              • {current.committee.execTitle} •
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
+              {current.committee.executiveCommittee.map((member, idx) => (
+                <div key={idx} className="bg-[#FAF8F2]/70 p-3.5 rounded-xl border border-tertiary/10 hover:border-[#D4AF37] hover:bg-white transition flex items-center gap-3 shadow-sm">
+                  <div className="w-10 h-10 rounded-lg bg-amber-100/60 flex items-center justify-center text-xl flex-shrink-0 select-none border border-amber-200/50">
+                    {member.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block truncate">
+                      {member.role}
+                    </span>
+                    <span className="text-xs md:text-sm font-bold text-neutral-900 block truncate">
+                      {member.name}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
+          </div>
 
-            {/* Double divider line */}
-            <div className="my-10 flex flex-col gap-[3px] max-w-4xl mx-auto">
-              <div className="border-t border-tertiary/30" />
-              <div className="border-t border-tertiary/10" />
+          {/* 3. Women Committee & Members Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Women Representatives */}
+            <div className="bg-white/95 p-6 rounded-2xl shadow-lg border border-pink-200/60 space-y-4">
+              <h3 className="text-center font-bold text-base md:text-lg text-[#4a1c02] border-b border-pink-200/60 pb-2">
+                🌸 {current.committee.womenTitle}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {current.committee.womenCommittee.map((w, idx) => (
+                  <div key={idx} className="bg-pink-50/40 p-3 rounded-lg border border-pink-100 flex items-center gap-2">
+                    <span className="text-pink-500 font-bold select-none">🌸</span>
+                    <span className="text-xs md:text-sm font-bold text-neutral-800">{w.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Grid rows for Desktop */}
-            <div className="space-y-0 max-w-4xl mx-auto hidden md:block">
-              {current.committee.grid.map((row, rowIdx) => (
-                <div key={rowIdx} className="grid grid-cols-5">
-                  {row.map((cell, cellIdx) => {
-                    const isEmpty = !cell.name;
-                    const hasRightBorder = cellIdx < row.length - 1 && cell.name && row[cellIdx + 1].name;
-                    const hasBottomBorder = rowIdx < current.committee.grid.length - 1;
-                    
-                    return (
-                      <div 
-                        key={cellIdx}
-                        className={`flex flex-col items-center justify-center p-4 min-h-[90px] ${
-                          hasRightBorder ? 'border-r border-tertiary/20' : ''
-                        } ${
-                          (cell.name && hasBottomBorder) || (rowIdx === current.committee.grid.length - 1 && cell.name) ? 'border-b border-tertiary/20' : ''
-                        }`}
-                      >
-                        {!isEmpty && (
-                          <>
-                            <span className="text-on-background text-base font-bold font-serif mb-1">
-                              {cell.name}
-                            </span>
-                            <span className="text-tertiary text-xs font-semibold">
-                              {cell.role}
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+            {/* General Members */}
+            <div className="bg-white/95 p-6 rounded-2xl shadow-lg border border-tertiary/20 space-y-4">
+              <h3 className="text-center font-bold text-base md:text-lg text-[#4a1c02] border-b border-tertiary/20 pb-2">
+                🚩 {current.committee.membersTitle}
+              </h3>
+              <div className="flex flex-wrap justify-center gap-2">
+                {current.committee.generalMembers.map((m, idx) => (
+                  <div key={idx} className="bg-[#FAF8F2] px-3 py-1.5 rounded-full border border-tertiary/15 text-xs font-bold text-neutral-800 flex items-center gap-1.5 shadow-sm">
+                    <span className="text-amber-500 select-none">🚩</span>
+                    <span>{m.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
 
-            {/* Responsive list for Mobile */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden text-left">
-              {current.committee.grid.flatMap((row) => row).filter(cell => cell.name).map((cell, idx) => (
-                <div key={idx} className="bg-surface-container-lowest p-4 rounded border border-tertiary/10 flex flex-col justify-center">
-                  <span className="text-on-background text-sm font-bold font-serif">
-                    {cell.name}
-                  </span>
-                  <span className="text-tertiary text-xs font-semibold mt-1">
-                    {cell.role}
-                  </span>
-                </div>
-              ))}
-            </div>
-
+          {/* View Full Committee Button */}
+          <div className="text-center pt-2">
+            <Link
+              to="/about/committee"
+              className="inline-flex items-center gap-2 bg-[#4a1c02] text-[#FFE9A3] hover:bg-[#301103] px-8 py-3 rounded-full font-bold text-sm tracking-wider uppercase border border-[#D4AF37] shadow-md transition transform hover:scale-105"
+            >
+              <span>{current.committee.viewAllBtn}</span>
+              <span>→</span>
+            </Link>
           </div>
 
         </div>
