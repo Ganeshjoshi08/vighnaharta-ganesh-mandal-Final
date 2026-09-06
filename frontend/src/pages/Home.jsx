@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API, { BACKEND_URL } from "../api/api";
 import { useSettings } from "../context/SettingsContext";
 import qrImg from "../assets/qr.png";
