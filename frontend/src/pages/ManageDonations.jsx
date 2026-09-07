@@ -9,21 +9,67 @@ import TilakImg from "../assets/Tilak.jpg";
 import savarkarImg from "../assets/savarkar.png";
 import munimSign from "../assets/munim_sign.png";
 
-// Number to Words Converter for Receipts
+// Robust Indian Number System to Words Converter for Receipts
 const numberToWords = (num) => {
-  const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
-  const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  if (num === null || num === undefined || num === "") return "";
+  
+  // Clean string or number: remove commas, currency symbols, and get integer
+  const cleaned = String(num).replace(/[^0-9.]/g, "");
+  const integerPart = Math.floor(Number(cleaned) || 0);
+  
+  if (integerPart === 0) return "Zero Rupees Only";
+  if (integerPart > 999999999) return "Amount Too Large";
 
-  if ((num = num.toString()).length > 9) return 'Amount Too Large';
-  let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-  if (!n) return '';
-  let str = '';
-  str += (Number(n[1]) != 0) ? (a[Number(n[1])] || b[Number(n[1])[0]] + ' ' + a[Number(n[1])[1]]) + 'Crore ' : '';
-  str += (Number(n[2]) != 0) ? (a[Number(n[2])] || b[Number(n[2])[0]] + ' ' + a[Number(n[2])[1]]) + 'Lakh ' : '';
-  str += (Number(n[3]) != 0) ? (a[Number(n[3])] || b[Number(n[3])[0]] + ' ' + a[Number(n[3])[1]]) + 'Thousand ' : '';
-  str += (Number(n[4]) != 0) ? (a[Number(n[4])] || b[Number(n[4])[0]] + ' ' + a[Number(n[4])[1]]) + 'Hundred ' : '';
-  str += (Number(n[5]) != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[Number(n[5])[0]] + ' ' + a[Number(n[5])[1]]) + 'Rupees Only' : 'Rupees Only';
-  return str.trim();
+  const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+  const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+  const convertTwoDigits = (n) => {
+    n = Number(n);
+    if (n === 0) return "";
+    if (n < 20) return units[n];
+    const t = Math.floor(n / 10);
+    const u = n % 10;
+    return tens[t] + (u > 0 ? " " + units[u] : "");
+  };
+
+  const convertThreeDigits = (n) => {
+    n = Number(n);
+    const h = Math.floor(n / 100);
+    const rem = n % 100;
+    let res = "";
+    if (h > 0) {
+      res += units[h] + " Hundred";
+    }
+    if (rem > 0) {
+      if (res !== "") res += " and ";
+      res += convertTwoDigits(rem);
+    }
+    return res;
+  };
+
+  let str = "";
+  const crore = Math.floor(integerPart / 10000000);
+  let rem = integerPart % 10000000;
+  const lakh = Math.floor(rem / 100000);
+  rem = rem % 100000;
+  const thousand = Math.floor(rem / 1000);
+  rem = rem % 1000;
+  const hundredAndBelow = rem;
+
+  if (crore > 0) {
+    str += convertTwoDigits(crore) + " Crore ";
+  }
+  if (lakh > 0) {
+    str += convertTwoDigits(lakh) + " Lakh ";
+  }
+  if (thousand > 0) {
+    str += convertTwoDigits(thousand) + " Thousand ";
+  }
+  if (hundredAndBelow > 0) {
+    str += convertThreeDigits(hundredAndBelow) + " ";
+  }
+
+  return str.trim() + " Rupees Only";
 };
 
 const ManageDonations = () => {
@@ -53,6 +99,7 @@ const ManageDonations = () => {
   const [amount, setAmount] = useState("");
   const [modeOfDonation, setModeOfDonation] = useState("Online");
   const [address, setAddress] = useState("");
+  const [collectedBy, setCollectedBy] = useState("अक्षय कुलकर्णी");
 
   // Selected donation for generating/sharing PDF
   const [selectedDonation, setSelectedDonation] = useState(null);
@@ -83,16 +130,16 @@ const ManageDonations = () => {
 
   const handleCreateDonation = async (e) => {
     e.preventDefault();
-    if (!donorName || !mobileNumber || !amount || !modeOfDonation) {
-      alert("Please fill all required fields.");
+    if (!donorName || !mobileNumber || !amount || !modeOfDonation || !collectedBy) {
+      alert("कृपया सर्व आवश्यक माहिती भरा. (Please fill all required fields.)");
       return;
     }
     if (!/^\d{10}$/.test(mobileNumber)) {
-      alert("Please enter a valid 10-digit mobile number.");
+      alert("कृपया योग्य १० अंकी मोबाईल नंबर टाका. (Please enter a valid 10-digit mobile number.)");
       return;
     }
     if (Number(amount) <= 0) {
-      alert("Amount must be greater than zero.");
+      alert("वर्गणी रक्कम शून्यापेक्षा जास्त असावी. (Amount must be greater than zero.)");
       return;
     }
 
@@ -103,7 +150,8 @@ const ManageDonations = () => {
         mobileNumber,
         amount: Number(amount),
         modeOfDonation,
-        address
+        address,
+        collectedBy
       });
 
       alert(res.data.msg || "Donation created successfully!");
@@ -116,6 +164,7 @@ const ManageDonations = () => {
       setMobileNumber("");
       setAmount("");
       setAddress("");
+      setCollectedBy("अक्षय कुलकर्णी");
       setPage(1); // Reset page to 1 to see the new entry
 
       fetchDonations();
@@ -364,6 +413,23 @@ const ManageDonations = () => {
                 />
               </div>
 
+              <div>
+                <label className="block text-xs font-bold text-neutral-800 uppercase tracking-wider mb-2">
+                  कोणाकडे पैसे जमा केले / दिले (Collected By) <span className="text-red-500">*</span>
+                </label>
+                <select
+                  required
+                  value={collectedBy}
+                  onChange={(e) => setCollectedBy(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 transition font-medium bg-white text-neutral-900 text-sm cursor-pointer"
+                >
+                  <option value="अक्षय कुलकर्णी">१. अक्षय कुलकर्णी (Akshay Kulkarni)</option>
+                  <option value="गौरव कुलकर्णी">२. गौरव कुलकर्णी (Gaurav Kulkarni)</option>
+                  <option value="शुभम जोशी">३. शुभम जोशी (Shubham Joshi)</option>
+                  <option value="गणेश जोशी">४. गणेश जोशी (Ganesh Joshi)</option>
+                </select>
+              </div>
+
               <button
                 type="submit"
                 disabled={formLoading}
@@ -444,7 +510,12 @@ const ManageDonations = () => {
                           {d.receiptNumber || "N/A"}
                         </td>
                         <td className="py-3.5 px-4 font-semibold text-neutral-900">
-                          {d.donorName || d.name || "Unknown"}
+                          <div>{d.donorName || d.name || "Unknown"}</div>
+                          {d.collectedBy && (
+                            <div className="text-[11px] text-amber-800 font-medium mt-0.5">
+                              👤 {d.collectedBy}
+                            </div>
+                          )}
                         </td>
                         <td className="py-3.5 px-4 text-neutral-600">
                           {d.mobileNumber || "N/A"}
@@ -646,14 +717,32 @@ const ManageDonations = () => {
                 </div>
 
                 {/* Title Section */}
-                <div style={{ textAlign: "center", margin: "25px 0" }}>
+                <div style={{ textAlign: "center", margin: "16px 0 18px 0" }}>
+                  <div
+                    style={{
+                      display: "inline-block",
+                      background: "linear-gradient(135deg, #d97706, #b45309)",
+                      color: "#ffffff",
+                      padding: "4px 22px",
+                      borderRadius: "20px",
+                      fontSize: "13px",
+                      fontWeight: "800",
+                      letterSpacing: "0.8px",
+                      boxShadow: "0 2px 6px rgba(180, 83, 9, 0.35)",
+                      marginBottom: "6px",
+                      textTransform: "uppercase"
+                    }}
+                  >
+                    🚩 स्मार्ट गणेशोत्सव - २०२६ 🚩
+                  </div>
                   <h2
                     style={{
                       color: "#4a1c02", // Saffron/maroon color
-                      fontSize: "24px",
+                      fontSize: "17px",
                       fontWeight: "bold",
                       textDecoration: "underline",
-                      margin: 0
+                      margin: "2px 0 0 0",
+                      letterSpacing: "0.5px"
                     }}
                   >
                     वर्गणी पावती / DONATION RECEIPT
@@ -661,7 +750,7 @@ const ManageDonations = () => {
                 </div>
 
                 {/* Receipt Info Table */}
-                <div style={{ fontSize: "16px", color: "#222", lineHeight: "1.8" }}>
+                <div style={{ fontSize: "15px", color: "#222", lineHeight: "1.7" }}>
                   <table style={{ width: "100%", borderCollapse: "collapse" }}>
                     <tbody>
                       <tr>
@@ -674,34 +763,40 @@ const ManageDonations = () => {
                       </tr>
 
                       <tr style={{ borderTop: "1px solid #e2d6b5" }}>
-                        <td colSpan="2" style={{ padding: "12px 0" }}>
+                        <td colSpan="2" style={{ padding: "10px 0" }}>
                           <strong>वर्गणीदाराचे नाव / Donor Name :</strong> {selectedDonation.donorName || selectedDonation.name}
                         </td>
                       </tr>
 
                       <tr style={{ borderTop: "1px solid #e2d6b5" }}>
-                        <td style={{ padding: "12px 0" }}>
+                        <td style={{ padding: "10px 0" }}>
                           <strong>मोबाईल नंबर / Mobile No :</strong> {selectedDonation.mobileNumber || "N/A"}
                         </td>
-                        <td style={{ padding: "12px 0", textAlign: "right" }}>
+                        <td style={{ padding: "10px 0", textAlign: "right" }}>
                           <strong>वर्गणीचा प्रकार / Donation Mode :</strong> {selectedDonation.modeOfDonation}
+                        </td>
+                      </tr>
+
+                      <tr style={{ borderTop: "1px solid #e2d6b5" }}>
+                        <td colSpan="2" style={{ padding: "10px 0" }}>
+                          <strong>कोणाकडे पैसे जमा केले / Collected By :</strong> <span style={{ color: "#4a1c02", fontWeight: "bold" }}>{selectedDonation.collectedBy || "अक्षय कुलकर्णी"}</span>
                         </td>
                       </tr>
 
                       {selectedDonation.address && (
                         <tr style={{ borderTop: "1px solid #e2d6b5" }}>
-                          <td colSpan="2" style={{ padding: "12px 0" }}>
+                          <td colSpan="2" style={{ padding: "10px 0" }}>
                             <strong>पत्ता / Address :</strong> {selectedDonation.address}
                           </td>
                         </tr>
                       )}
 
                       <tr style={{ borderTop: "1px solid #e2d6b5" }}>
-                        <td style={{ padding: "12px 0" }}>
-                          <strong>वर्गणीची रक्कम / Amount :</strong> <span style={{ fontSize: "20px", fontWeight: "bold", color: "#b45309" }}>₹{Number(selectedDonation.amount).toLocaleString("en-IN")}/-</span>
+                        <td style={{ padding: "10px 0" }}>
+                          <strong>वर्गणीची रक्कम / Amount :</strong> <span style={{ fontSize: "18px", fontWeight: "bold", color: "#b45309" }}>₹{Number(selectedDonation.amount).toLocaleString("en-IN")}/-</span>
                         </td>
-                        <td style={{ padding: "12px 0", textAlign: "right" }}>
-                          <strong>रक्कम शब्दात / Amount in Words :</strong> <span style={{ fontStyle: "italic", color: "#444" }}>{numberToWords(selectedDonation.amount)}</span>
+                        <td style={{ padding: "10px 0", textAlign: "right" }}>
+                          <strong>रक्कम शब्दात / Amount in Words :</strong> <span style={{ fontStyle: "italic", color: "#333", fontWeight: "600" }}>{numberToWords(selectedDonation.amount)}</span>
                         </td>
                       </tr>
                     </tbody>

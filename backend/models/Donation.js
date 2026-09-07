@@ -59,6 +59,11 @@ const donationSchema = new mongoose.Schema(
     },
     date: {
       type: String
+    },
+    collectedBy: {
+      type: String,
+      trim: true,
+      default: "अक्षय कुलकर्णी"
     }
   },
   { timestamps: true }

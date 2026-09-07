@@ -33,7 +33,8 @@ exports.getDonations = async (req, res) => {
         { donorName: searchRegex },
         { name: searchRegex },
         { mobileNumber: searchRegex },
-        { receiptNumber: searchRegex }
+        { receiptNumber: searchRegex },
+        { collectedBy: searchRegex }
       ];
     }
 
@@ -148,7 +149,7 @@ exports.createDonation = async (req, res) => {
 //--------------------------------------------------
 exports.createAdminDonation = async (req, res) => {
   try {
-    const { donorName, mobileNumber, amount, modeOfDonation, address } = req.body;
+    const { donorName, mobileNumber, amount, modeOfDonation, address, collectedBy } = req.body;
 
     // validations
     if (!donorName || !mobileNumber || !amount || !modeOfDonation) {
@@ -198,6 +199,7 @@ exports.createAdminDonation = async (req, res) => {
       amount: parsedAmount,
       modeOfDonation,
       address,
+      collectedBy: collectedBy || "अक्षय कुलकर्णी",
       receiptNumber,
       date: formattedDate,
       user: req.user?._id
@@ -207,11 +209,11 @@ exports.createAdminDonation = async (req, res) => {
     await donation.save();
 
     // Log Activity & Create Notification
-    await logActivity("Admin", `Donation created: ${receiptNumber} - ₹${parsedAmount}`);
+    await logActivity("Admin", `Donation created: ${receiptNumber} - ₹${parsedAmount} (Collected by ${donation.collectedBy})`);
     await createNotification(
       "DONATION",
       "New Admin Donation Created 💰",
-      `${donorName} donated ₹${parsedAmount} (${modeOfDonation}).`,
+      `${donorName} donated ₹${parsedAmount} (${modeOfDonation}) - Collected by ${donation.collectedBy}.`,
       "/admin/donations"
     );
 
@@ -242,6 +244,7 @@ exports.exportExcel = async (req, res) => {
       "Date": d.date || new Date(d.createdAt).toLocaleDateString("en-GB"),
       "Donor Name": d.donorName || d.name || "Unknown",
       "Mobile Number": d.mobileNumber || "N/A",
+      "Collected By": d.collectedBy || "अक्षय कुलकर्णी",
       "Address": d.address || "",
       "Amount": `₹${d.amount}`,
       "Mode of Donation": d.modeOfDonation || "N/A"
