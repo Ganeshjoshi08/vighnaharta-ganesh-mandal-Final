@@ -8,6 +8,7 @@ import mandallogo from "../assets/mandallogo.png";
 import TilakImg from "../assets/Tilak.jpg";
 import savarkarImg from "../assets/savarkar.png";
 import munimSign from "../assets/munim_sign.png";
+import posterHeaderBanner from "../assets/poster_header_banner.png";
 
 // Robust Indian Number System to Words Converter for Receipts
 const numberToWords = (num) => {
@@ -103,6 +104,11 @@ const ManageDonations = () => {
 
   // Selected donation for generating/sharing PDF
   const [selectedDonation, setSelectedDonation] = useState(null);
+
+  // Clear / Reset all donations state & security passkey modal
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const receiptRef = useRef(null);
 
@@ -224,6 +230,36 @@ const ManageDonations = () => {
     }
   };
 
+  // Clear / Reset All Donations handler protected with secret security passkey on server
+  const handleClearAllDonations = async (e) => {
+    e.preventDefault();
+    const trimmedPass = deletePassword.trim();
+    if (!trimmedPass) {
+      alert("कृपया सुरक्षितता पासवर्ड (Security Password) टाका.");
+      return;
+    }
+
+    if (!window.confirm("तुम्हाला खात्री आहे का? सर्व वर्गणी डेटा कायमचा नष्ट होईल आणि परत मिळणार नाही!")) {
+      return;
+    }
+
+    setDeleteLoading(true);
+    try {
+      const res = await API.post("/donations/clear-all", { secretPasskey: trimmedPass });
+      alert(res.data.msg || "सर्व वर्गणी डेटा यशस्वीरित्या हटवला गेला आहे!");
+      setIsDeleteModalOpen(false);
+      setDeletePassword("");
+      setPage(1);
+      fetchDonations();
+    } catch (err) {
+      console.error("Clear all error:", err);
+      const errorMsg = err.response?.data?.msg || err.message || "डेटा हटवताना त्रुटी आली. कृपया बॅकएंड सर्व्हर चालू असल्याची खात्री करा.";
+      alert(errorMsg);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   // PDF download flow for individual receipt
   const downloadReceiptPDF = async (donation) => {
     setSelectedDonation(donation);
@@ -231,7 +267,7 @@ const ManageDonations = () => {
       try {
         const element = receiptRef.current;
         if (!element) return;
-        const canvas = await html2canvas(element, { scale: 2 });
+        const canvas = await html2canvas(element, { scale: 2, useCORS: true, allowTaint: true });
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
         const imgWidth = 210;
@@ -242,7 +278,7 @@ const ManageDonations = () => {
         console.error("PDF generation failed:", err);
         alert("Failed to generate PDF. You can try printing the page.");
       }
-    }, 100);
+    }, 150);
   };
 
   // Web Share API flow for individual receipt
@@ -254,7 +290,7 @@ const ManageDonations = () => {
       try {
         const element = receiptRef.current;
         if (!element) return;
-        const canvas = await html2canvas(element, { scale: 2 });
+        const canvas = await html2canvas(element, { scale: 2, useCORS: true, allowTaint: true });
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
         const imgWidth = 210;
@@ -464,6 +500,16 @@ const ManageDonations = () => {
                 >
                   <span>{exportPdfLoading ? "⏳ Exporting..." : "📄 Download PDF Report"}</span>
                 </button>
+                <button
+                  onClick={() => {
+                    setDeletePassword("");
+                    setIsDeleteModalOpen(true);
+                  }}
+                  className="px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition text-xs flex items-center gap-1.5 shadow-sm"
+                  title="Delete All Current Donations Data (Password Required)"
+                >
+                  <span>🗑️ सर्व डेटा नष्ट करा (Reset)</span>
+                </button>
               </div>
             </div>
 
@@ -635,132 +681,39 @@ const ManageDonations = () => {
               {/* Printable Content relative wrapper to overlay watermark */}
               <div style={{ position: "relative", zIndex: 1 }}>
 
-                {/* TOP FESTIVE HEADER / BANNER MATCHING USER POSTER DESIGN */}
+                {/* TOP AUTHENTIC GRAPHIC BANNER FROM POSTER */}
                 <div
                   style={{
-                    background: "linear-gradient(to bottom, #fff6f8, #ffffff)",
-                    borderBottom: "2.5px solid #581c87",
-                    padding: "10px 12px 6px 12px",
-                    borderRadius: "10px 10px 0 0",
-                    position: "relative",
-                    boxSizing: "border-box"
+                    width: "100%",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    border: "1.5px solid #D4AF37",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                    marginBottom: "12px",
+                    backgroundColor: "#ffffff"
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    {/* Left: Mandal Circular Logo */}
-                    <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-                      <img
-                        src={mandallogo}
-                        alt="Logo"
-                        style={{ width: "64px", height: "64px", objectFit: "contain" }}
-                      />
-                    </div>
-
-                    {/* Center: Bright Red Calligraphy Title & Blue Subtitle */}
-                    <div style={{ textAlign: "center", flex: 1, padding: "0 8px" }}>
-                      <h1
-                        style={{
-                          fontSize: "30px",
-                          color: "#e60000", // Vibrant Bright Red
-                          fontWeight: "900",
-                          fontFamily: "'AMS Chhatrapati', 'AMSChhatrapati', 'Yatra One', serif",
-                          margin: 0,
-                          lineHeight: "1.15",
-                          letterSpacing: "0.5px"
-                        }}
-                      >
-                        विघ्नहर्ता मित्र मंडळ
-                      </h1>
-                      <div
-                        style={{
-                          color: "#1d4ed8", // Rich Royal Blue
-                          fontSize: "16px",
-                          fontWeight: "800",
-                          fontFamily: "serif",
-                          margin: "2px 0 4px 0",
-                          letterSpacing: "0.5px"
-                        }}
-                      >
-                        आयोजित :- स्मार्ट गणेशोत्सव - २०२६
-                      </div>
-                    </div>
-
-                    {/* Right: Portraits with Orange Border */}
-                    <div style={{ display: "flex", flexDirection: "row", gap: "6px", flexShrink: 0 }}>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <img
-                          src={TilakImg}
-                          alt="Tilak"
-                          style={{
-                            width: "40px",
-                            height: "52px",
-                            objectFit: "cover",
-                            borderRadius: "3px",
-                            border: "2px solid #ea580c"
-                          }}
-                        />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <img
-                          src={savarkarImg}
-                          alt="Savarkar"
-                          style={{
-                            width: "40px",
-                            height: "52px",
-                            objectFit: "cover",
-                            borderRadius: "3px",
-                            border: "2px solid #ea580c"
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Address Pill centered on baseline */}
-                  <div style={{ position: "relative", textAlign: "center", marginTop: "2px" }}>
-                    <div
-                      style={{
-                        display: "inline-block",
-                        background: "#4a044e",
-                        color: "#ffffff",
-                        padding: "2px 22px",
-                        borderRadius: "16px",
-                        fontSize: "11.5px",
-                        fontWeight: "bold",
-                        letterSpacing: "0.5px",
-                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)"
-                      }}
-                    >
-                      विघ्नहर्ता चौक, जुन्या तहसिल मागे, बीड
-                    </div>
-                  </div>
+                  <img
+                    src={posterHeaderBanner}
+                    alt="Mandal Header Banner"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                      objectFit: "contain"
+                    }}
+                  />
                 </div>
 
-                {/* Title Section with Orange-Brown Badge as requested */}
-                <div style={{ textAlign: "center", margin: "14px 0 16px 0" }}>
-                  <div
-                    style={{
-                      display: "inline-block",
-                      background: "linear-gradient(135deg, #c2410c, #b45309)",
-                      color: "#ffffff",
-                      padding: "4px 26px",
-                      borderRadius: "25px",
-                      fontSize: "13.5px",
-                      fontWeight: "800",
-                      letterSpacing: "0.8px",
-                      boxShadow: "0 2px 6px rgba(180, 83, 9, 0.35)",
-                      marginBottom: "6px"
-                    }}
-                  >
-                    🚩 स्मार्ट गणेशोत्सव - २०२६ 🚩
-                  </div>
+                {/* Title Section */}
+                <div style={{ textAlign: "center", margin: "8px 0 16px 0" }}>
                   <h2
                     style={{
                       color: "#4a1c02",
-                      fontSize: "16px",
+                      fontSize: "19px",
                       fontWeight: "bold",
                       textDecoration: "underline",
-                      margin: "2px 0 0 0",
+                      margin: 0,
                       letterSpacing: "0.5px"
                     }}
                   >
@@ -848,6 +801,81 @@ const ManageDonations = () => {
 
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================================================== */}
+      {/* ⚠️ DELETE ALL DATA CONFIRMATION MODAL (Vigh2026)   */}
+      {/* ================================================== */}
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-red-200 relative">
+            
+            {/* Header */}
+            <div className="flex items-center gap-3 text-red-600 mb-4 pb-3 border-b border-red-100">
+              <div className="w-12 h-12 rounded-2xl bg-red-100 flex items-center justify-center text-2xl flex-shrink-0">
+                ⚠️
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-neutral-900 leading-tight">
+                  सर्व वर्गणी डेटा नष्ट करा
+                </h3>
+                <p className="text-xs text-red-600 font-semibold mt-0.5">
+                  Reset All Donations (Fresh Start)
+                </p>
+              </div>
+            </div>
+
+            {/* Warning Box */}
+            <div className="p-3.5 bg-red-50/80 border border-red-200 rounded-2xl mb-5 text-xs text-red-900 leading-relaxed font-medium space-y-1.5">
+              <p>
+                <strong>⚠️ महत्त्वाची सूचना:</strong> हा पर्याय निवडल्यास सर्व वर्गणीदारांचा डेटा, पावत्या आणि जमा रकमा कायमच्या नष्ट (Delete) होतील.
+              </p>
+              <p className="text-neutral-600">
+                हा डेटा नष्ट केल्यावर सर्व हिशोब शून्य (0) होऊन नवीन वर्गणीसाठी फ्रेश सुरुवात होईल.
+              </p>
+            </div>
+
+            {/* Password Form */}
+            <form onSubmit={handleClearAllDonations} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-neutral-800 uppercase tracking-wider mb-2">
+                  सुरक्षितता पासवर्ड टाका (Enter Password) <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="password"
+                  required
+                  autoFocus
+                  placeholder="सुरक्षितता पासवर्ड प्रविष्ट करा..."
+                  value={deletePassword}
+                  onChange={(e) => setDeletePassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-600 transition text-sm font-mono"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-neutral-100">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDeleteModalOpen(false);
+                    setDeletePassword("");
+                  }}
+                  disabled={deleteLoading}
+                  className="px-4 py-2.5 rounded-xl border border-neutral-300 text-neutral-700 hover:bg-neutral-100 font-bold text-xs transition"
+                >
+                  रद्द करा (Cancel)
+                </button>
+                <button
+                  type="submit"
+                  disabled={deleteLoading || !deletePassword}
+                  className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition shadow-md disabled:opacity-50 flex items-center gap-2"
+                >
+                  {deleteLoading ? "डेटा नष्ट करत आहे..." : "🔴 खात्रीपूर्वक सर्व डेटा हटवा"}
+                </button>
+              </div>
+            </form>
+
           </div>
         </div>
       )}

@@ -6,7 +6,8 @@ const {
   createDonation,
   createAdminDonation,
   exportExcel,
-  exportPdfReport
+  exportPdfReport,
+  clearAllDonations
 } = require("../controllers/donationController");
 
 const { protect, isAdmin } = require("../middleware/authMiddleware");
@@ -23,5 +24,6 @@ router.get("/", protect, isAdmin, getDonations);
 router.post("/admin-create", protect, isAdmin, createAdminDonation);
 router.get("/export-excel", protect, isAdmin, exportExcel);
 router.get("/export-pdf", protect, isAdmin, exportPdfReport);
+router.post("/clear-all", protect, isAdmin, clearAllDonations);
 
 module.exports = router;

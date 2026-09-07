@@ -380,3 +380,39 @@ exports.exportPdfReport = async (req, res) => {
     res.status(500).json({ msg: "Failed to generate PDF report ❌" });
   }
 };
+
+//--------------------------------------------------
+// 🗑️ DELETE ALL DONATIONS (PROTECTED BY Vigh2026 PASSKEY)
+//--------------------------------------------------
+exports.clearAllDonations = async (req, res) => {
+  try {
+    const { secretPasskey } = req.body;
+
+    if (!secretPasskey) {
+      return res.status(400).json({ msg: "कृपया सुरक्षितता पासवर्ड टाका. (Security password is required.)" });
+    }
+
+    if (secretPasskey !== "Vigh2026") {
+      return res.status(403).json({ msg: "चुकीचा पासवर्ड! डेटा डिलीट करता येणार नाही. (Invalid password! Cannot delete data.)" });
+    }
+
+    const deleteResult = await Donation.deleteMany({});
+
+    await logActivity("Admin", `All Donations Data Cleared (${deleteResult.deletedCount} records deleted)`);
+    await createNotification(
+      "DONATION",
+      "All Donations Data Cleared 🗑️",
+      `All ${deleteResult.deletedCount} donation records have been permanently reset by admin.`,
+      "/admin/donations"
+    );
+
+    return res.json({
+      msg: `सर्व ${deleteResult.deletedCount} वर्गणी नोंदी यशस्वीरित्या हटवल्या गेल्या आहेत! आता तुम्ही नवीन डेटा टाकू शकता.`,
+      deletedCount: deleteResult.deletedCount
+    });
+
+  } catch (err) {
+    console.error("CLEAR ALL DONATIONS ERROR:", err.message);
+    res.status(500).json({ msg: "डेटा हटवताना सर्व्हर त्रुटी आली ❌ (Server error while clearing donations)" });
+  }
+};
