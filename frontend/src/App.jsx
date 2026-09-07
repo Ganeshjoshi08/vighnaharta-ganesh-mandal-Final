@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Events from "./pages/Events";
+import Schedule from "./pages/Schedule";
 import Gallery from "./pages/Gallery";
 import Donation from "./pages/Donation";
 import Atharvashirsha from "./pages/Atharvashirsha";
@@ -154,6 +155,7 @@ function App() {
         {/* 🌐 PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/schedule" element={<Schedule />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/donation" element={<Donation />} />
         <Route path="/atharva" element={<Atharvashirsha />} />

@@ -145,24 +145,24 @@ const Navbar = () => {
       </div>
 
       {/* 2. TOP FESTIVE HEADER / BANNER */}
-      <div className="w-full bg-gradient-to-r from-[#200b02] via-[#4a1c02] to-[#200b02] border-b-2 border-[#D4AF37]/50 px-2 sm:px-4 md:px-12 py-2.5 sm:py-4 flex flex-row justify-between items-center gap-2 sm:gap-4">
+      <div className="w-full bg-gradient-to-r from-[#200b02] via-[#4a1c02] to-[#200b02] border-b-2 border-[#D4AF37]/50 px-2 xs:px-3 sm:px-6 md:px-12 py-2.5 sm:py-3.5 flex flex-row justify-between items-center gap-1.5 xs:gap-2.5 sm:gap-4">
         {/* Left: Mandal Logo */}
         <div className="flex items-center flex-shrink-0">
-          <div className="relative p-1 rounded-xl border border-amber-400/40 bg-[#301103]/20 shadow-[0_0_15px_rgba(212,175,55,0.35)]">
+          <div className="relative p-1 xs:p-1.5 rounded-xl border border-amber-400/50 bg-[#301103]/40 shadow-[0_0_15px_rgba(212,175,55,0.4)] flex items-center justify-center">
             <img
               src={logoSrc}
               alt="Mandal Logo"
-              className="w-8 h-8 xs:w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 object-contain select-none rounded-lg"
+              className="w-11 h-11 xs:w-13 xs:h-13 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-22 lg:h-22 object-contain select-none rounded-lg"
             />
           </div>
         </div>
 
         {/* Center: Large Marathi Mandal Name */}
-        <div className="text-center flex-1 min-w-0 mx-1 sm:mx-2 pl-4 pr-1">
+        <div className="text-center flex-1 min-w-0 mx-1 xs:mx-2 px-1">
           <h1
-            className={`font-bold text-white text-[13px] xs:text-[15px] sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] ${
-              lang === "english" ? "whitespace-normal leading-tight" : "whitespace-nowrap"
-            } sm:whitespace-normal`}
+            className={`font-black text-white text-[18px] xs:text-[21px] sm:text-2xl md:text-3xl lg:text-[44px] xl:text-[52px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.95)] ${
+              lang === "english" ? "whitespace-normal leading-tight" : "whitespace-nowrap sm:whitespace-normal"
+            }`}
             style={{
               fontFamily: (lang === "marathi" && isCalligraphyFont(mandalName))
                 ? "'AMS Chhatrapati', 'AMSChhatrapati', serif"
@@ -170,7 +170,7 @@ const Navbar = () => {
               letterSpacing: (lang === "marathi" && isCalligraphyFont(mandalName))
                 ? "normal"
                 : "inherit",
-              lineHeight: "1.45"
+              lineHeight: "1.35"
             }}
           >
             {mandalName}
@@ -178,22 +178,26 @@ const Navbar = () => {
         </div>
 
         {/* Right: Portraits (Lokmanya Tilak & Savarkar) */}
-        <div className="flex items-center gap-1.5 sm:gap-3 md:gap-4 select-none flex-shrink-0">
+        <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 md:gap-4 select-none flex-shrink-0">
           <div className="flex flex-col items-center">
             <img
               src={tilakImg}
               alt="Lokmanya Tilak"
-              className="w-6 h-8.5 xs:w-8 xs:h-11 sm:w-11 sm:h-15 md:w-14 md:h-20 object-cover rounded border border-[#D4AF37]/40 shadow-md"
+              className="w-9 h-12 xs:w-10.5 xs:h-14 sm:w-12 sm:h-16 md:w-14 md:h-20 object-cover rounded-md border border-[#D4AF37]/60 shadow-md"
             />
-            <span className="hidden lg:block text-[8px] md:text-[9px] text-amber-200/80 mt-1 font-serif">लोकमान्य टिळक</span>
+            <span className="hidden sm:block text-[8px] md:text-[9px] text-amber-200/90 mt-0.5 font-serif font-semibold">
+              {lang === "marathi" ? "लोकमान्य टिळक" : "Lokmanya Tilak"}
+            </span>
           </div>
           <div className="flex flex-col items-center">
             <img
               src={savarkarImg}
               alt="Veer Savarkar"
-              className="w-6 h-8.5 xs:w-8 xs:h-11 sm:w-11 sm:h-15 md:w-14 md:h-20 object-cover rounded border border-[#D4AF37]/40 shadow-md"
+              className="w-9 h-12 xs:w-10.5 xs:h-14 sm:w-12 sm:h-16 md:w-14 md:h-20 object-cover rounded-md border border-[#D4AF37]/60 shadow-md"
             />
-            <span className="hidden lg:block text-[8px] md:text-[9px] text-amber-200/80 mt-1 font-serif font-bold">स्वा. सावरकर</span>
+            <span className="hidden sm:block text-[8px] md:text-[9px] text-amber-200/90 mt-0.5 font-serif font-bold">
+              {lang === "marathi" ? "स्वा. सावरकर" : "V. Savarkar"}
+            </span>
           </div>
         </div>
       </div>
