@@ -635,110 +635,129 @@ const ManageDonations = () => {
               {/* Printable Content relative wrapper to overlay watermark */}
               <div style={{ position: "relative", zIndex: 1 }}>
 
-                {/* TOP FESTIVE HEADER / BANNER */}
+                {/* TOP FESTIVE HEADER / BANNER MATCHING USER POSTER DESIGN */}
                 <div
                   style={{
-                    background: "linear-gradient(to right, #200b02, #4a1c02, #200b02)",
-                    border: "2px solid #D4AF37",
-                    padding: "15px",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    background: "linear-gradient(to bottom, #fff6f8, #ffffff)",
+                    borderBottom: "2.5px solid #581c87",
+                    padding: "10px 12px 6px 12px",
+                    borderRadius: "10px 10px 0 0",
+                    position: "relative",
                     boxSizing: "border-box"
                   }}
                 >
-                  {/* Left: Logo */}
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <div
-                      style={{
-                        border: "1px solid rgba(212,175,55,0.4)",
-                        padding: "4px",
-                        borderRadius: "10px",
-                        background: "rgba(48,17,3,0.2)"
-                      }}
-                    >
+                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                    {/* Left: Mandal Circular Logo */}
+                    <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
                       <img
                         src={mandallogo}
                         alt="Logo"
-                        style={{ width: "65px", height: "65px", objectFit: "contain" }}
+                        style={{ width: "64px", height: "64px", objectFit: "contain" }}
                       />
+                    </div>
+
+                    {/* Center: Bright Red Calligraphy Title & Blue Subtitle */}
+                    <div style={{ textAlign: "center", flex: 1, padding: "0 8px" }}>
+                      <h1
+                        style={{
+                          fontSize: "30px",
+                          color: "#e60000", // Vibrant Bright Red
+                          fontWeight: "900",
+                          fontFamily: "'AMS Chhatrapati', 'AMSChhatrapati', 'Yatra One', serif",
+                          margin: 0,
+                          lineHeight: "1.15",
+                          letterSpacing: "0.5px"
+                        }}
+                      >
+                        विघ्नहर्ता मित्र मंडळ
+                      </h1>
+                      <div
+                        style={{
+                          color: "#1d4ed8", // Rich Royal Blue
+                          fontSize: "16px",
+                          fontWeight: "800",
+                          fontFamily: "serif",
+                          margin: "2px 0 4px 0",
+                          letterSpacing: "0.5px"
+                        }}
+                      >
+                        आयोजित :- स्मार्ट गणेशोत्सव - २०२६
+                      </div>
+                    </div>
+
+                    {/* Right: Portraits with Orange Border */}
+                    <div style={{ display: "flex", flexDirection: "row", gap: "6px", flexShrink: 0 }}>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <img
+                          src={TilakImg}
+                          alt="Tilak"
+                          style={{
+                            width: "40px",
+                            height: "52px",
+                            objectFit: "cover",
+                            borderRadius: "3px",
+                            border: "2px solid #ea580c"
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <img
+                          src={savarkarImg}
+                          alt="Savarkar"
+                          style={{
+                            width: "40px",
+                            height: "52px",
+                            objectFit: "cover",
+                            borderRadius: "3px",
+                            border: "2px solid #ea580c"
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Center Title in AMS Chhatrapati with address */}
-                  <div style={{ textAlign: "center", flex: 1, paddingLeft: "10px", paddingRight: "10px" }}>
-                    <h1
+                  {/* Address Pill centered on baseline */}
+                  <div style={{ position: "relative", textAlign: "center", marginTop: "2px" }}>
+                    <div
                       style={{
-                        fontFamily: "'AMS Chhatrapati', 'AMSChhatrapati', serif",
-                        fontSize: "36px",
-                        color: "#FFE9A3", // Royal Golden typography
-                        margin: 0,
-                        letterSpacing: "normal",
-                        lineHeight: "1.25",
-                        textShadow: "0 2px 4px rgba(0,0,0,0.85)"
-                      }}
-                    >
-                      ivaGnahtaa_ imaPa ma/DL, baID.
-                    </h1>
-                    <p
-                      style={{
-                        fontSize: "12px",
+                        display: "inline-block",
+                        background: "#4a044e",
                         color: "#ffffff",
-                        margin: "4px 0 0 0",
-                        fontWeight: "normal",
-                        fontFamily: "serif"
+                        padding: "2px 22px",
+                        borderRadius: "16px",
+                        fontSize: "11.5px",
+                        fontWeight: "bold",
+                        letterSpacing: "0.5px",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)"
                       }}
                     >
-                      स्थापना: १९९० • विघ्नहर्ता चौक, बीड
-                    </p>
-                  </div>
-
-                  {/* Right: Portraits */}
-                  <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <img
-                        src={TilakImg}
-                        alt="Tilak"
-                        style={{ width: "42px", height: "54px", objectFit: "cover", borderRadius: "3px", border: "1px solid #D4AF37" }}
-                      />
-                      <span style={{ color: "#FFE9A3", fontSize: "8px", marginTop: "2px" }}>लोकमान्य टिळक</span>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <img
-                        src={savarkarImg}
-                        alt="Savarkar"
-                        style={{ width: "42px", height: "54px", objectFit: "cover", borderRadius: "3px", border: "1px solid #D4AF37" }}
-                      />
-                      <span style={{ color: "#FFE9A3", fontSize: "8px", marginTop: "2px" }}>स्वा. सावरकर</span>
+                      विघ्नहर्ता चौक, जुन्या तहसिल मागे, बीड
                     </div>
                   </div>
                 </div>
 
-                {/* Title Section */}
-                <div style={{ textAlign: "center", margin: "16px 0 18px 0" }}>
+                {/* Title Section with Orange-Brown Badge as requested */}
+                <div style={{ textAlign: "center", margin: "14px 0 16px 0" }}>
                   <div
                     style={{
                       display: "inline-block",
-                      background: "linear-gradient(135deg, #d97706, #b45309)",
+                      background: "linear-gradient(135deg, #c2410c, #b45309)",
                       color: "#ffffff",
-                      padding: "4px 22px",
-                      borderRadius: "20px",
-                      fontSize: "13px",
+                      padding: "4px 26px",
+                      borderRadius: "25px",
+                      fontSize: "13.5px",
                       fontWeight: "800",
                       letterSpacing: "0.8px",
                       boxShadow: "0 2px 6px rgba(180, 83, 9, 0.35)",
-                      marginBottom: "6px",
-                      textTransform: "uppercase"
+                      marginBottom: "6px"
                     }}
                   >
                     🚩 स्मार्ट गणेशोत्सव - २०२६ 🚩
                   </div>
                   <h2
                     style={{
-                      color: "#4a1c02", // Saffron/maroon color
-                      fontSize: "17px",
+                      color: "#4a1c02",
+                      fontSize: "16px",
                       fontWeight: "bold",
                       textDecoration: "underline",
                       margin: "2px 0 0 0",
