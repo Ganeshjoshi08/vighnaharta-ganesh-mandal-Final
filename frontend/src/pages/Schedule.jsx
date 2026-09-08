@@ -183,7 +183,7 @@ const Schedule = () => {
     { nameMr: "मयुरेश कव्हाळे", nameEn: "Mayuresh Kavhale", phone: "७७७४०२५५२४", tel: "7774025524" },
     { nameMr: "अक्षय कुलकर्णी", nameEn: "Akshay Kulkarni", phone: "८७६७१३४६२३", tel: "8767134623" },
     { nameMr: "गौरव कुलकर्णी", nameEn: "Gaurav Kulkarni", phone: "८७६७०१८२४२", tel: "8767018242" },
-    { nameMr: "गिरीश सेलमोरकर", nameEn: "Girish Selmokar", phone: "९०२१९३६४१२", tel: "9021936412" }
+    { nameMr: "गिरीश सेलमोकर", nameEn: "Girish Selmokar", phone: "९०२१९३६४१२", tel: "9021936412" }
   ];
 
   return (

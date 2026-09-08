@@ -80,7 +80,7 @@ const AboutCommittee = () => {
     {
       roleMr: "सचिव",
       roleEn: "Secretary",
-      nameMr: "श्री. गिरीश सेलमोरकर",
+      nameMr: "श्री. गिरीश सेलमोकर",
       nameEn: "Mr. Girish Selmokar",
       icon: "📝"
     },
@@ -172,7 +172,7 @@ const AboutCommittee = () => {
 
   // 3. Women Representatives Committee (महिला प्रतिनिधी मंडळ)
   const womenCommittee = [
-    { nameMr: "कु. पूर्वा पातोदकर", nameEn: "Miss Purva Patodkar" },
+    { nameMr: "कु. पूर्वा पाटोदकर", nameEn: "Miss Purva Patodkar" },
     { nameMr: "कु. सावी तट्टे", nameEn: "Miss Savi Tatte" },
     { nameMr: "कु. शिवाणी खडकीकर", nameEn: "Miss Shivani Khadkikar" },
     { nameMr: "कु. श्रावणी रुईकर", nameEn: "Miss Shravani Ruikar" }
