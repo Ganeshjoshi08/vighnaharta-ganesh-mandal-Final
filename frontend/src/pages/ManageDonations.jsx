@@ -9,6 +9,7 @@ import TilakImg from "../assets/Tilak.jpg";
 import savarkarImg from "../assets/savarkar.png";
 import munimSign from "../assets/munim_sign.png";
 import posterHeaderBanner from "../assets/poster_header_banner.png";
+import mandalStamp from "../assets/mandal_stamp.png";
 
 // Robust Indian Number System to Words Converter for Receipts
 const numberToWords = (num) => {
@@ -775,27 +776,57 @@ const ManageDonations = () => {
                   </table>
                 </div>
 
-                {/* Footer text */}
-                <div style={{ marginTop: "40px", borderTop: "2px solid #D4AF37", paddingTop: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ fontSize: "12px", color: "#666" }}>
-                    * This is an official donation receipt generated digitally.
+                {/* Footer text & Stamp / Signature */}
+                <div style={{ marginTop: "35px", borderTop: "2px solid #D4AF37", paddingTop: "15px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+                  <div style={{ fontSize: "12px", color: "#666", maxWidth: "280px", lineHeight: "1.4" }}>
+                    <div>* This is an official donation receipt generated digitally.</div>
+                    <div style={{ fontSize: "11px", color: "#8a6d3b", marginTop: "4px", fontWeight: "600" }}>
+                      श्री गणेशाय नमः | पावती क्र: {selectedDonation.receiptNumber}
+                    </div>
                   </div>
 
-                  {/* Munim Signature & Name */}
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <img
-                      src={munimSign}
-                      alt="Munim Signature"
-                      style={{
-                        width: "125px",
-                        height: "auto",
-                        mixBlendMode: "multiply",
-                        marginBottom: "-6px"
-                      }}
-                    />
-                    <span style={{ fontSize: "14px", fontWeight: "bold", color: "#4a1c02" }}>
-                      विघ्नहर्ता मित्र मंडळ
-                    </span>
+                  {/* Stamp & Munim Signature Section */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                    
+                    {/* Official Mandal Stamp */}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      <img
+                        src={mandalStamp}
+                        alt="Mandal Stamp"
+                        style={{
+                          width: "95px",
+                          height: "95px",
+                          objectFit: "contain",
+                          display: "block",
+                          transform: "rotate(-4deg)",
+                          filter: "drop-shadow(0 2px 4px rgba(0,32,137,0.12))"
+                        }}
+                      />
+                      <span style={{ fontSize: "10px", fontWeight: "bold", color: "#002089", marginTop: "2px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                        अधिकृत शिक्का (Stamp)
+                      </span>
+                    </div>
+
+                    {/* Munim Signature & Name */}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      <img
+                        src={munimSign}
+                        alt="Munim Signature"
+                        style={{
+                          width: "125px",
+                          height: "auto",
+                          mixBlendMode: "multiply",
+                          marginBottom: "-4px"
+                        }}
+                      />
+                      <span style={{ fontSize: "14px", fontWeight: "bold", color: "#4a1c02" }}>
+                        विघ्नहर्ता मित्र मंडळ
+                      </span>
+                      <span style={{ fontSize: "10px", color: "#777" }}>
+                        (अधिकृत स्वाक्षरी / Sign)
+                      </span>
+                    </div>
+
                   </div>
                 </div>
 
